@@ -50,6 +50,7 @@ export default function Navigation() {
 						textAlign={useBreakpointValue({ base: "center", md: "left" })}
 						fontFamily={"heading"}
 						color={useColorModeValue("gray.800", "white")}
+						onClick={() => navigate("/")}
 					>
 						Artisanal Futures
 					</Text>
@@ -260,22 +261,22 @@ const NAV_ITEMS = [
 	// },
 	{
 		label: "Stores",
-		href: "#",
+		href: "/stores",
 	},
 	{
 		label: "Products",
-		href: "#",
+		href: "/products",
 	},
 	{
 		label: "Share Knowledge",
-		href: "#",
+		href: "/share",
 	},
 	{
 		label: "Tools",
-		href: "#",
+		href: "/tools",
 	},
 	{
 		label: "Contact",
-		href: "#",
+		href: "/contact",
 	},
 ];
