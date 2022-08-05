@@ -1,21 +1,17 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { Route, Routes } from "react-router-dom";
 
-import { Routes, Route } from "react-router-dom";
-
-import Homepage from "./pages/Homepage";
-import Stores from "./pages/Stores";
-import ShareKnowledge from "./pages/ShareKnowledge";
-import Products from "./pages/Products";
-import Tools from "./pages/Tools";
-import Contact from "./pages/Contact";
-import Navigation from "./components/layout/Navigation";
-import Footer from "./components/layout/Footer";
 import "./App.css";
+import Footer from "./components/layout/Footer";
+import Navigation from "./components/layout/Navigation";
+import SignUpForm from "./features/SignUpForm";
+import Contact from "./pages/Contact";
+import Homepage from "./pages/Homepage";
+import Products from "./pages/Products";
+import ShareKnowledge from "./pages/ShareKnowledge";
+import Stores from "./pages/Stores";
+import Tools from "./pages/Tools";
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<div className="App">
 			<Navigation />
@@ -26,6 +22,7 @@ function App() {
 				<Route path="/share" element={<ShareKnowledge />} />
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/contact" element={<Contact />} />
+				<Route path="/signup" element={<SignUpForm />} />
 			</Routes>
 			<Footer />
 		</div>

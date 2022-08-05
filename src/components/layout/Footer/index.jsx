@@ -1,5 +1,4 @@
-import { Box, Container, Link, SimpleGrid, Stack, Text, Flex, Tag, useColorModeValue } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { Box, Container, Flex, Link, SimpleGrid, Stack, Tag, Text, useColorModeValue } from "@chakra-ui/react";
 
 const Logo = (props) => {
 	return (
