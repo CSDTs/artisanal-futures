@@ -1,0 +1,125 @@
+.aboutMeHeader {
+	font-family: "Poppins", system-ui;
+	max-width: none;
+	box-sizing: border-box;
+	display: flex !important;
+	align-items: center !important;
+	padding-top: 0 !important;
+	padding-bottom: 8rem !important;
+	position: relative;
+	// background-image: url(https://raw.githubusercontent.com/creativetimofficial/argon-dashboard/gh-pages/assets-old/img/theme/profile-cover.jpg);
+	background-color: #32325d;
+	background-size: cover;
+	background-position: center top;
+	border-radius: 15px;
+}
+
+.mainContent {
+	font-family: "Poppins", system-ui;
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 1140px;
+	padding: 0.75rem;
+	margin-bottom: 1.5rem;
+}
+
+span.socialPadding {
+	padding: 15px;
+}
+
+.avatar {
+	word-wrap: break-word;
+	font-family: "Poppins", system-ui;
+	max-width: none;
+	box-sizing: border-box;
+	position: relative;
+	margin-bottom: 50px;
+	transition-duration: 500ms;
+	z-index: 1;
+	border-radius: 15px;
+	box-shadow: 0 0.25rem 1rem 0 rgba(47, 91, 234, 0.125);
+	visibility: visible;
+	animation-delay: 0.2s;
+	animation-name: fadeInUp;
+}
+
+.aboutMeText {
+	word-wrap: break-word;
+	visibility: visible;
+	font-family: "Poppins", system-ui;
+	max-width: unset;
+	margin-bottom: 0.5rem;
+	box-sizing: border-box;
+	line-height: 1.5;
+	display: block;
+	width: 100%;
+	padding: 0.625rem 0.75rem;
+	color: #8898aa;
+	border-radius: 0.375rem;
+	background-color: #fff;
+	background-clip: padding-box;
+	font-size: 0.875rem;
+	transition: box-shadow 0.15s ease;
+	border: 0;
+	box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
+	border-color: rgba(50, 151, 211, 0.25);
+	height: fit-content;
+	text-align: left;
+}
+
+.aboutMeTextContainer {
+	word-wrap: break-word;
+	visibility: visible;
+	font-family: "Poppins", system-ui;
+	max-width: none;
+	box-sizing: border-box;
+	position: relative;
+	z-index: 1;
+	padding: 30px;
+	text-align: right;
+	transition-duration: 500ms;
+	border-radius: 0 0 15px 15px;
+	background-color: #ffffff;
+}
+
+.aboutMeTitle {
+	word-wrap: break-word;
+	visibility: visible;
+	text-align: right;
+	padding: 0;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+	clear: both;
+	max-width: unset;
+	margin-top: 0;
+	font-family: inherit;
+	font-weight: 600;
+	line-height: 1.5;
+	color: #32325d;
+	box-sizing: border-box;
+	font-size: 1rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin-bottom: 0.25rem;
+	transition-duration: 500ms;
+}
+
+.aboutMeHeading {
+	word-wrap: break-word;
+	visibility: visible;
+	font-family: "Poppins", system-ui;
+	max-width: none;
+	box-sizing: border-box;
+	position: relative;
+	z-index: 1;
+	border-radius: 15px 15px 0 0;
+	margin: 0 auto;
+	padding: 30px 30px 0 30px;
+	background-color: #8083ea;
+	overflow: hidden;
+}

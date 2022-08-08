@@ -10,6 +10,7 @@ import Products from "./pages/Products";
 import ShareKnowledge from "./pages/ShareKnowledge";
 import Stores from "./pages/Stores";
 import Tools from "./pages/Tools";
+import VendorProfile from "./pages/VendorProfile";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/signup" element={<SignUpForm />} />
+				<Route path="/vendors/:name" element={<VendorProfile />} />
 			</Routes>
 			<Footer />
 		</div>
