@@ -11,6 +11,7 @@ import ShareKnowledge from "./pages/ShareKnowledge";
 import Stores from "./pages/Stores";
 import Tools from "./pages/Tools";
 import VendorProfile from "./pages/VendorProfile";
+import ShopRateCalculator from "./features/ShopRateCalculator";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/signup" element={<SignUpForm />} />
 				<Route path="/vendors/:name" element={<VendorProfile />} />
+				<Route path="/tools/shop-rate-calculator" element={<ShopRateCalculator />} />
 			</Routes>
 			<Footer />
 		</div>
