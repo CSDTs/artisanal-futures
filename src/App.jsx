@@ -12,6 +12,7 @@ import Stores from "./pages/Stores";
 import Tools from "./pages/Tools";
 import VendorProfile from "./pages/VendorProfile";
 import ShopRateCalculator from "./features/ShopRateCalculator";
+import ProductSearch from "./features/ProductSearch";
 
 function App() {
 	return (
@@ -20,7 +21,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Homepage />} />
 				<Route path="/stores" element={<Stores />} />
-				<Route path="/products" element={<Products />} />
+				<Route path="/products" element={<ProductSearch />} />
 				<Route path="/share" element={<ShareKnowledge />} />
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/contact" element={<Contact />} />
