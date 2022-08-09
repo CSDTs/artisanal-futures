@@ -13,6 +13,7 @@ import Tools from "./pages/Tools";
 import VendorProfile from "./pages/VendorProfile";
 import ShopRateCalculator from "./features/ShopRateCalculator";
 import ProductSearch from "./features/ProductSearch";
+import EndpointTesting from "./features/EndpointTesting";
 
 function App() {
 	return (
@@ -28,6 +29,7 @@ function App() {
 				<Route path="/signup" element={<SignUpForm />} />
 				<Route path="/vendors/:name" element={<VendorProfile />} />
 				<Route path="/tools/shop-rate-calculator" element={<ShopRateCalculator />} />
+				<Route path="/endpoints" element={<EndpointTesting />} />
 			</Routes>
 			<Footer />
 		</div>
