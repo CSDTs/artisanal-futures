@@ -5,7 +5,17 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
 	plugins: [react()],
 	server: {
-		host: true,
-		port: 8080,
+		host: "0.0.0.0",
+
+		strictPort: true,
+		port: 3000,
+		hmr: {
+			clientPort: 3000, // vite@2.5.2 and newer: clientPort
+		},
+
+		// hmr: {
+		// 	port: 3000,
+		// 	clientPort: 3000,
+		// },
 	},
 });
