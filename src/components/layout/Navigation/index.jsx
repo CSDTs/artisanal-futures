@@ -17,13 +17,22 @@ import {
 	useColorMode,
 } from "@chakra-ui/react";
 
+import { useState, useEffect } from "react";
+import AuthService from "../../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-
+import UserDropdown from "../../ui/User/UserDropdown";
 export default function Navigation() {
 	const { isOpen, onToggle } = useDisclosure();
 	const { colorMode, toggleColorMode } = useColorMode();
+	const [currentUser, setCurrentUser] = useState("");
+
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		setCurrentUser(AuthService.getCurrentUser());
+	}, []);
+
 	return (
 		<Box>
 			<Flex
@@ -61,22 +70,29 @@ export default function Navigation() {
 				</Flex>
 
 				<Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-					<Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} href={"#"}>
-						Sign In
-					</Button>
-					<Button
-						display={{ base: "none", md: "inline-flex" }}
-						fontSize={"sm"}
-						fontWeight={600}
-						color={"white"}
-						bg={"pink.400"}
-						onClick={() => navigate("/signup")}
-						_hover={{
-							bg: "pink.300",
-						}}
-					>
-						Sign Up
-					</Button>
+					{!currentUser?.token && (
+						<>
+							<Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} onClick={() => navigate("/signin")}>
+								Sign In
+							</Button>
+							<Button
+								display={{ base: "none", md: "inline-flex" }}
+								fontSize={"sm"}
+								fontWeight={600}
+								color={"white"}
+								bg={"pink.400"}
+								onClick={() => navigate("/signup")}
+								_hover={{
+									bg: "pink.300",
+								}}
+							>
+								Sign Up
+							</Button>
+						</>
+					)}
+
+					{currentUser?.token && <UserDropdown username={currentUser.user_nicename} />}
+
 					<Button onClick={toggleColorMode}>{colorMode === "light" ? <MoonIcon /> : <SunIcon />}</Button>
 				</Stack>
 			</Flex>

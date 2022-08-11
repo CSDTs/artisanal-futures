@@ -4,6 +4,7 @@ import "./App.css";
 import Footer from "./components/layout/Footer";
 import Navigation from "./components/layout/Navigation";
 import SignUpForm from "./features/SignUpForm";
+import SignInForm from "./features/SignInForm";
 import Contact from "./pages/Contact";
 import Homepage from "./pages/Homepage";
 import Products from "./pages/Products";
@@ -26,6 +27,7 @@ function App() {
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/signup" element={<SignUpForm />} />
+				<Route path="/signin" element={<SignInForm />} />
 				<Route path="/vendors/:name" element={<VendorProfile />} />
 				<Route path="/tools/shop-rate-calculator" element={<ShopRateCalculator />} />
 			</Routes>
