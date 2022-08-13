@@ -49,7 +49,7 @@ export default function CostPanel({ title, text, hint, fields, handleCost }) {
 	const refForm = useRef(null);
 
 	useEffect(() => {
-		handleCost(total);
+		if (handleCost) handleCost(total);
 	}, [total]);
 
 	function recalculateCostTotals() {
@@ -60,10 +60,10 @@ export default function CostPanel({ title, text, hint, fields, handleCost }) {
 			if (refForm) {
 				let product = 1;
 				for (let elem of refForm.current.elements) {
-					product = product * parseFloat(elem.value || 1);
+					product = product * parseFloat(elem.value);
 				}
 
-				total = product;
+				total = product || 0;
 			}
 		} else {
 			if (refForm) {

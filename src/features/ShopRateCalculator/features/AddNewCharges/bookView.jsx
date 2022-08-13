@@ -94,6 +94,12 @@ class BookView extends React.Component {
 	};
 
 	clickOnDelete(record) {
+		this.props.handleCost(
+			[...this.state.bookDetails.filter((r) => r !== record)].reduce((accum, current) => {
+				return accum + parseFloat(current.price || 0);
+			}, 0)
+		);
+
 		this.setState({
 			bookDetails: this.state.bookDetails.filter((r) => r !== record),
 		});
