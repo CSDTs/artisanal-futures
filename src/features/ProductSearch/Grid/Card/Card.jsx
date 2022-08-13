@@ -26,7 +26,7 @@ import {
 } from "@chakra-ui/react";
 
 import ProductDetails from "../ProductDetails/ProductDetails";
-
+import ProductCard from "../../../../components/ui/Card/ProductCard";
 const IMAGE =
 	"https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
 function capitalize(input) {
@@ -37,8 +37,13 @@ function capitalize(input) {
 		.join(" ");
 }
 export default function Card(props) {
-	let attributes = props.principles.replace(",", "|");
+	let attributes = props.principles.replace(",", "  ");
+	attributes = attributes.replace("d,", "d");
+	attributes = attributes.replace("e,", "e");
+	attributes = attributes.replace("y,", "y");
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	// console.log(attributes.replace("  ", " •"));
 	return (
 		<>
 			<Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
@@ -57,7 +62,12 @@ export default function Card(props) {
 					</ModalFooter> */}
 				</ModalContent>
 			</Modal>
-			<Center py={12}>
+
+			<section onClick={onOpen}>
+				<ProductCard {...props} />
+			</section>
+
+			{/* <Center py={12}>
 				<Box
 					role={"group"}
 					p={6}
@@ -67,7 +77,8 @@ export default function Card(props) {
 					boxShadow={"2xl"}
 					rounded={"lg"}
 					pos={"relative"}
-					zIndex={1}>
+					zIndex={1}
+				>
 					<Box
 						rounded={"lg"}
 						mt={-12}
@@ -89,7 +100,8 @@ export default function Card(props) {
 							_after: {
 								filter: "blur(20px)",
 							},
-						}}>
+						}}
+					>
 						<Image rounded={"lg"} height={230} width={282} objectFit={"cover"} src={props.image} onClick={onOpen} />
 					</Box>
 					<Stack pt={10} align={"center"}>
@@ -110,7 +122,8 @@ export default function Card(props) {
 											py={1}
 											bg={useColorModeValue("gray.50", "gray.800")}
 											fontWeight={"400"}
-											fontSize={"0.65rem"}>
+											fontSize={"0.65rem"}
+										>
 											{principle}
 										</Badge>
 									)}
@@ -121,7 +134,7 @@ export default function Card(props) {
 						<Heading fontSize={"xl"} fontFamily={"body"} fontWeight={300} color={"black"}></Heading>
 					</Stack>
 				</Box>
-			</Center>
+			</Center> */}
 		</>
 	);
 }

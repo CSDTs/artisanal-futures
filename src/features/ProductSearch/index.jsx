@@ -1,12 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-import { Container, Box, Text, Image, Link, Stack, Checkbox, Divider, Heading } from "@chakra-ui/react";
+import {
+	Container,
+	Box,
+	Text,
+	Image,
+	Link,
+	Stack,
+	Checkbox,
+	Divider,
+	Heading,
+	Drawer,
+	DrawerBody,
+	useColorModeValue,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerOverlay,
+	DrawerContent,
+	DrawerCloseButton,
+	useDisclosure,
+	Button,
+	Input,
+} from "@chakra-ui/react";
 
-import ProductGrid from "./components/Grid/Grid";
+import ProductGrid from "./Grid/Grid";
 import Filter from "./components/Filter/Filter";
+
+import ProductCard from "../../components/ui/Card/ProductCard";
+
+import { BsFilter } from "react-icons/bs";
 // import CategoryDrawer from "./components/CategoryDrawer/CategoryDrawer";
 // import CategoryFilters from "./components/CategoryFilters/CategoryFilters";
-
+import Layout from "./Grid/Layout";
 const FilterArtisan = (text, artisan) => {
 	artisan = artisan.toLowerCase();
 	text = text.toLowerCase();
@@ -21,7 +46,7 @@ const AdjustText = (text, key) => {
 	return key.includes(text);
 };
 
-function App() {
+export default function ProductSearch() {
 	const [products, setProducts] = useState([]);
 	const [attributes, setAttributes] = useState([]);
 	const [search, setSearch] = useState("");
@@ -82,6 +107,9 @@ function App() {
 		setFiltered(current);
 	}, [selectedAttribute, filteredTags, search]);
 
+	useEffect(() => {
+		console.log(filteredTags);
+	}, [filteredTags]);
 	// useEffect(() => {
 	// 	// console.log(search);
 	// 	let results = "";
@@ -144,92 +172,132 @@ function App() {
 		fetchAttributes();
 		// fetchSearch();
 	}, []);
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const btnRef = useRef();
+	const checkboxArtisans = useRef(null);
 
+	const initSelectedTags = () => {
+		onOpen();
+		let checkboxes = document.querySelectorAll("input[type='checkbox']");
+		console.log(checkboxes);
+	};
 	return (
-		<div className="App">
-			<header className="App-header">
-				{/* <p>Artisanal Futures</p> */}
-				{/* <CategoryDrawer attributes={attributes} /> */}
-				<Container></Container>
+		<Container maxW={"6xl"} mt={6}>
+			<Heading mb={6}>Products</Heading>
 
-				<Container maxW="container.xl">
-					<Box p={4} display={{ md: "flex" }}>
-						<Box flexShrink={0}>
-							<Stack spacing={1} direction="column">
-								<Heading as="h5" size="sm" align={"left"}>
-									Shop By Artisan
-								</Heading>
-								<Checkbox onChange={handleTagGroupChange} value="Dabls Mbad African Bead Museum">
-									Dabls' MBAD African Bead Museum
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="African Futurist Collective">
-									African Futurist Collective
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="Cactus Harmony">
-									Cactus Harmony
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="Visual Noise">
-									Visual Noise
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="Xclusive Virgin Hair">
-									Xclusive Virgin Hair
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="Akoma">
-									Akoma
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="Willow Run Acres">
-									Willow Run Acres
-								</Checkbox>
-								<Checkbox onChange={handleTagGroupChange} value="Olive Mode Boutique">
-									Olive Mode Boutique
-								</Checkbox>
-							</Stack>
-							<Divider marginTop={"1rem"} marginBottom={"1rem"} />
-							<Stack spacing={1} direction="column">
-								<Heading as="h5" size="sm" align={"left"}>
-									Shop By Store Attributes
-								</Heading>
-								{attributes &&
-									attributes.map((principle) => (
-										<Checkbox key={`${principle.name}-opt`} value={principle.name} onChange={handleTagGroupChange}>
-											{principle.name}
-										</Checkbox>
-									))}
-							</Stack>
-						</Box>
-						<Box mt={{ base: 4, md: 0 }} ml={{ md: 6 }} w="100%">
-							<Text fontWeight="bold" textTransform="uppercase" fontSize="sm" letterSpacing="wide" color="teal.600">
-								Artisanal Futures Products
-							</Text>
-							<Link
-								mt={1}
-								display="block"
-								fontSize="lg"
-								lineHeight="normal"
-								fontWeight="semibold"
-								href="#"
-								marginBottom={"2rem"}
+			{/* <Text fontWeight="bold" textTransform="uppercase" fontSize="sm" letterSpacing="wide" color="teal.600">
+				Artisanal Futures Products
+			</Text> */}
+			<Text mt={1} display="block" fontSize="lg" lineHeight="normal" fontWeight="semibold" marginBottom={"2rem"}>
+				Search through all our artisans' products and support small businesses
+			</Text>
+			<Filter
+				attributes={attributes}
+				products={products}
+				handleChange={handleAttributeChange}
+				handleSearch={handleSearchChange}
+				handleTags={handleTagGroupChange}
+			/>
+
+			<Button ref={btnRef} colorScheme="teal" onClick={initSelectedTags} mb={4}>
+				<BsFilter />
+				&nbsp;All Filters
+			</Button>
+			<Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef}>
+				<DrawerOverlay />
+				<DrawerContent>
+					<DrawerCloseButton />
+					<DrawerHeader>Filters</DrawerHeader>
+
+					<DrawerBody>
+						<Stack spacing={1} direction="column" ref={checkboxArtisans}>
+							<Heading as="h5" size="sm" align={"left"}>
+								Shop By Artisan
+							</Heading>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="Dabls Mbad African Bead Museum"
+								isChecked={filteredTags.includes("Dabls Mbad African Bead Museum")}
 							>
-								Search through all our artisans' products and support small businesses
-							</Link>
-							<Filter
-								attributes={attributes}
-								products={products}
-								handleChange={handleAttributeChange}
-								handleSearch={handleSearchChange}
-								handleTags={handleTagGroupChange}
-							/>
+								Dabls' MBAD African Bead Museum
+							</Checkbox>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="African Futurist Collective"
+								isChecked={filteredTags.includes("African Futurist Collective")}
+							>
+								African Futurist Collective
+							</Checkbox>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="Cactus Harmony"
+								isChecked={filteredTags.includes("Cactus Harmony")}
+							>
+								Cactus Harmony
+							</Checkbox>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="Visual Noise"
+								isChecked={filteredTags.includes("Visual Noise")}
+							>
+								Visual Noise
+							</Checkbox>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="Xclusive Virgin Hair"
+								isChecked={filteredTags.includes("Xclusive Virgin Hair")}
+							>
+								Xclusive Virgin Hair
+							</Checkbox>
+							<Checkbox onChange={handleTagGroupChange} value="Akoma" isChecked={filteredTags.includes("Akoma")}>
+								Akoma
+							</Checkbox>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="Willow Run Acres"
+								isChecked={filteredTags.includes("Willow Run Acres")}
+							>
+								Willow Run Acres
+							</Checkbox>
+							<Checkbox
+								onChange={handleTagGroupChange}
+								value="Olive Mode Boutique"
+								isChecked={filteredTags.includes("Olive Mode Boutique")}
+							>
+								Olive Mode Boutique
+							</Checkbox>
+						</Stack>
+						<Divider marginTop={"1rem"} marginBottom={"1rem"} />
+						<Stack spacing={1} direction="column">
+							<Heading as="h5" size="sm" align={"left"}>
+								Shop By Store Attributes
+							</Heading>
+							{attributes &&
+								attributes.map((principle) => (
+									<Checkbox
+										key={`${principle.name}-opt`}
+										value={principle.name}
+										onChange={handleTagGroupChange}
+										isChecked={filteredTags.includes(principle.name)}
+									>
+										{principle.name}
+									</Checkbox>
+								))}
+						</Stack>
+					</DrawerBody>
 
-							<ProductGrid products={filtered} />
-						</Box>
-					</Box>
-				</Container>
+					<DrawerFooter>
+						<Button variant="outline" mr={3} onClick={onClose} w={"50%"}>
+							Cancel
+						</Button>
+						<Button colorScheme="blue" w={"50%"} onClick={onClose}>
+							Apply
+						</Button>
+					</DrawerFooter>
+				</DrawerContent>
+			</Drawer>
 
-				{/* <ProductGrid products={search} /> */}
-			</header>
-			{/* <>{search}</> */}
-		</div>
+			<ProductGrid products={filtered} />
+		</Container>
 	);
 }
-
-export default App;
