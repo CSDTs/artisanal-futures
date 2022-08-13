@@ -9,7 +9,7 @@ const useLogInToWP = (payload) => {
 	};
 	useEffect(() => {
 		axios
-			.post("http://52.4.17.133/wp-json/jwt-auth/v1/token", payload, { headers })
+			.post("https://fourm.artisanalfutures.org/wp-json/jwt-auth/v1/token", payload, { headers })
 			.then((res) => res.json())
 			.then((data) => {
 				setError(data.error);

@@ -7,6 +7,7 @@ import {
 	Stack,
 	Collapse,
 	Icon,
+	Container,
 	Link,
 	Popover,
 	PopoverTrigger,
@@ -46,55 +47,56 @@ export default function Navigation() {
 				borderColor={useColorModeValue("gray.200", "gray.900")}
 				align={"center"}
 			>
-				<Flex flex={{ base: 1, md: "auto" }} ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
-					<IconButton
-						onClick={onToggle}
-						icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-						variant={"ghost"}
-						aria-label={"Toggle Navigation"}
-					/>
-				</Flex>
-				<Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-					<Text
-						textAlign={useBreakpointValue({ base: "center", md: "left" })}
-						fontFamily={"heading"}
-						color={useColorModeValue("gray.800", "white")}
-						onClick={() => navigate("/")}
-					>
-						Artisanal Futures
-					</Text>
-
-					<Flex display={{ base: "none", md: "flex" }} ml={10}>
-						<DesktopNav />
+				<Container maxW={"6xl"} flexDir={"row"} alignItems={"center"} display={"flex"}>
+					<Flex flex={{ base: 1, md: "auto" }} ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
+						<IconButton
+							onClick={onToggle}
+							icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+							variant={"ghost"}
+							aria-label={"Toggle Navigation"}
+						/>
 					</Flex>
-				</Flex>
+					<Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+						<Text
+							textAlign={useBreakpointValue({ base: "center", md: "left" })}
+							fontFamily={"heading"}
+							color={useColorModeValue("gray.800", "white")}
+							onClick={() => navigate("/")}
+						>
+							Artisanal Futures
+						</Text>
 
-				<Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-					{!currentUser?.token && (
-						<>
-							<Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} onClick={() => navigate("/signin")}>
-								Sign In
-							</Button>
-							<Button
-								display={{ base: "none", md: "inline-flex" }}
-								fontSize={"sm"}
-								fontWeight={600}
-								color={"white"}
-								bg={"pink.400"}
-								onClick={() => navigate("/signup")}
-								_hover={{
-									bg: "pink.300",
-								}}
-							>
-								Sign Up
-							</Button>
-						</>
-					)}
+						<Flex display={{ base: "none", md: "flex" }} ml={10}>
+							<DesktopNav />
+						</Flex>
+					</Flex>
+					<Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
+						{!currentUser?.token && (
+							<>
+								<Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} onClick={() => navigate("/signin")}>
+									Sign In
+								</Button>
+								<Button
+									display={{ base: "none", md: "inline-flex" }}
+									fontSize={"sm"}
+									fontWeight={600}
+									color={"white"}
+									bg={"pink.400"}
+									onClick={() => navigate("/signup")}
+									_hover={{
+										bg: "pink.300",
+									}}
+								>
+									Sign Up
+								</Button>
+							</>
+						)}
 
-					{currentUser?.token && <UserDropdown username={currentUser.user_nicename} />}
+						{currentUser?.token && <UserDropdown username={currentUser.user_nicename} />}
 
-					<Button onClick={toggleColorMode}>{colorMode === "light" ? <MoonIcon /> : <SunIcon />}</Button>
-				</Stack>
+						<Button onClick={toggleColorMode}>{colorMode === "light" ? <MoonIcon /> : <SunIcon />}</Button>
+					</Stack>{" "}
+				</Container>
 			</Flex>
 
 			<Collapse in={isOpen} animateOpacity>
@@ -118,7 +120,14 @@ const DesktopNav = () => {
 							<Link
 								p={2}
 								// href={navItem.href ?? "#"}
-								onClick={() => navigate(navItem.href ?? "#")}
+								onClick={() => {
+									if (navItem.href === "https://fourm.artisanalfutures.org/") {
+										window.location.href = "https://fourm.artisanalfutures.org/";
+										return;
+									}
+
+									navigate(navItem.href ?? "#");
+								}}
 								fontSize={"sm"}
 								fontWeight={500}
 								color={linkColor}
@@ -285,7 +294,7 @@ const NAV_ITEMS = [
 	},
 	{
 		label: "Share Knowledge",
-		href: "/share",
+		href: "https://fourm.artisanalfutures.org/",
 	},
 	{
 		label: "Tools",

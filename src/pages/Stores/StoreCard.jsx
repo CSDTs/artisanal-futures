@@ -1,25 +1,41 @@
-import { Box, Heading, Text, Image, Icon, Stack, Button } from "@chakra-ui/react";
-import { FaStoreAlt, FaFacebook } from "react-icons/fa";
+import { Box, Heading, Text, Image, Icon, Stack, Button, useColorModeValue } from "@chakra-ui/react";
+import { FaStoreAlt, FaFacebook, FaInstagram, FaUserAlt } from "react-icons/fa";
 import { LoremIpsum } from "react-lorem-ipsum";
 import { useNavigate } from "react-router-dom";
 
-export default function StoreCard({ name, thumbnail, socials, url }) {
+export default function StoreCard({ business_name, thumbnail_image, social_media, website, artisan }) {
 	const navigate = useNavigate();
 
-	const SocialIcon = (icon) => {
+	const SocialIcon = (social) => {
+		const [icon, url] = social;
+
+		let SocialIcon = "";
+
 		switch (icon) {
 			case "Store":
-				return <FaStoreAlt />;
-			case "Facebook":
-				return <FaFacebook />;
+				if (url) SocialIcon = <FaStoreAlt />;
+				break;
+			case "facebook":
+				if (url) SocialIcon = <FaFacebook />;
+				break;
+			case "instagram":
+				if (url) SocialIcon = <FaInstagram />;
+				break;
 			default:
-				return <FaStoreAlt />;
+				break;
 		}
+
+		if (SocialIcon)
+			return (
+				<Button size="sm" colorScheme="blue" onClick={() => window.open(url, "_blank").focus()}>
+					{SocialIcon}
+				</Button>
+			);
 	};
 	return (
 		<Box
 			boxShadow="xl"
-			bg="white"
+			bg={useColorModeValue("white", "gray.900")}
 			role={"group"}
 			p={6}
 			maxW={"330px"}
@@ -27,21 +43,32 @@ export default function StoreCard({ name, thumbnail, socials, url }) {
 			rounded={"lg"}
 			pos={"relative"}
 			zIndex={0}
-			onClick={() => navigate(`/vendors/${url}`)}
+			// onClick={() => navigate(`/vendors/${url}`)}
 		>
 			<Image
 				rounded={"lg"}
 				height={230}
 				width={282}
 				objectFit={"cover"}
-				src={thumbnail}
+				src={thumbnail_image}
 				cursor={"pointer"}
 				fallbackSrc="https://via.placeholder.com/360"
 			/>
-			<Heading fontSize="lg">{name}</Heading>
+			<Heading fontSize="md" mt={3} textAlign="center">
+				{business_name}
+			</Heading>
 
-			<Stack direction={"row"}>
-				{socials && socials.map((social) => <Button colorScheme="blue">{SocialIcon(social)}</Button>)}
+			<Stack direction={"row"} mt={3} justifyContent="center">
+				{artisan && (
+					<Button size="sm" colorScheme="blue" onClick={() => navigate(`/vendors/${artisan.post_name}`)}>
+						<FaUserAlt />
+					</Button>
+				)}
+
+				<Button size="sm" colorScheme="blue" onClick={() => window.open(website, "_blank").focus()}>
+					<FaStoreAlt />
+				</Button>
+				{social_media && Object.entries(social_media).map((social) => <>{SocialIcon(social)}</>)}
 			</Stack>
 		</Box>
 	);

@@ -2,9 +2,21 @@ import styles from "./AboutMe.module.scss";
 
 import { Text, Heading, Box, Container, Image } from "@chakra-ui/react";
 
-export default function AboutMe(props) {
-	const { artisan, gen_location, avatar, brief, address, phone, email, description } = props.profile;
-	const { name, store_url, thumbnail } = props;
+export default function AboutMe({ artisan, store }) {
+	const { name, profile_information, artisan_image } = artisan;
+	const {
+		business_name,
+		website,
+		general_location,
+		thumbnail_image,
+		cover_image,
+		miscellaneous_information,
+		business_email,
+		business_phone_number,
+		business_address,
+		business_brief_description,
+	} = store;
+
 	return (
 		<div className="col-xl-8 order-xl-1">
 			<div className="card bg-secondary shadow">
@@ -13,7 +25,7 @@ export default function AboutMe(props) {
 						<div className="form-group focused">
 							<div className={`${styles.avatar} single_advisor_profile wow fadeInUp`} data-wow-delay="0.2s">
 								<div className={styles.aboutMeHeading}>
-									<Image src={thumbnail} w={"100%"} alt="" objectFit={"cover"} h={"450px"} />
+									<Image src={cover_image} w={"100%"} alt="" objectFit={"cover"} h={"450px"} />
 								</div>
 
 								<div className={styles.aboutMeTextContainer}>
@@ -21,7 +33,7 @@ export default function AboutMe(props) {
 										About Me
 									</Heading>
 									<Text className={styles.aboutMeText} fontWeight={500}>
-										{description}
+										{profile_information}
 									</Text>
 								</div>
 							</div>

@@ -1,3 +1,3 @@
 export default function ShareKnowledge() {
-	return <h1>Share Knowledge</h1>;
+	return <iframe src="https://fourm.artisanalfutures.org/" width="100%" height="600px"></iframe>;
 }

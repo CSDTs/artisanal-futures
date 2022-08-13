@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const WP_API_URL = "http://52.4.17.133/wp-json/";
+const WP_API_URL = "https://fourm.artisanalfutures.org/wp-json/";
 const loginHeaders = {
 	"Content-Type": "application/json",
 };
