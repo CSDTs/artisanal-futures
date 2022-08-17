@@ -12,6 +12,7 @@ import {
 	Heading,
 	Drawer,
 	DrawerBody,
+	Flex,
 	useColorModeValue,
 	DrawerFooter,
 	DrawerHeader,
@@ -21,11 +22,17 @@ import {
 	useDisclosure,
 	Button,
 	Input,
+	FormControl,
+	FormLabel,
+	InputGroup,
+	InputLeftElement,
+	InputRightElement,
 } from "@chakra-ui/react";
 
 import ProductGrid from "./Grid/Grid";
 import Filter from "./components/Filter/Filter";
-
+import useSWR from "swr";
+import axios from "axios";
 import ProductCard from "../../components/ui/Card/ProductCard";
 
 import { BsFilter } from "react-icons/bs";
@@ -46,11 +53,33 @@ const AdjustText = (text, key) => {
 	return key.includes(text);
 };
 
+const createQuery = (keyword = "dress") => {
+	return {
+		query: {
+			content: keyword,
+		},
+		response_model: [
+			{
+				name: "",
+				description: "",
+				principles: "",
+				the_artisan: "",
+				url: "",
+				image: "",
+				craftID: "",
+				assessment: [],
+			},
+		],
+	};
+};
+
 export default function ProductSearch() {
 	const [products, setProducts] = useState([]);
+	const [apiProducts, setApiProducts] = useState();
 	const [attributes, setAttributes] = useState([]);
 	const [search, setSearch] = useState("");
 	const [filtered, setFiltered] = useState([]);
+	const [fetching, isFetching] = useState(false);
 	// const [selectedAttribute, setSelectedAttribute] = useState("");
 
 	// Each option has its own state for filtering
@@ -81,8 +110,8 @@ export default function ProductSearch() {
 	useEffect(() => {
 		//If user doesn't do anything, just return the set of apps as is.
 		console.log(filteredTags);
-		if (selectedAttribute === "All" && filteredTags == [] && search == "") {
-			setFiltered(products);
+		if (selectedAttribute === "All" && filteredTags.length == 0 && search == "") {
+			setFiltered(apiProducts ? apiProducts : products);
 			return;
 		}
 
@@ -105,22 +134,38 @@ export default function ProductSearch() {
 		});
 
 		setFiltered(current);
-	}, [selectedAttribute, filteredTags, search]);
+	}, [selectedAttribute, filteredTags, search, apiProducts]);
 
-	useEffect(() => {
-		console.log(filteredTags);
-	}, [filteredTags]);
-	// useEffect(() => {
-	// 	// console.log(search);
-	// 	let results = "";
-	// 	if (search != "") {
-	// 		fetchSearch(search).then((data) => console.log(FilterArtisan()));
-	// 	}
-	// }, [search]);
+	const fetchProductOrder = (keyword = "dress") => {
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(createQuery(keyword)),
+		};
+
+		isFetching(true);
+		console.log("Fetching data...please wait...");
+
+		// fetch("http://api.artisanalfutures.org/product-search-with-assessment", requestOptions)
+		// 	.then((response) => response.json())
+		// 	.then((res) => {
+		// 		setApiProducts(res.data);
+
+		// 		console.log("Finished fetching");
+		// 		console.log(res.data);
+		// 		isFetching(false);
+		// 	});
+
+		axios.post("https://api.artisanalfutures.org/product-search-with-assessment/", createQuery(keyword)).then((res) => {
+			setApiProducts(res.data);
+			console.log("Finished fetching");
+			isFetching(false);
+		});
+	};
 
 	const fetchProducts = async () => {
 		//TODO Replace with final endpoint
-		const res = await fetch("api/products.json");
+		const res = await fetch("api/ecodata.json");
 		const data = await res.json();
 		setProducts(data);
 		setFiltered(data);
@@ -131,37 +176,6 @@ export default function ProductSearch() {
 		const data = await res.json();
 		setAttributes(data);
 	};
-
-	// const fetchSearch = async (inputData) => {
-	// 	//TODO Replace with final endpoint
-
-	// 	const requestOptions = {
-	// 		method: "POST",
-	// 		headers: { "Content-Type": "application/json" },
-	// 		body: JSON.stringify({
-	// 			query: {
-	// 				content: inputData,
-	// 			},
-	// 			response_model: [
-	// 				{
-	// 					name: "string",
-	// 					description: "string",
-	// 					principles: "string",
-	// 					the_artisan: "string",
-	// 					url: "string",
-	// 					image:
-	// 						"https://cdn1.vectorstock.com/i/thumb-large/46/50/missing-picture-page-for-website-design-or-mobile-vector-27814650.jpg",
-	// 					craftID: "string",
-	// 				},
-	// 			],
-	// 		}),
-	// 	};
-	// 	const res = await fetch("http://127.0.0.1:8000/search/", requestOptions);
-	// 	const data = await res.json();
-
-	// 	return data;
-	// 	// setSearch(data);
-	// };
 
 	const fetchSearch = (inputData) => {
 		return FilterArtisan();
@@ -174,6 +188,7 @@ export default function ProductSearch() {
 	}, []);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef();
+	const keywordRef = useRef();
 	const checkboxArtisans = useRef(null);
 
 	const initSelectedTags = () => {
@@ -199,10 +214,6 @@ export default function ProductSearch() {
 				handleTags={handleTagGroupChange}
 			/>
 
-			<Button ref={btnRef} colorScheme="teal" onClick={initSelectedTags} mb={4}>
-				<BsFilter />
-				&nbsp;All Filters
-			</Button>
 			<Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef}>
 				<DrawerOverlay />
 				<DrawerContent>
@@ -296,6 +307,44 @@ export default function ProductSearch() {
 					</DrawerFooter>
 				</DrawerContent>
 			</Drawer>
+			<Flex direction={"row"} justifyContent={"space-between"}>
+				<Button ref={btnRef} colorScheme="teal" onClick={initSelectedTags} mb={4}>
+					<BsFilter />
+					&nbsp;All Filters
+				</Button>
+				<Stack direction={"row"}>
+					<InputGroup marginBottom={"1rem"}>
+						<InputLeftElement pointerEvents="none" children={<BsFilter color="gray.300" />} />
+						<Input
+							type="text"
+							placeholder="Sort products by keyword"
+							ref={keywordRef}
+
+							// backgroundColor="white"
+							// color={useColorModeValue("#fff", "gray.900")}
+						/>
+					</InputGroup>
+					<Button
+						// h="100%"
+						// size="lg"
+						isLoading={fetching}
+						px={8}
+						color={"#fff"}
+						backgroundColor={"#319795"}
+						_hover={{
+							background: "white",
+							color: "teal.500",
+							borderColor: "teal.500",
+							border: "1px",
+						}}
+						onClick={() => {
+							fetchProductOrder(keywordRef.current.value);
+						}}
+					>
+						Sort using ai
+					</Button>
+				</Stack>
+			</Flex>
 
 			<ProductGrid products={filtered} />
 		</Container>

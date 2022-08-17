@@ -1,8 +1,10 @@
 import { Heading, Box, useColorModeValue, Icon, chakra, Image, Button, Container } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import Features from "./Features";
 
 export default function Homepage() {
+	const navigate = useNavigate();
 	const bg = useColorModeValue("white", "gray.800");
 	return (
 		<>
@@ -134,7 +136,7 @@ export default function Homepage() {
 									fontWeight="extrabold"
 									// fontFamily="fantasy"
 								>
-									<Button colorScheme={"gray"}>Shop Our Stores</Button>
+									<Button colorScheme={"gray"}  onClick={()=> navigate('/stores')}>Shop Our Stores</Button>
 								</Box>
 							</Box>
 						</Box>

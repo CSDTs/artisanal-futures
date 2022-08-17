@@ -8,7 +8,7 @@ export default function ProductGrid({ products }) {
 			<SimpleGrid columns={[2, null, 3]} spacing="20px" padding="1rem">
 				{products &&
 					products.map((product) => (
-						<Box>
+						<Box key={product.name}>
 							<Card {...product} />
 						</Box>
 					))}

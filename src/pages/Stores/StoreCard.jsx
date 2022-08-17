@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Image, Icon, Stack, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Heading, Text, Image, Icon, Stack, Button, useColorModeValue, Flex, Spacer } from "@chakra-ui/react";
 import { FaStoreAlt, FaFacebook, FaInstagram, FaUserAlt } from "react-icons/fa";
 import { LoremIpsum } from "react-lorem-ipsum";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ export default function StoreCard({ business_name, thumbnail_image, social_media
 
 		if (SocialIcon)
 			return (
-				<Button size="sm" colorScheme="blue" onClick={() => window.open(url, "_blank").focus()}>
+				<Button size="sm" colorScheme="blue" onClick={() => window.open(url, "_blank").focus()} mx={2}>
 					{SocialIcon}
 				</Button>
 			);
@@ -38,11 +38,12 @@ export default function StoreCard({ business_name, thumbnail_image, social_media
 			bg={useColorModeValue("white", "gray.900")}
 			role={"group"}
 			p={6}
-			maxW={"330px"}
+			maxW={{ base: "100%" }}
 			w={"full"}
 			rounded={"lg"}
 			pos={"relative"}
 			zIndex={0}
+
 			// onClick={() => navigate(`/vendors/${url}`)}
 		>
 			<Image
@@ -50,6 +51,7 @@ export default function StoreCard({ business_name, thumbnail_image, social_media
 				height={230}
 				width={282}
 				objectFit={"cover"}
+				mx={"auto"}
 				src={thumbnail_image}
 				cursor={"pointer"}
 				fallbackSrc="https://via.placeholder.com/360"
@@ -58,18 +60,19 @@ export default function StoreCard({ business_name, thumbnail_image, social_media
 				{business_name}
 			</Heading>
 
-			<Stack direction={"row"} mt={3} justifyContent="center">
+			<Flex direction={"row"} mt={3} justifyContent="center">
 				{artisan && (
-					<Button size="sm" colorScheme="blue" onClick={() => navigate(`/vendors/${artisan.post_name}`)}>
+					<Button size="sm" colorScheme="blue" onClick={() => navigate(`/vendors/${artisan.post_name}`)} mx={2}>
 						<FaUserAlt />
 					</Button>
 				)}
 
-				<Button size="sm" colorScheme="blue" onClick={() => window.open(website, "_blank").focus()}>
+				<Button size="sm" colorScheme="blue" onClick={() => window.open(website, "_blank").focus()} mx={2}>
 					<FaStoreAlt />
 				</Button>
-				{social_media && Object.entries(social_media).map((social) => <>{SocialIcon(social)}</>)}
-			</Stack>
+
+				{social_media && Object.entries(social_media).map((social) => <span key={social}>{SocialIcon(social)}</span>)}
+			</Flex>
 		</Box>
 	);
 }

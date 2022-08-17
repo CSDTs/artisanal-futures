@@ -77,7 +77,7 @@ export default function ProductCard(props) {
 						</Box>
 					</Box>
 
-					<Box display="flex" mt="2" alignItems="center">
+					{/* <Box display="flex" mt="2" alignItems="center">
 						{Array(5)
 							.fill("")
 							.map((_, i) => (
@@ -86,7 +86,7 @@ export default function ProductCard(props) {
 						<Box as="span" ml="2" color="gray.600" fontSize="sm">
 							{property.reviewCount} reviews
 						</Box>
-					</Box>
+					</Box> */}
 				</Box>
 			</Box>
 		</Flex>

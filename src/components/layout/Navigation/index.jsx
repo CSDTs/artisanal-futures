@@ -16,6 +16,7 @@ import {
 	useBreakpointValue,
 	useDisclosure,
 	useColorMode,
+	Image,
 } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
@@ -57,14 +58,15 @@ export default function Navigation() {
 						/>
 					</Flex>
 					<Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-						<Text
+						{/* <Text
 							textAlign={useBreakpointValue({ base: "center", md: "left" })}
 							fontFamily={"heading"}
 							color={useColorModeValue("gray.800", "white")}
 							onClick={() => navigate("/")}
 						>
 							Artisanal Futures
-						</Text>
+						</Text> */}
+						<Image src={"/img/logo.png"} h={5} onClick={() => navigate("/")} />
 
 						<Flex display={{ base: "none", md: "flex" }} ml={10}>
 							<DesktopNav />
@@ -94,7 +96,9 @@ export default function Navigation() {
 
 						{currentUser?.token && <UserDropdown username={currentUser.user_nicename} />}
 
-						<Button onClick={toggleColorMode}>{colorMode === "light" ? <MoonIcon /> : <SunIcon />}</Button>
+						<Button onClick={toggleColorMode} hidden>
+							{colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+						</Button>
 					</Stack>{" "}
 				</Container>
 			</Flex>

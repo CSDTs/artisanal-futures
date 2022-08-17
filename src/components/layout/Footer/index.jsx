@@ -1,5 +1,5 @@
-import { Box, Container, Flex, Link, SimpleGrid, Stack, Tag, Text, useColorModeValue } from "@chakra-ui/react";
-
+import { Box, Container, Flex, Link, SimpleGrid, Stack, Tag, Text, useColorModeValue, Image } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 const Logo = (props) => {
 	return (
 		<svg height={32} viewBox="0 0 120 28" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -15,6 +15,122 @@ const Logo = (props) => {
 	);
 };
 
+const LogoAlt = (props) => {
+	return (
+		<svg
+			version="1.0"
+			xmlns="http://www.w3.org/2000/svg"
+			height={32}
+			viewBox="0 0 120 28"
+			preserveAspectRatio="xMidYMid meet"
+			{...props}
+		>
+			<g transform="translate(0.000000,70.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+				<path
+					d="M177 521 c-121 -122 -147 -154 -147 -177 0 -24 27 -56 153 -182 l153
+-153 24 26 24 26 -132 132 c-73 73 -132 137 -132 142 0 6 58 69 130 140 72 71
+130 135 130 141 0 10 -41 54 -51 54 -3 0 -71 -67 -152 -149z"
+				/>
+				<path
+					d="M1651 541 c-15 -27 9 -56 37 -47 39 13 24 66 -18 66 -5 0 -14 -8 -19
+-19z"
+				/>
+				<path d="M2930 355 l0 -205 25 0 25 0 0 205 0 205 -25 0 -25 0 0 -205z" />
+				<path
+					d="M940 524 c-6 -14 -40 -99 -76 -187 -37 -89 -69 -168 -72 -175 -3 -10
+3 -13 23 -10 23 2 31 11 48 56 l20 52 93 0 94 0 15 -37 c23 -59 30 -68 57 -71
+25 -3 24 0 -56 197 -78 193 -82 201 -109 201 -20 0 -30 -7 -37 -26z m80 -132
+c18 -45 30 -85 27 -88 -2 -3 -36 -4 -75 -2 l-70 3 37 92 c20 51 39 89 42 85 3
+-4 21 -44 39 -90z"
+				/>
+				<path
+					d="M3190 350 l0 -200 25 0 c25 0 25 1 25 90 l0 90 85 0 c78 0 85 2 85
+20 0 18 -7 20 -85 20 l-85 0 0 70 0 70 100 0 c93 0 100 1 100 20 0 19 -7 20
+-125 20 l-125 0 0 -200z"
+				/>
+				<path
+					d="M490 505 l-24 -26 69 -69 69 -70 -67 -68 -67 -68 28 -27 28 -27 82
+84 c53 54 82 91 82 106 0 15 -29 52 -82 106 -45 46 -84 84 -88 84 -4 0 -17
+-11 -30 -25z"
+				/>
+				<path
+					d="M1466 508 c-3 -13 -6 -33 -6 -44 0 -15 -8 -24 -25 -28 -14 -4 -25
+-13 -25 -21 0 -9 10 -15 25 -15 l25 0 0 -110 c0 -107 1 -110 26 -126 20 -14
+33 -15 62 -8 49 12 51 40 3 36 -20 -2 -37 2 -42 10 -5 7 -9 55 -9 106 l0 92
+40 0 c33 0 40 3 40 20 0 17 -7 20 -40 20 l-40 0 0 45 c0 49 -23 64 -34 23z"
+				/>
+				<path
+					d="M3826 508 c-3 -13 -6 -33 -6 -44 0 -15 -8 -24 -25 -28 -14 -4 -25
+-13 -25 -21 0 -9 10 -15 25 -15 l25 0 0 -110 c0 -107 1 -110 26 -126 20 -14
+33 -15 62 -8 49 12 51 40 3 36 -20 -2 -37 2 -42 10 -5 7 -9 55 -9 106 l0 92
+40 0 c33 0 40 3 40 20 0 17 -7 20 -40 20 l-40 0 0 45 c0 49 -23 64 -34 23z"
+				/>
+				<path
+					d="M1210 295 c0 -138 1 -145 20 -145 19 0 20 7 20 89 0 81 2 92 25 120
+19 21 36 31 63 33 29 2 37 7 37 23 0 34 -47 31 -89 -5 l-36 -32 0 31 c0 24 -4
+31 -20 31 -19 0 -20 -7 -20 -145z"
+				/>
+				<path d="M1650 295 l0 -145 25 0 25 0 0 145 0 145 -25 0 -25 0 0 -145z" />
+				<path
+					d="M1818 425 c-30 -17 -44 -52 -34 -88 4 -16 20 -30 48 -41 101 -41 115
+-57 82 -91 -12 -12 -27 -15 -53 -11 -74 11 -84 11 -88 0 -2 -6 13 -19 33 -29
+75 -35 164 5 164 74 0 34 -21 54 -75 72 -41 13 -75 36 -75 50 0 32 70 50 110
+29 25 -13 38 7 17 27 -22 22 -96 27 -129 8z"
+				/>
+				<path
+					d="M2084 426 c-38 -17 -50 -34 -36 -48 8 -8 18 -6 36 6 54 35 116 12
+116 -43 0 -27 -3 -29 -52 -35 -113 -15 -160 -75 -103 -131 30 -30 67 -32 120
+-5 22 11 41 20 42 20 2 0 3 -9 3 -20 0 -13 7 -20 20 -20 19 0 20 7 20 101 0
+70 -5 111 -15 134 -26 53 -86 69 -151 41z m116 -175 c0 -36 -31 -61 -75 -61
+-61 0 -76 52 -22 75 17 8 47 14 65 15 29 0 32 -3 32 -29z"
+				/>
+				<path
+					d="M2330 295 c0 -138 1 -145 20 -145 19 0 20 7 20 104 0 102 1 105 27
+126 18 14 38 20 62 18 50 -4 61 -31 61 -150 0 -91 1 -98 20 -98 19 0 20 7 20
+116 0 115 0 116 -30 146 -27 27 -36 30 -71 25 -22 -3 -48 -12 -58 -21 -23 -21
+-28 -20 -34 4 -3 11 -12 20 -21 20 -14 0 -16 -19 -16 -145z"
+				/>
+				<path
+					d="M2685 425 c-41 -22 -46 -28 -36 -44 7 -11 14 -10 39 3 37 19 83 21
+100 4 7 -7 12 -26 12 -44 0 -30 -2 -32 -45 -37 -71 -10 -113 -32 -121 -63 -18
+-73 50 -116 124 -79 20 11 40 21 43 23 4 1 9 -6 12 -18 3 -11 13 -20 22 -20
+15 0 16 13 13 120 -3 106 -5 122 -24 141 -29 28 -99 35 -139 14z m115 -174 c0
+-36 -31 -61 -76 -61 -37 0 -58 21 -49 49 7 22 45 39 93 40 29 1 32 -2 32 -28z"
+				/>
+				<path
+					d="M3480 324 c0 -115 0 -116 30 -146 27 -27 36 -30 71 -25 22 3 48 12
+58 21 23 21 28 20 34 -4 3 -11 12 -20 21 -20 14 0 16 19 16 145 0 138 -1 145
+-20 145 -19 0 -20 -7 -20 -104 0 -102 -1 -105 -27 -126 -18 -14 -38 -20 -62
+-18 -50 4 -61 31 -61 151 0 90 -1 97 -20 97 -19 0 -20 -7 -20 -116z"
+				/>
+				<path
+					d="M4000 333 c0 -89 3 -114 20 -140 26 -43 77 -53 129 -27 20 10 39 20
+44 22 4 2 7 -6 7 -17 0 -14 6 -21 20 -21 19 0 20 7 20 145 l0 145 -25 0 -25 0
+0 -109 c0 -105 -1 -109 -25 -125 -32 -21 -78 -20 -98 2 -14 15 -17 40 -17 125
+l0 107 -25 0 -25 0 0 -107z"
+				/>
+				<path
+					d="M4320 295 l0 -145 25 0 c25 0 25 0 25 95 0 88 2 98 25 120 16 17 35
+25 60 25 31 0 35 3 35 25 0 37 -52 35 -90 -4 l-29 -28 -6 28 c-5 20 -13 29
+-26 29 -18 0 -19 -9 -19 -145z"
+				/>
+				<path
+					d="M4601 422 c-67 -34 -89 -119 -51 -198 27 -55 74 -79 138 -70 60 8 98
+32 82 51 -10 12 -16 12 -41 0 -48 -25 -94 -19 -123 16 -14 17 -26 41 -26 55 0
+24 1 24 100 24 l100 0 0 33 c0 84 -96 132 -179 89z m119 -42 c40 -40 27 -50
+-60 -50 -87 0 -95 6 -55 45 31 32 86 34 115 5z"
+				/>
+				<path
+					d="M4880 427 c-13 -7 -31 -25 -40 -40 -24 -43 0 -75 78 -105 51 -20 62
+-28 62 -47 0 -44 -25 -50 -125 -33 -38 6 -21 -27 22 -41 58 -21 118 -3 139 42
+25 52 8 80 -68 109 -65 25 -81 45 -57 74 13 16 65 16 100 0 11 -5 19 -2 22 8
+14 35 -82 59 -133 33z"
+				/>
+			</g>
+		</svg>
+	);
+};
+
 const ListHeader = ({ children }) => {
 	return (
 		<Text fontWeight={"500"} fontSize={"lg"} mb={2}>
@@ -24,46 +140,34 @@ const ListHeader = ({ children }) => {
 };
 
 export default function Footer() {
+	const navigate = useNavigate();
 	return (
 		<Box bg={useColorModeValue("gray.50", "gray.900")} color={useColorModeValue("gray.700", "gray.200")} mt={"4rem"}>
 			<Container as={Stack} maxW={"6xl"} py={10}>
 				<SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
 					<Stack align={"flex-start"}>
-						<ListHeader>Product</ListHeader>
-						<Link href={"#"}>Overview</Link>
-						<Stack direction={"row"} align={"center"} spacing={2}>
-							<Link href={"#"}>Features</Link>
-							<Tag size={"sm"} bg={useColorModeValue("green.300", "green.800")} ml={2} color={"white"}>
-								New
-							</Tag>
-						</Stack>
-						<Link href={"#"}>Tutorials</Link>
-						<Link href={"#"}>Pricing</Link>
-						<Link href={"#"}>Releases</Link>
+						<ListHeader>Products</ListHeader>
+						<Link onClick={() => navigate("/products")}>All</Link>
+						<Link onClick={() => navigate("/stores")}>Stores</Link>
+						<Link onClick={() => navigate("/tools")}>Tools</Link>
 					</Stack>
 					<Stack align={"flex-start"}>
-						<ListHeader>Company</ListHeader>
+						<ListHeader>The Collective</ListHeader>
 						<Link href={"#"}>About Us</Link>
-						<Link href={"#"}>Press</Link>
-						<Link href={"#"}>Careers</Link>
-						<Link href={"#"}>Contact Us</Link>
-						<Link href={"#"}>Partners</Link>
+						<Link onClick={() => navigate("/signup")}>Become an Artisan</Link>
+						<Link onClick={() => navigate("/contact")}>Contact Us</Link>
 					</Stack>
 					<Stack align={"flex-start"}>
 						<ListHeader>Legal</ListHeader>
-						<Link href={"#"}>Cookies Policy</Link>
-						<Link href={"#"}>Privacy Policy</Link>
-						<Link href={"#"}>Terms of Service</Link>
-						<Link href={"#"}>Law Enforcement</Link>
-						<Link href={"#"}>Status</Link>
+						<Link onClick={() => navigate("/agreement")}>The Artisanal Futures Collective Agreement</Link>
+						<Link onClick={() => navigate("/privacy")}>Privacy Policy</Link>
+						<Link onClick={() => navigate("/tos")}>Terms of Service</Link>
 					</Stack>
 					<Stack align={"flex-start"}>
 						<ListHeader>Follow Us</ListHeader>
 						<Link href={"#"}>Facebook</Link>
 						<Link href={"#"}>Twitter</Link>
-						<Link href={"#"}>Dribbble</Link>
 						<Link href={"#"}>Instagram</Link>
-						<Link href={"#"}>LinkedIn</Link>
 					</Stack>
 				</SimpleGrid>
 			</Container>
@@ -85,7 +189,8 @@ export default function Footer() {
 						ml: 8,
 					}}
 				>
-					<Logo />
+					{/* <LogoAlt /> */}
+					<Image src={"/img/logo.png"} h={7} />
 				</Flex>
 				<Text pt={6} fontSize={"sm"} textAlign={"center"}>
 					© 2022 Artisanal Futures. All rights reserved

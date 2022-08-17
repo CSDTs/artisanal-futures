@@ -15,6 +15,9 @@ import VendorProfile from "./pages/VendorProfile";
 import ShopRateCalculator from "./features/ShopRateCalculator";
 import ProductSearch from "./features/ProductSearch";
 
+import TermsOfService from "./pages/TOS";
+import Agreement from "./pages/Agreement";
+import Privacy from "./pages/Privacy";
 function App() {
 	return (
 		<div className="App">
@@ -30,6 +33,10 @@ function App() {
 				<Route path="/signin" element={<SignInForm />} />
 				<Route path="/vendors/:name" element={<VendorProfile />} />
 				<Route path="/tools/shop-rate-calculator" element={<ShopRateCalculator />} />
+
+				<Route path="/tos" element={<TermsOfService />} />
+				<Route path="/agreement" element={<Agreement />} />
+				<Route path="/privacy" element={<Privacy />} />
 			</Routes>
 			<Footer />
 		</div>
