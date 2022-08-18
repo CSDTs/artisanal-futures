@@ -21,14 +21,14 @@ import { FaFacebook, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 
 export default function SideInformation({ artisan, store }) {
 	// const { artisan, gen_location, avatar, brief, address, phone, email, description } = props.profile;
-	const { name, profile_information, artisan_image } = artisan;
+	const { name, profile_information, artisan_image, misc_information } = artisan;
 	const {
 		business_name,
 		website,
 		general_location,
 		thumbnail_image,
 		cover_image,
-		miscellaneous_information,
+		// miscellaneous_information,
 		business_email,
 		business_phone_number,
 		business_address,
@@ -106,7 +106,7 @@ export default function SideInformation({ artisan, store }) {
 				</Stack>
 				<Stack direction={"column"} pt={"3rem"}>
 					<Heading fontSize={"md"}>Store Highlights</Heading>
-					<Text>{miscellaneous_information}</Text>
+					<Text>{misc_information}</Text>
 				</Stack>
 
 				<Stack direction={"column"} pt={"3rem"}>

@@ -35,6 +35,10 @@ import {
 import { useEffect, useState, useId } from "react";
 export default function ImageUpload({ selectedFile, heading, fileType, setSelectedFile, updateOverride }) {
 	const [preview, setPreview] = useState();
+
+	useEffect(() => {
+		setSelectedFile("preview", preview);
+	}, [preview]);
 	const id = useId();
 	// create a preview as a side effect, whenever selected file is changed
 	useEffect(() => {

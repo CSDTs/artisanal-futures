@@ -5,12 +5,15 @@ const loginHeaders = {
 	"Content-Type": "application/json",
 };
 
-const authHeaders = {
-	"Content-Type": "application/json",
+// const authHeaders = {
+// 	"Content-Type": "application/json",
 
-	Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
-};
+// 	Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+// };
 
+// const validateHeaders = {
+// 	Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+// };
 const login = (payload) => {
 	return axios
 		.post(WP_API_URL + "jwt-auth/v1/token", payload, {
@@ -24,6 +27,28 @@ const login = (payload) => {
 			return response.data;
 		});
 };
+
+const verifyToken = () => {
+	return axios
+		.post(
+			WP_API_URL + "jwt-auth/v1/token/validate",
+			{},
+
+			{
+				headers: {
+					Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+				},
+			}
+		)
+		.then((response) => {
+			console.log(response);
+			if (response.status == 200) {
+				return getUserInformation();
+			}
+			return response.data;
+		});
+};
+
 const logout = () => {
 	localStorage.removeItem("user");
 	localStorage.removeItem("user_id");
@@ -34,6 +59,7 @@ const getCurrentUser = () => {
 };
 
 const getUserInformation = () => {
+	if (!JSON.parse(localStorage.getItem("user"))) throw new Error("User not logged in");
 	let payload = {
 		headers: {
 			"Content-Type": "application/json",
@@ -43,16 +69,21 @@ const getUserInformation = () => {
 	};
 
 	return axios.get(WP_API_URL + "wp/v2/users", payload).then((response) => {
+		console.log(response);
 		localStorage.setItem("user_id", response.data[0].id);
 		return response.data;
 	});
 };
 
 const updateUserInformation = (payload) => {
+	if (!JSON.parse(localStorage.getItem("user"))) throw new Error("User not logged in");
 	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
 	return axios
 		.post(WP_API_URL + "wp/v2/users/" + JSON.parse(localStorage.getItem("user_id")), temp, {
-			headers: authHeaders,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+			},
 		})
 		.then((response) => {
 			console.log(response);
@@ -62,10 +93,15 @@ const updateUserInformation = (payload) => {
 };
 
 const updateArtisanInformation = (id, payload) => {
+	if (!JSON.parse(localStorage.getItem("user"))) throw new Error("User not logged in");
 	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
 	return axios
 		.post(WP_API_URL + "wp/v2/artisans/" + id, temp, {
-			headers: authHeaders,
+			headers: {
+				"Content-Type": "application/json",
+
+				Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+			},
 		})
 		.then((response) => {
 			console.log(response);
@@ -81,6 +117,7 @@ const AuthService = {
 	updateUserInformation,
 	getUserInformation,
 	updateArtisanInformation,
+	verifyToken,
 };
 
 export default AuthService;

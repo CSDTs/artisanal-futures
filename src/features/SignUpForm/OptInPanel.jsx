@@ -25,6 +25,11 @@ import { BsCircleFill } from "react-icons/bs";
 import { MdModeEdit } from "react-icons/md";
 export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, setCheckboxes, textColor }) {
 	const iconColor = useColorModeValue("gray.300", "gray.700");
+	let formTypes = optInPayload.formType;
+
+	useEffect(() => {
+		setOptInPayload({ ...optInPayload, ...{ formType: checkboxes } });
+	}, [checkboxes]);
 
 	return (
 		<>
@@ -49,21 +54,22 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							transition=".5s all ease"
 							border="1px solid lightgray"
 							align="center"
-							bg={checkboxes.design ? "teal.300" : "#fff"}
+							bg={checkboxes.unmonitored ? "teal.300" : "#fff"}
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
+								isChecked={optInPayload.formType.unmonitored}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
 											...prevCheckboxes,
-											design: !prevCheckboxes.design,
+											unmonitored: !prevCheckboxes.unmonitored,
 										};
 									})
 								}
 								display="none"
 							/>
-							<Icon as={AiFillSetting} w="54px" h="54px" color={checkboxes.design ? "#fff" : iconColor} />
+							<Icon as={AiFillSetting} w="54px" h="54px" color={checkboxes.unmonitored ? "#fff" : iconColor} />
 						</Flex>
 					</FormLabel>
 					<Text color={textColor} fontWeight="bold" fontSize="md">
@@ -80,21 +86,22 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							transition=".5s all ease"
 							border="1px solid lightgray"
 							align="center"
-							bg={checkboxes.code ? "teal.300" : "#fff"}
+							bg={checkboxes.monitored ? "teal.300" : "#fff"}
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
+								isChecked={optInPayload.formType.monitored}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
 											...prevCheckboxes,
-											code: !prevCheckboxes.code,
+											monitored: !prevCheckboxes.monitored,
 										};
 									})
 								}
 								display="none"
 							/>
-							<Icon as={FaCube} w="54px" h="54px" color={checkboxes.code ? "#fff" : iconColor} />
+							<Icon as={FaCube} w="54px" h="54px" color={checkboxes.monitored ? "#fff" : iconColor} />
 						</Flex>
 					</FormLabel>
 					<Text color={textColor} fontWeight="bold" fontSize="md">
@@ -111,21 +118,22 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							transition=".5s all ease"
 							border="1px solid lightgray"
 							align="center"
-							bg={checkboxes.develop ? "teal.300" : "#fff"}
+							bg={checkboxes.private ? "teal.300" : "#fff"}
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
+								isChecked={optInPayload.formType.private}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
 											...prevCheckboxes,
-											develop: !prevCheckboxes.develop,
+											private: !prevCheckboxes.private,
 										};
 									})
 								}
 								display="none"
 							/>
-							<Icon w="54px" h="54px" color={checkboxes.develop ? "#fff" : iconColor} />
+							<Icon w="54px" h="54px" color={checkboxes.private ? "#fff" : iconColor} />
 						</Flex>
 					</FormLabel>
 					<Text color={textColor} fontWeight="bold" fontSize="md">
@@ -142,21 +150,22 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							transition=".5s all ease"
 							border="1px solid lightgray"
 							align="center"
-							bg={checkboxes.other ? "teal.300" : "#fff"}
+							bg={checkboxes.invisible ? "teal.300" : "#fff"}
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
+								isChecked={optInPayload.formType.invisible}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
 											...prevCheckboxes,
-											other: !prevCheckboxes.other,
+											invisible: !prevCheckboxes.invisible,
 										};
 									})
 								}
 								display="none"
 							/>
-							<Icon w="54px" h="54px" color={checkboxes.other ? "#fff" : iconColor} />
+							<Icon w="54px" h="54px" color={checkboxes.invisible ? "#fff" : iconColor} />
 						</Flex>
 					</FormLabel>
 					<Text color={textColor} fontWeight="bold" fontSize="md">
@@ -177,7 +186,11 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 				<FormLabel htmlFor="email-alerts" mb="0">
 					I agree to be a part of our supply chain conversations service
 				</FormLabel>
-				<Switch id="email-alerts" />
+				<Switch
+					id="email-alerts"
+					onChange={(e) => setOptInPayload({ ...optInPayload, ...{ supplyChain: e.target.checked } })}
+					isChecked={optInPayload.supplyChain}
+				/>
 			</FormControl>
 		</>
 	);

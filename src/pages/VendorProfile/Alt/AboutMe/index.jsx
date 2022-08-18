@@ -3,13 +3,13 @@ import styles from "./AboutMe.module.scss";
 import { Text, Heading, Box, Container, Image } from "@chakra-ui/react";
 
 export default function AboutMe({ artisan, store }) {
-	const { name, profile_information, artisan_image } = artisan;
+	const { name, profile_information, cover_image, misc_information } = artisan;
 	const {
 		business_name,
 		website,
 		general_location,
 		thumbnail_image,
-		cover_image,
+
 		miscellaneous_information,
 		business_email,
 		business_phone_number,
@@ -17,6 +17,7 @@ export default function AboutMe({ artisan, store }) {
 		business_brief_description,
 	} = store;
 
+	console.log(store);
 	return (
 		<div className="col-xl-8 order-xl-1">
 			<div className="card bg-secondary shadow">

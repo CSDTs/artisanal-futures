@@ -1,27 +1,6 @@
 import axios from "axios";
 
 const WP_API_URL = "https://fourm.artisanalfutures.org/wp-json/wp/v2";
-const loginHeaders = {
-	"Content-Type": "application/json",
-};
-
-// const fetchHeaders = {
-// 	"Content-Type": "application/json",
-// 	Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
-// };
-
-const getShop = (id) => {
-	return axios
-		.get(WP_API_URL + "/stores/" + id, {
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
-			},
-		})
-		.then((response) => {
-			return response.data;
-		});
-};
 
 const getProfile = (id) => {
 	return axios
@@ -32,15 +11,15 @@ const getProfile = (id) => {
 			},
 		})
 		.then((response) => {
-			return response.data.acf;
+			return response.data;
 		});
 };
-const updateShop = (id, payload) => {
+const updateProfile = (payload, id) => {
+	console.log(payload);
 	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-
 	return axios
 		.post(
-			WP_API_URL + "/stores/" + id,
+			WP_API_URL + "/artisans/" + id,
 			{ fields: temp },
 			{
 				headers: {
@@ -50,14 +29,14 @@ const updateShop = (id, payload) => {
 			}
 		)
 		.then((response) => {
+			console.log(response);
 			return response.data;
 		});
 };
-
-const publishShop = (id) => {
+const publishProfile = (id) => {
 	return axios
 		.post(
-			WP_API_URL + "/stores/" + id,
+			WP_API_URL + "/artisans/" + id,
 			{ status: "publish" },
 			{
 				headers: {
@@ -71,12 +50,10 @@ const publishShop = (id) => {
 		});
 };
 
-const ShopService = {
-	getShop,
+const ProfileService = {
 	getProfile,
-	updateShop,
-	publishShop,
-	// getPropFromProfile,
+	updateProfile,
+	publishProfile,
 };
 
-export default ShopService;
+export default ProfileService;

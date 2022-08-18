@@ -19,29 +19,6 @@ import ImageUpload from "../../components/ImageUpload";
 import { FaUserAlt } from "react-icons/fa";
 export default function ProfilePanel({ profilePayload, setProfilePayload, textColor }) {
 	useEffect(() => {
-		if (!profilePayload.selectedFile) {
-			setProfileValue("preview", null);
-			return;
-		}
-
-		const objectUrl = URL.createObjectURL(profilePayload.selectedFile);
-
-		setProfileValue("preview", objectUrl);
-
-		// free memory when ever this component is unmounted
-		return () => URL.revokeObjectURL(objectUrl);
-	}, [profilePayload.selectedFile]);
-
-	const onSelectFile = (e) => {
-		if (!e.target.files || e.target.files.length === 0) {
-			setProfileValue("selectedFile", null);
-			return;
-		}
-
-		setProfileValue("selectedFile", e.target.files[0]);
-	};
-
-	useEffect(() => {
 		console.log(profilePayload);
 	}, [profilePayload]);
 
@@ -60,26 +37,42 @@ export default function ProfilePanel({ profilePayload, setProfilePayload, textCo
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 					About Me
 				</FormLabel>
-				<Textarea borderRadius="15px" placeholder="eg. Artisanal Futures" fontSize="xs" />
+				<Textarea
+					borderRadius="15px"
+					placeholder="eg. Artisanal Futures"
+					fontSize="xs"
+					value={profilePayload.profile_information}
+				/>
 			</FormControl>
 			<FormControl onChange={(e) => setProfileValue("business_information", e.target.value)}>
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 					Business Information
 				</FormLabel>
-				<Textarea borderRadius="15px" placeholder="eg. Detroit, MI" fontSize="xs" />
+				<Textarea
+					borderRadius="15px"
+					placeholder="eg. Detroit, MI"
+					fontSize="xs"
+					value={profilePayload.business_information}
+				/>
 			</FormControl>
 			<FormControl onChange={(e) => setProfileValue("misc_information", e.target.value)}>
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 					Any other information you wish to let people know?
 				</FormLabel>
-				<Textarea borderRadius="15px" placeholder="eg. https://www.google.com" fontSize="xs" />
+				<Textarea
+					borderRadius="15px"
+					placeholder="eg. https://www.google.com"
+					fontSize="xs"
+					value={profilePayload.misc_information}
+				/>
 			</FormControl>
 
 			<ImageUpload
-				setSelectedFile={setProfileValue}
-				fileType={"cover_image"}
 				heading={"Cover Photo"}
-				selectedFile={profilePayload.cover_image}
+				selectedFile={profilePayload.selectedFile}
+				fileType={"selectedFile"}
+				setSelectedFile={setProfileValue}
+				updateOverride={profilePayload.cover_image}
 			/>
 		</Stack>
 	);

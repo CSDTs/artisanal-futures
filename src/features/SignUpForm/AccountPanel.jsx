@@ -19,7 +19,7 @@ import { FaUserAlt } from "react-icons/fa";
 import AvatarUpload from "../../components/AvatarUpload";
 import AuthService from "../../services/auth.service";
 
-export default function AccountPanel({ accountPayload, setAccountPayload, textColor }) {
+export default function AccountPanel({ accountPayload, setAccountPayload, miscPayload, setMiscPayload, textColor }) {
 	const setAccountValue = (key, value) => {
 		setAccountPayload((data) => {
 			return {
@@ -28,10 +28,21 @@ export default function AccountPanel({ accountPayload, setAccountPayload, textCo
 			};
 		});
 	};
+	const setMiscValue = (key, value) => {
+		setMiscPayload((data) => {
+			return {
+				...data,
+				[key]: value,
+			};
+		});
+	};
+	// useEffect(() => {
+	// 	console.log(accountPayload);
+	// }, [accountPayload]);
 
-	useEffect(() => {
-		console.log(accountPayload);
-	}, [accountPayload]);
+	// useEffect(() => {
+	// 	console.log("Misc is " + JSON.stringify(miscPayload));
+	// }, [miscPayload]);
 
 	return (
 		<Flex direction={{ sm: "column", md: "row" }} w="100%" mb="24px">
@@ -59,13 +70,13 @@ export default function AccountPanel({ accountPayload, setAccountPayload, textCo
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 						First Name
 					</FormLabel>
-					<Input borderRadius="15px" placeholder="eg. Taylor " fontSize="xs" />
+					<Input borderRadius="15px" placeholder="eg. Taylor " fontSize="xs" value={accountPayload.first_name} />
 				</FormControl>
 				<FormControl onChange={(e) => setAccountValue("last_name", e.target.value)}>
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 						Last Name
 					</FormLabel>
-					<Input borderRadius="15px" placeholder="eg. Smith" fontSize="xs" />
+					<Input borderRadius="15px" placeholder="eg. Smith" fontSize="xs" value={accountPayload.last_name} />
 				</FormControl>
 				<FormControl isDisabled>
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
@@ -87,8 +98,8 @@ export default function AccountPanel({ accountPayload, setAccountPayload, textCo
 				</FormControl>
 
 				<Stack direction="column" spacing="20px">
-					<FormControl isRequired>
-						<Checkbox>
+					<FormControl onChange={(e) => setMiscValue("tos", e.target.checked)}>
+						<Checkbox isChecked={miscPayload.tos}>
 							{" "}
 							Check here to indicate tha you have read and agree to our{" "}
 							<Link href={"/tos"} target="_blank" color="teal.400">
@@ -97,8 +108,8 @@ export default function AccountPanel({ accountPayload, setAccountPayload, textCo
 							</Link>
 						</Checkbox>
 					</FormControl>
-					<FormControl isRequired>
-						<Checkbox>
+					<FormControl onChange={(e) => setMiscValue("agreement", e.target.checked)}>
+						<Checkbox isChecked={miscPayload.agreement}>
 							Check here to indicate tha you have read and agree to our{" "}
 							<Link href={"/agreement"} target="_blank" color="teal.400">
 								{" "}

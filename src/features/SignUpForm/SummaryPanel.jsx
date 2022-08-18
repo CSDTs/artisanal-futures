@@ -10,7 +10,10 @@ import {
 	Stack,
 	VisuallyHidden,
 	chakra,
+	Image,
 	Text,
+	SimpleGrid,
+	Wrap,
 } from "@chakra-ui/react";
 // Custom components
 import { useEffect } from "react";
@@ -18,139 +21,106 @@ import { useEffect } from "react";
 export default function SummaryPanel({ account, business, profile, optional, textColor }) {
 	return (
 		<>
-			<Flex direction={{ sm: "column", md: "row" }} w="100%" mb="24px"></Flex>
-			<Flex direction={{ sm: "column", md: "row" }} w="100%" mb="24px">
-				<Box
-					position="relative"
-					minW={{ sm: "110px", xl: "150px" }}
-					h={{ sm: "110px", xl: "150px" }}
-					mx={{ sm: "auto", md: "40px", xl: "85px" }}
-					mb={{ sm: "25px" }}
-				>
-					<FormControl>
-						<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-							Account Information
-						</FormLabel>
-					</FormControl>
+			<SimpleGrid columns={3} spacingX="40px" spacingY="20px">
+				<Box bg="gray.300" p={2}>
+					<Stack direction="column" spacing="1rem" w="100%">
+						<FormControl>
+							<FormLabel color={textColor} fontSize="md" fontWeight="bold">
+								Account Information
+							</FormLabel>
+						</FormControl>
+						<Avatar bg="gray.300" src={profile.artisan_image} size="xl" />
+						<Text color={textColor} fontSize="sm" fontWeight="400" mt={1}>
+							{account.first_name + " " + account.last_name}
+						</Text>
+						<Text color={textColor} fontSize="sm" fontWeight="400" mt={1}>
+							{account.username}
+						</Text>
+						<Text color={textColor} fontSize="sm" fontWeight="400" mt={1}>
+							{account.email}
+						</Text>
 
-					<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-						Upload a file or drag and drop
-					</Text>
+						<Text>Required</Text>
+						<Stack spacing={5} direction="row">
+							<Checkbox isDisabled isChecked={optional.tos}>
+								TOS
+							</Checkbox>
+							<Checkbox isDisabled isChecked={optional.agreement}>
+								Agreement
+							</Checkbox>
+						</Stack>
 
-					<FormControl isDisabled>
-						<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-							Full Name
-						</FormLabel>
-						<Input
-							borderRadius="15px"
-							placeholder="eg. example@address.com"
-							fontSize="xs"
-							type="email"
-							value={account.name}
-						/>
-					</FormControl>
-					<FormControl isDisabled>
-						<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-							Username
-						</FormLabel>
-						<Input
-							borderRadius="15px"
-							placeholder="eg. example@address.com"
-							fontSize="xs"
-							type="email"
-							value={account.username}
-						/>
-					</FormControl>
-					<FormControl isDisabled>
-						<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-							Email Address
-						</FormLabel>
-						<Input
-							borderRadius="15px"
-							placeholder="eg. example@address.com"
-							fontSize="xs"
-							type="email"
-							value={account.email}
-						/>
-					</FormControl>
+						<Text>Form Opt-Ins</Text>
+						<Wrap spacing={5}>
+							<Checkbox isDisabled isChecked={optional.formType.unmonitored}>
+								unmonitored
+							</Checkbox>
+							<Checkbox isDisabled isChecked={optional.formType.monitored}>
+								monitored
+							</Checkbox>
+							<Checkbox isDisabled isChecked={optional.formType.private}>
+								private
+							</Checkbox>
+							<Checkbox isDisabled isChecked={optional.formType.invisible}>
+								invisible
+							</Checkbox>
+						</Wrap>
+						<Text>Opt-In for Supply Chain</Text>
+						<Wrap spacing={5}>
+							<Checkbox isDisabled isChecked={optional.supplyChain}>
+								Supply Chain
+							</Checkbox>
+						</Wrap>
+					</Stack>
 				</Box>
-				<Box
-					position="relative"
-					minW={{ sm: "110px", xl: "150px" }}
-					h={{ sm: "110px", xl: "150px" }}
-					mx={{ sm: "auto", md: "40px", xl: "85px" }}
-					mb={{ sm: "25px" }}
-				>
-					<FormControl>
-						<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-							Profile Image
-						</FormLabel>
-					</FormControl>
-
-					<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-						Upload a file or drag and drop
-					</Text>
+				<Box bg="gray.300" p={2}>
+					<Stack direction="column" spacing="20px" w="100%">
+						<FormControl>
+							<FormLabel color={textColor} fontSize="md" fontWeight="bold">
+								Business Information
+							</FormLabel>
+						</FormControl>
+						<Image bg="gray.300" src={business.preview || business.thumbnail_image} size="xl" />
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{business.business_name}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{business.general_location}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{business.business_and_customer_description}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{business.business_principles}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{business.business_materials}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{business.business_processes}
+						</Text>
+					</Stack>
 				</Box>
-				<Box
-					position="relative"
-					minW={{ sm: "110px", xl: "150px" }}
-					h={{ sm: "110px", xl: "150px" }}
-					mx={{ sm: "auto", md: "40px", xl: "85px" }}
-					mb={{ sm: "25px" }}
-				>
-					<FormControl>
-						<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-							Profile Image
-						</FormLabel>
-					</FormControl>
-
-					<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-						Upload a file or drag and drop
-					</Text>
+				<Box bg="gray.300" p={2}>
+					<Stack direction="column" spacing="20px" w="100%">
+						<FormControl>
+							<FormLabel color={textColor} fontSize="md" fontWeight="bold">
+								Profile Information
+							</FormLabel>
+						</FormControl>
+						<Image bg="gray.300" src={profile.preview || profile.cover_image} size="xl" />
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{profile.profile_information}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{profile.misc_information}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{profile.business_information}
+						</Text>
+					</Stack>
 				</Box>
-				{/* <Stack direction="column" spacing="20px" w="100%" >
-				<FormControl isRequired onChange={(e) => setAccountValue("name", e.target.value)}>
-					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-						Full Name
-					</FormLabel>
-					<Input borderRadius="15px" placeholder="eg. Taylor Smith" fontSize="xs" />
-				</FormControl>
-				<FormControl isRequired onChange={(e) => setAccountValue("username", e.target.value)}>
-					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-						Username
-					</FormLabel>
-					<Input borderRadius="15px" placeholder="eg. tsmith" fontSize="xs" />
-				</FormControl>
-				<FormControl isRequired onChange={(e) => setAccountValue("email", e.target.value)}>
-					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-						Email Address
-					</FormLabel>
-					<Input borderRadius="15px" placeholder="eg. example@address.com" fontSize="xs" type="email" />
-				</FormControl>
-
-				<Stack direction="column" spacing="20px">
-					<FormControl isRequired>
-						<Checkbox>
-							{" "}
-							Check here to indicate tha you have read and agree to our{" "}
-							<Link href={"/tos"} target="_blank" color="teal.400">
-								{" "}
-								Terms of Service
-							</Link>
-						</Checkbox>
-					</FormControl>
-					<FormControl isRequired>
-						<Checkbox>
-							Check here to indicate tha you have read and agree to our{" "}
-							<Link href={"/agreement"} target="_blank" color="teal.400">
-								{" "}
-								Collective Agreement
-							</Link>
-						</Checkbox>
-					</FormControl>
-				</Stack>
-			</Stack> */}
-			</Flex>
+			</SimpleGrid>
 		</>
 	);
 }
