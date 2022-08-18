@@ -22,7 +22,6 @@ export default function MaterialCost(props) {
 	};
 
 	const handleSliderChange = (event) => {
-		console.log(tabIndex);
 		let current = tabIndex + 1;
 		setTabIndex(current > 3 ? 3 : current);
 	};

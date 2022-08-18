@@ -20,10 +20,8 @@ export default function Alt() {
 		});
 	}, []);
 	useEffect(() => {
-		console.log(artisan);
 		if (artisan)
 			axios.get("https://fourm.artisanalfutures.org/wp-json/wp/v2/stores/" + artisan.store.ID).then((res) => {
-				console.log(res.data.acf);
 				setStore(res.data.acf);
 			});
 	}, [artisan]);

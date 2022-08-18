@@ -43,23 +43,14 @@ export default function Card(props) {
 	attributes = attributes.replace("y,", "y");
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	// console.log(attributes.replace("  ", " •"));
 	return (
 		<>
 			<Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
 				<ModalOverlay />
 				<ModalContent maxW="70rem">
 					<ModalCloseButton />
-					{/* <ModalHeader>Modal Title</ModalHeader>
-					<ModalCloseButton />
-					<ModalBody>Test</ModalBody> */}
+
 					<ProductDetails {...props} />
-					{/* <ModalFooter>
-						<Button colorScheme="blue" mr={3} onClick={onClose}>
-							Close
-						</Button>
-						<Button variant="ghost">Secondary Action</Button>
-					</ModalFooter> */}
 				</ModalContent>
 			</Modal>
 

@@ -18,6 +18,7 @@ import ProductSearch from "./features/ProductSearch";
 import TermsOfService from "./pages/TOS";
 import Agreement from "./pages/Agreement";
 import Privacy from "./pages/Privacy";
+import NewArtisanLogin from "./features/NewArtisanLogin";
 function App() {
 	return (
 		<div className="App">
@@ -37,6 +38,8 @@ function App() {
 				<Route path="/tos" element={<TermsOfService />} />
 				<Route path="/agreement" element={<Agreement />} />
 				<Route path="/privacy" element={<Privacy />} />
+
+				<Route path="/new" element={<NewArtisanLogin />} />
 			</Routes>
 			<Footer />
 		</div>

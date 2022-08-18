@@ -92,7 +92,6 @@ export default function PricingGrid() {
 	};
 
 	const calculateLaborCosts = (isHourly = true) => {
-		console.log(laborTotal);
 		if (isFinite(laborTotal)) return laborTotal;
 		return 0;
 	};

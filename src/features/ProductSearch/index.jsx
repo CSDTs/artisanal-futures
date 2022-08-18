@@ -100,7 +100,6 @@ export default function ProductSearch() {
 		let checkValue = event.target.value;
 
 		let type = event.target;
-		console.log(type);
 
 		if (tags.includes(checkValue)) tags = tags.filter((tag) => tag != checkValue);
 		else tags.push(checkValue);
@@ -109,7 +108,7 @@ export default function ProductSearch() {
 
 	useEffect(() => {
 		//If user doesn't do anything, just return the set of apps as is.
-		console.log(filteredTags);
+
 		if (selectedAttribute === "All" && filteredTags.length == 0 && search == "") {
 			setFiltered(apiProducts ? apiProducts : products);
 			return;
@@ -137,24 +136,8 @@ export default function ProductSearch() {
 	}, [selectedAttribute, filteredTags, search, apiProducts]);
 
 	const fetchProductOrder = (keyword = "dress") => {
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(createQuery(keyword)),
-		};
-
 		isFetching(true);
 		console.log("Fetching data...please wait...");
-
-		// fetch("http://api.artisanalfutures.org/product-search-with-assessment", requestOptions)
-		// 	.then((response) => response.json())
-		// 	.then((res) => {
-		// 		setApiProducts(res.data);
-
-		// 		console.log("Finished fetching");
-		// 		console.log(res.data);
-		// 		isFetching(false);
-		// 	});
 
 		axios.post("https://api.artisanalfutures.org/product-search-with-assessment/", createQuery(keyword)).then((res) => {
 			setApiProducts(res.data);
@@ -193,8 +176,6 @@ export default function ProductSearch() {
 
 	const initSelectedTags = () => {
 		onOpen();
-		let checkboxes = document.querySelectorAll("input[type='checkbox']");
-		console.log(checkboxes);
 	};
 	return (
 		<Container maxW={"6xl"} mt={6}>

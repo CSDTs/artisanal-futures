@@ -114,11 +114,6 @@ const BookList = (props) => {
 						id={name}
 						name="name"
 						data-id={idx}
-						// handleCost={(e) => console.log(e)}
-						// onChange={(e) => {
-						// 	element.value = parseFloat(e.target.value);
-						// }}
-						// defaultValue={element.value}
 					/>
 					<Input
 						type="number"
@@ -132,11 +127,6 @@ const BookList = (props) => {
 						id={price}
 						name="price"
 						data-id={idx}
-						// handleCost={(e) => console.log(e)}
-						// onChange={(e) => {
-						// 	element.value = parseFloat(e.target.value);
-						// }}
-						// defaultValue={element.value}
 					/>
 					<InputRightElement onClick={() => props.delete(val)} children={<FaTrash color="gray.300" />} />
 				</InputGroup>

@@ -91,9 +91,34 @@ export default function Navigation() {
 								>
 									Sign Up
 								</Button>
+								<Button
+									display={{ base: "none", md: "inline-flex" }}
+									fontSize={"sm"}
+									fontWeight={600}
+									color={"white"}
+									bg={"blue.400"}
+									onClick={() => navigate("/new")}
+									_hover={{
+										bg: "pink.300",
+									}}
+								>
+									Sign In
+								</Button>
 							</>
 						)}
-
+						<Button
+							display={{ base: "none", md: "inline-flex" }}
+							fontSize={"sm"}
+							fontWeight={600}
+							color={"white"}
+							bg={"blue.400"}
+							onClick={() => navigate("/new")}
+							_hover={{
+								bg: "pink.300",
+							}}
+						>
+							Sign In
+						</Button>
 						{currentUser?.token && <UserDropdown username={currentUser.user_nicename} />}
 
 						<Button onClick={toggleColorMode} hidden>

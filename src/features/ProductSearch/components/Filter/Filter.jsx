@@ -18,7 +18,6 @@ export default function Filter({ attributes, handleChange, handleSearch, handleT
 	const [filtered, setFiltered] = useState([]);
 
 	const handleOnChange = (e) => {
-		console.log(e.target.value);
 		setFilteredProducts(e.target.value);
 	};
 	return (

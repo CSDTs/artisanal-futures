@@ -42,11 +42,10 @@ export default function AddNewCharges({ handleCost }) {
 	};
 
 	let removeFormFields = (i, test) => {
-		console.log(test);
 		let newFormValues = [...formValues];
 
 		newFormValues.splice(i, 1);
-		console.log(newFormValues);
+
 		setFormValues(newFormValues);
 	};
 

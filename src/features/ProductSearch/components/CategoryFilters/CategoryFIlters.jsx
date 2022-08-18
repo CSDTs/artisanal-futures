@@ -11,11 +11,7 @@ export default function CategoryFilters({ attributes, handleTagChange }) {
 				<Heading as="h5" size="sm">
 					Shop By Artisan
 				</Heading>
-				<Checkbox
-					onChange={(e) => {
-						console.log(e.target.value);
-					}}
-					value="Dabls Mbad African Bead Museum">
+				<Checkbox onChange={handleTagChange} value="Dabls Mbad African Bead Museum">
 					Dabls' MBAD African Bead Museum
 				</Checkbox>
 				<Checkbox onChange={handleTagChange} value="African Futurist Collective">

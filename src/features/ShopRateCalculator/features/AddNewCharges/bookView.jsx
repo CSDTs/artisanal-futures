@@ -59,12 +59,6 @@ class BookView extends React.Component {
 			this.setState({ [e.target.name]: e.target.value });
 		}
 
-		// console.log(
-		// 	[...this.state.bookDetails].reduce((accum, current) => {
-		// 		return accum + parseFloat(current.price || 0);
-		// 	}, 0)
-		// );
-
 		this.props.handleCost(
 			[...this.state.bookDetails].reduce((accum, current) => {
 				return accum + parseFloat(current.price || 0);
@@ -105,18 +99,6 @@ class BookView extends React.Component {
 		});
 	}
 
-	// componentDidUpdate() {
-	// 	this.props.handleCost(
-	// 		[...this.state.bookDetails].reduce((accum, current) => {
-	// 			return accum + parseFloat(current.price || 0);
-	// 		}, 0)
-	// 	);
-	// 	console.log(
-	// 		[...this.state.bookDetails].reduce((accum, current) => {
-	// 			return accum + parseFloat(current.price || 0);
-	// 		}, 0)
-	// 	);
-	// }
 	render() {
 		let { bookDetails } = this.state;
 		return (
