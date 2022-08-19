@@ -1,8 +1,27 @@
-import { FormControl, FormLabel, Stack, Textarea } from "@chakra-ui/react";
-
+import {
+	Avatar,
+	Link,
+	Box,
+	Checkbox,
+	Flex,
+	FormControl,
+	FormLabel,
+	Input,
+	Stack,
+	VisuallyHidden,
+	chakra,
+	Text,
+	Textarea,
+} from "@chakra-ui/react";
+// Custom components
+import { useEffect } from "react";
 import ImageUpload from "../../components/ImageUpload";
-
+import { FaUserAlt } from "react-icons/fa";
 export default function ProfilePanel({ profilePayload, setProfilePayload, textColor }) {
+	useEffect(() => {
+		console.log(profilePayload);
+	}, [profilePayload]);
+
 	const setProfileValue = (key, value) => {
 		setProfilePayload((data) => {
 			return {
@@ -14,7 +33,7 @@ export default function ProfilePanel({ profilePayload, setProfilePayload, textCo
 
 	return (
 		<Stack direction="column" spacing="20px" w="100%">
-			<FormControl onChange={(e) => setProfileValue("about_me", e.target.value)}>
+			<FormControl onChange={(e) => setProfileValue("profile_information", e.target.value)}>
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 					About Me
 				</FormLabel>
@@ -22,7 +41,7 @@ export default function ProfilePanel({ profilePayload, setProfilePayload, textCo
 					borderRadius="15px"
 					placeholder="eg. Artisanal Futures"
 					fontSize="xs"
-					value={profilePayload.about_me}
+					value={profilePayload.profile_information}
 				/>
 			</FormControl>
 			<FormControl onChange={(e) => setProfileValue("business_information", e.target.value)}>

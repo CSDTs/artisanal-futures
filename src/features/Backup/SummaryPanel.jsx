@@ -42,32 +42,32 @@ export default function SummaryPanel({ account, business, profile, optional, tex
 
 						<Text>Required</Text>
 						<Stack spacing={5} direction="row">
-							<Checkbox isDisabled isChecked={optional.terms_of_service}>
+							<Checkbox isDisabled isChecked={optional.tos}>
 								TOS
 							</Checkbox>
-							<Checkbox isDisabled isChecked={optional.collective_agreement}>
+							<Checkbox isDisabled isChecked={optional.agreement}>
 								Agreement
 							</Checkbox>
 						</Stack>
 
 						<Text>Form Opt-Ins</Text>
 						<Wrap spacing={5}>
-							<Checkbox isDisabled isChecked={optional.fourm.unmonitored}>
+							<Checkbox isDisabled isChecked={optional.formType.unmonitored}>
 								unmonitored
 							</Checkbox>
-							<Checkbox isDisabled isChecked={optional.fourm.monitored}>
+							<Checkbox isDisabled isChecked={optional.formType.monitored}>
 								monitored
 							</Checkbox>
-							<Checkbox isDisabled isChecked={optional.fourm.privately_visible}>
+							<Checkbox isDisabled isChecked={optional.formType.private}>
 								private
 							</Checkbox>
-							<Checkbox isDisabled isChecked={optional.fourm.invisible}>
+							<Checkbox isDisabled isChecked={optional.formType.invisible}>
 								invisible
 							</Checkbox>
 						</Wrap>
 						<Text>Opt-In for Supply Chain</Text>
 						<Wrap spacing={5}>
-							<Checkbox isDisabled isChecked={optional.supply_chain}>
+							<Checkbox isDisabled isChecked={optional.supplyChain}>
 								Supply Chain
 							</Checkbox>
 						</Wrap>
@@ -82,22 +82,22 @@ export default function SummaryPanel({ account, business, profile, optional, tex
 						</FormControl>
 						<Image bg="gray.300" src={business.preview || business.thumbnail_image} size="xl" />
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{business.name}
+							{business.business_name}
 						</Text>
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{business.address}
+							{business.general_location}
 						</Text>
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
 							{business.business_and_customer_description}
 						</Text>
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{business.principles}
+							{business.business_principles}
 						</Text>
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{business.materials}
+							{business.business_materials}
 						</Text>
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{business.processes}
+							{business.business_processes}
 						</Text>
 					</Stack>
 				</Box>
@@ -110,13 +110,13 @@ export default function SummaryPanel({ account, business, profile, optional, tex
 						</FormControl>
 						<Image bg="gray.300" src={profile.preview || profile.cover_image} size="xl" />
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{profile.about_me}
-						</Text>
-						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
-							{profile.business_information}
+							{profile.profile_information}
 						</Text>
 						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
 							{profile.misc_information}
+						</Text>
+						<Text color={textColor} fontSize="xs" fontWeight="400" mt={1}>
+							{profile.business_information}
 						</Text>
 					</Stack>
 				</Box>

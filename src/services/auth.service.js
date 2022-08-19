@@ -70,7 +70,10 @@ const getUserInformation = () => {
 
 	return axios.get(WP_API_URL + "wp/v2/users", payload).then((response) => {
 		console.log(response);
+		let user = JSON.parse(localStorage.getItem("user"));
+		user = { ...user, ...{ membership_id: response.data[0].acf.membership } };
 		localStorage.setItem("user_id", response.data[0].id);
+		localStorage.setItem("user", JSON.stringify(user));
 		return response.data;
 	});
 };

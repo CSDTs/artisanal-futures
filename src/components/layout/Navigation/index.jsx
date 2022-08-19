@@ -106,19 +106,7 @@ export default function Navigation() {
 								</Button>
 							</>
 						)}
-						<Button
-							display={{ base: "none", md: "inline-flex" }}
-							fontSize={"sm"}
-							fontWeight={600}
-							color={"white"}
-							bg={"blue.400"}
-							onClick={() => navigate("/new")}
-							_hover={{
-								bg: "pink.300",
-							}}
-						>
-							Sign In
-						</Button>
+
 						{currentUser?.token && <UserDropdown username={currentUser.user_nicename} />}
 
 						<Button onClick={toggleColorMode} hidden>
@@ -316,6 +304,10 @@ const NAV_ITEMS = [
 	{
 		label: "Stores",
 		href: "/stores",
+	},
+	{
+		label: "Artisans",
+		href: "/artisans",
 	},
 	{
 		label: "Products",

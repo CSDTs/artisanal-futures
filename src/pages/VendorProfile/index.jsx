@@ -4,7 +4,7 @@ import { Heading, SimpleGrid, Box, Container, Text, useColorModeValue, Flex, Spa
 
 import SideInformation from "./SideInformation";
 import AboutMe from "./AboutMe";
-import Alt from "./Alt";
+// import Alt from "./Alt";
 
 import STORES from "../../data/stores.json";
 export default function VendorProfile() {
@@ -29,7 +29,7 @@ export default function VendorProfile() {
 			</Container> */}
 
 			<Container maxW={"container.lg"} background={"gray.100"} mt={4}>
-				<Alt />
+				{/* <Alt /> */}
 			</Container>
 		</>
 	);

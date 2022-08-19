@@ -19,6 +19,9 @@ import TermsOfService from "./pages/TOS";
 import Agreement from "./pages/Agreement";
 import Privacy from "./pages/Privacy";
 import NewArtisanLogin from "./features/NewArtisanLogin";
+import Members from "./pages/Members";
+import Profile from "./pages/Profile";
+import ArtisanDetails from "./pages/ArtisanDetails";
 function App() {
 	return (
 		<div className="App">
@@ -33,6 +36,7 @@ function App() {
 				<Route path="/signup" element={<SignUpForm />} />
 				<Route path="/signin" element={<SignInForm />} />
 				<Route path="/vendors/:name" element={<VendorProfile />} />
+
 				<Route path="/tools/shop-rate-calculator" element={<ShopRateCalculator />} />
 
 				<Route path="/tos" element={<TermsOfService />} />
@@ -40,6 +44,10 @@ function App() {
 				<Route path="/privacy" element={<Privacy />} />
 
 				<Route path="/new" element={<NewArtisanLogin />} />
+
+				<Route path="/artisans" element={<Members />} />
+				<Route path="/artisans/:name" element={<ArtisanDetails />} />
+				<Route path="/profile" element={<Profile />} />
 			</Routes>
 			<Footer />
 		</div>

@@ -19,21 +19,22 @@ import { LoremIpsum } from "react-lorem-ipsum";
 
 import { FaFacebook, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 
-export default function SideInformation({ artisan, store }) {
+export default function SideInformation({ profile, business, profile_image, full_name }) {
 	// const { artisan, gen_location, avatar, brief, address, phone, email, description } = props.profile;
-	const { name, profile_information, artisan_image, misc_information } = artisan;
-	const {
-		business_name,
-		website,
-		general_location,
-		thumbnail_image,
-		cover_image,
-		// miscellaneous_information,
-		business_email,
-		business_phone_number,
-		business_address,
-		business_brief_description,
-	} = store;
+	const { name, profile_information, artisan_image, misc_information } = profile;
+	const { name: business_name, business_brief_description, website, address } = business;
+	// const {
+	// 	business_name,
+	// 	website,
+	// 	general_location,
+	// 	thumbnail_image,
+	// 	cover_image,
+	// 	// miscellaneous_information,
+	// 	business_email,
+	// 	business_phone_number,
+	// 	business_address,
+	// 	business_brief_description,
+	// } = store;
 
 	return (
 		<Box py={12} pl={4}>
@@ -52,7 +53,6 @@ export default function SideInformation({ artisan, store }) {
 					rounded={"lg"}
 					mt={-12}
 					pos={"relative"}
-					height={"230px"}
 					_after={{
 						transition: "all .3s ease",
 						content: '""',
@@ -71,18 +71,18 @@ export default function SideInformation({ artisan, store }) {
 						},
 					}}
 				>
-					<Image src={artisan_image} borderRadius="full" />
+					<Image src={profile_image} borderRadius="full" boxSize="150px" mx={"auto"} boxShadow="dark-lg" />
 				</Box>
 
-				<Stack direction={"column"} pt={"1rem"} spacing={1} textAlign="center">
-					<Text color={"gray.600"}>{name}</Text>
+				<Stack direction={"column"} spacing={1} textAlign="center" mt={6}>
+					<Text color={"gray.600"}>{full_name}</Text>
 					<Text color={"gray.500"} fontSize={"sm"}>
-						{general_location}
+						{address}
 					</Text>
 				</Stack>
 				<Stack direction={"column"} spacing={1.5} textAlign="center">
 					<Text color={"gray.700"} fontWeight={500} fontSize={"sm"} as="i" mt={5}>
-						{business_brief_description}
+						Owner of {business_name}
 					</Text>
 					<Link href={website} color="teal.500">
 						{website}
@@ -95,13 +95,13 @@ export default function SideInformation({ artisan, store }) {
 						{business_name}
 					</Text>
 					<Text color={"gray.700"} fontWeight={500} fontSize={"0.85rem"}>
-						{business_address}
+						{/* {business_address} */}
 					</Text>
 					<Text color={"gray.700"} fontWeight={500} fontSize={"0.85rem"}>
-						{business_phone_number}
+						{/* {business_phone_number} */}
 					</Text>
 					<Text color={"gray.700"} fontWeight={500} fontSize={"0.85rem"}>
-						{business_email}
+						{/* {business_email} */}
 					</Text>
 				</Stack>
 				<Stack direction={"column"} pt={"3rem"}>

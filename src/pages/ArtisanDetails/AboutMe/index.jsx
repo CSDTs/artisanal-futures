@@ -2,22 +2,9 @@ import styles from "./AboutMe.module.scss";
 
 import { Text, Heading, Box, Container, Image } from "@chakra-ui/react";
 
-export default function AboutMe({ artisan, store }) {
-	const { name, profile_information, cover_image, misc_information } = artisan;
-	const {
-		business_name,
-		website,
-		general_location,
-		thumbnail_image,
+export default function AboutMe({ profile }) {
+	const { cover_image, about_me } = profile;
 
-		miscellaneous_information,
-		business_email,
-		business_phone_number,
-		business_address,
-		business_brief_description,
-	} = store;
-
-	console.log(store);
 	return (
 		<div className="col-xl-8 order-xl-1">
 			<div className="card bg-secondary shadow">
@@ -34,7 +21,7 @@ export default function AboutMe({ artisan, store }) {
 										About Me
 									</Heading>
 									<Text className={styles.aboutMeText} fontWeight={500}>
-										{profile_information}
+										{about_me}
 									</Text>
 								</div>
 							</div>

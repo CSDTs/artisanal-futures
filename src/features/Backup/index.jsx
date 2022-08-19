@@ -54,46 +54,45 @@ import ShopService from "../../services/shop.service";
 import ProfileService from "../../services/profile.service";
 import { useNavigate } from "react-router-dom";
 import PanelTab from "./PanelTab";
-
-import MemberService from "../../services/member.service";
 function SignUpForm({ artisan, isUpdate }) {
-	const { user, isLoading, isError } = MemberService.getMemberInformationACF(
-		JSON.parse(localStorage.getItem("user")).membership_id,
-		true
-	);
-
 	const textColor = useColorModeValue("gray.700", "white");
 	const bgPrevButton = useColorModeValue("gray.100", "gray.100");
 	const iconColor = useColorModeValue("gray.300", "gray.700");
-
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [checkboxes, setCheckboxes] = useState({
 		unmonitored: false,
 		monitored: false,
-		privately_visible: false,
+		private: false,
 		invisible: false,
 	});
 
+	const [fetchedStore, setFetchedStore] = useState();
 	useEffect(() => {
-		if (user?.user)
-			setAccountPayload({
-				...accountPayload,
-				...{ first_name: user.user.user_firstname, last_name: user.user.user_lastname },
+		if (artisan.store)
+			ShopService.getShop(artisan.store.ID).then((data) => {
+				setFetchedStore(data.acf);
 			});
-		if (user?.business) setBusinessPayload({ ...businessPayload, ...user.business });
-		if (user?.profile) setProfilePayload({ ...businessPayload, ...user.profile });
-		if (user?.modifiers) {
-			setMiscPayload({ ...miscPayload, ...user.modifiers });
-			setCheckboxes(user.modifiers.fourm);
+		if (artisan.description) {
+			setMiscPayload(JSON.parse(artisan.description));
+			setCheckboxes(JSON.parse(artisan.description).formType);
 		}
 
-		if (user?.profile_image)
-			setAccountPayload((data) => {
-				return {
-					...data,
-					preview: user.profile_image,
-				};
+		if (artisan) {
+			setAccountPayload({ ...accountPayload, ...{ first_name: artisan.first_name, last_name: artisan.last_name } });
+		}
+
+		if (artisan.profile) {
+			ProfileService.getProfile(artisan.profile.ID).then((data) => {
+				console.log(data);
+				setProfilePayload({ ...profilePayload, ...data.acf });
 			});
-	}, [user]);
+		}
+	}, [artisan]);
+
+	useEffect(() => {
+		// console.log(fetchedStore);
+		setBusinessPayload({ ...businessPayload, ...fetchedStore });
+	}, [fetchedStore]);
 
 	const [activeBullets, setActiveBullets] = useState({
 		about: true,
@@ -119,99 +118,196 @@ function SignUpForm({ artisan, isUpdate }) {
 	});
 
 	const [businessPayload, setBusinessPayload] = useState({
-		name: "",
-		email: "",
-		phone_number: "",
-		address: "",
+		business_name: "",
+		general_location: "",
 		website: "",
 		business_and_customer_description: "",
-		principles: "",
-		materials: "",
-		processes: "",
+		business_principles: "",
+		business_materials: "",
+		business_processes: "",
 		thumbnail_image: "",
 		selectedFile: null,
 		preview: null,
 	});
 
 	const [miscPayload, setMiscPayload] = useState({
-		terms_of_service: false,
-		collective_agreement: false,
+		tos: false,
+		agreement: false,
 		formType: [],
-		fourm: {
-			unmonitored: false,
-			monitored: false,
-			privately_visible: false,
-			invisible: false,
-		},
-		supply_chain: false,
+		supplyChain: false,
 	});
 
 	const [profilePayload, setProfilePayload] = useState({
-		about_me: "",
-		business_information: "",
+		name: "",
+		general_location: businessPayload.general_location,
+		website: businessPayload.website,
+		profile_information: "",
 		misc_information: "",
+		business_information: "",
 		cover_image: "",
+		profile_image: "",
 		selectedFile: null,
 		preview: null,
 	});
-
-	const navigate = useNavigate();
-
-	const uploadMedia = (payload, callback) => {
-		if (!payload.selectedFile) return;
-
-		let formData = new FormData();
-		let file = payload.selectedFile;
-		formData.append("file", file);
-		formData.append("title", file.name);
-
-		let headers = {};
-		headers["Content-Disposition"] = "form-data; filename='" + file.name + "'";
-		headers["Authorization"] = `Bearer ${JSON.parse(localStorage.getItem("user")).token}`;
-		axios
-			.post("https://fourm.artisanalfutures.org/wp-json/wp/v2/media", formData, {
-				headers: headers,
-			})
-			.then((res) => callback(res));
+	const setAccountValue = (key, value) => {
+		setAccountPayload((data) => {
+			return {
+				...data,
+				[key]: value,
+			};
+		});
 	};
 
-	async function updateUserInWPMembership() {
-		uploadMedia(accountPayload, (resp) => {
-			MemberService.postMembershipData(222, { profile_image: resp.data.source_url });
+	const setBusinessValue = (key, value) => {
+		setBusinessPayload((data) => {
+			return {
+				...data,
+				[key]: value,
+			};
 		});
+	};
 
-		await updateOptInsInWPMembership();
+	const setProfileValue = (key, value) => {
+		setProfilePayload((data) => {
+			return {
+				...data,
+				[key]: value,
+			};
+		});
+	};
+
+	useEffect(() => {
+		if (!accountPayload.selectedFile) {
+			setAccountValue("preview", null);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(accountPayload.selectedFile);
+
+		setAccountValue("preview", objectUrl);
+
+		// free memory when ever this component is unmounted
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [accountPayload.selectedFile]);
+
+	const onSelectFile = (e) => {
+		if (!e.target.files || e.target.files.length === 0) {
+			setAccountValue("selectedFile", null);
+			return;
+		}
+
+		setAccountValue("selectedFile", e.target.files[0]);
+	};
+
+	useEffect(() => {
+		if (artisan)
+			ShopService.getProfile(artisan?.profile?.ID).then((data) => {
+				setAccountValue("preview", data.artisan_image);
+			});
+	}, [artisan]);
+
+	const navigate = useNavigate();
+	function updateItem() {
+		if (accountPayload.selectedFile) {
+			var formData = new FormData();
+			let file = accountPayload.selectedFile;
+			formData.append("file", file);
+			formData.append("title", file.name);
+
+			let headers = {};
+			headers["Content-Disposition"] = "form-data; filename='" + file.name + "'";
+			headers["Authorization"] = `Bearer ${JSON.parse(localStorage.getItem("user")).token}`;
+			axios
+				.post("https://fourm.artisanalfutures.org/wp-json/wp/v2/media", formData, {
+					headers: headers,
+				})
+				.then(function (resp) {
+					AuthService.getUserInformation().then((data) => {
+						let artisan_profile = data[0].acf.profile.ID;
+						AuthService.updateArtisanInformation(artisan_profile, { fields: { artisan_image: resp.data.source_url } });
+					});
+				});
+		}
+	}
+
+	function updateBusinessCover() {
+		if (businessPayload.selectedFile) {
+			let formData = new FormData();
+			let file = businessPayload.selectedFile;
+			formData.append("file", file);
+			formData.append("title", file.name);
+
+			let headers = {};
+			headers["Content-Disposition"] = "form-data; filename='" + file.name + "'";
+			headers["Authorization"] = `Bearer ${JSON.parse(localStorage.getItem("user")).token}`;
+			axios
+				.post("https://fourm.artisanalfutures.org/wp-json/wp/v2/media", formData, {
+					headers: headers,
+				})
+				.then(function (resp) {
+					AuthService.getUserInformation().then((data) => {
+						let store_profile = data[0].acf.store.ID;
+						ShopService.updateShop(store_profile, { thumbnail_image: resp.data.source_url });
+					});
+				});
+		}
+	}
+
+	function updateProfileCover() {
+		if (profilePayload.selectedFile) {
+			let formData = new FormData();
+			let file = profilePayload.selectedFile;
+			formData.append("file", file);
+			formData.append("title", file.name);
+
+			let headers = {};
+			headers["Content-Disposition"] = "form-data; filename='" + file.name + "'";
+			headers["Authorization"] = `Bearer ${JSON.parse(localStorage.getItem("user")).token}`;
+			axios
+				.post("https://fourm.artisanalfutures.org/wp-json/wp/v2/media", formData, {
+					headers: headers,
+				})
+				.then(function (resp) {
+					AuthService.getUserInformation().then((data) => {
+						let profile_id = data[0].acf.profile.ID || "";
+
+						ProfileService.updateProfile({ cover_image: resp.data.source_url }, profile_id);
+					});
+				});
+		}
+	}
+
+	async function updateUserInWP() {
+		updateItem();
 		return AuthService.updateUserInformation(accountPayload).then(() =>
-			MemberService.postMembershipData(222, { full_name: accountPayload.first_name + " " + accountPayload.last_name })
+			AuthService.updateUserInformation({ description: JSON.stringify(miscPayload) }).then(() =>
+				AuthService.updateUserInformation({ name: `${accountPayload.first_name} ${accountPayload.last_name}` })
+			)
 		);
 	}
 
-	async function updateBusinessInWPMembership() {
-		uploadMedia(businessPayload, (resp) => {
-			MemberService.postMembershipData(222, { business: { thumbnail_image: resp.data.source_url } });
-		});
-
-		return MemberService.postMembershipData(222, { business: businessPayload });
+	async function updateOptInsInWP() {
+		// updateItem();
+		return AuthService.updateUserInformation({ description: JSON.stringify(miscPayload) });
 	}
 
-	async function updateProfileInWPMembership() {
-		uploadMedia(profilePayload, (resp) => {
-			MemberService.postMembershipData(222, { profile: { cover_image: resp.data.source_url } });
-		});
-		return MemberService.postMembershipData(222, { profile: profilePayload });
+	async function updateBusinessInWP() {
+		updateBusinessCover();
+		return ShopService.updateShop(artisan?.store?.ID, businessPayload);
 	}
 
-	async function updateOptInsInWPMembership() {
-		return MemberService.postMembershipData(222, { modifiers: miscPayload });
+	async function updateProfileInWP() {
+		updateProfileCover();
+		console.log(profilePayload);
+		return ProfileService.updateProfile(profilePayload, artisan?.profile?.ID || "");
 	}
-
 	async function submitWPData() {
-		await updateUserInWPMembership();
-		await updateBusinessInWPMembership();
-		await updateOptInsInWPMembership();
-		await updateProfileInWPMembership();
-		await MemberService.publishMembershipData(222);
-
+		await updateUserInWP();
+		await updateBusinessInWP();
+		await updateOptInsInWP();
+		await updateProfileInWP();
+		await ShopService.publishShop(artisan?.store?.ID);
+		await ProfileService.publishProfile(artisan?.profile?.ID);
 		navigate("/stores");
 	}
 
@@ -219,7 +315,7 @@ function SignUpForm({ artisan, isUpdate }) {
 		<Flex direction="column" minH="100vh" align="center" pt={{ sm: "125px", lg: "75px" }}>
 			<Flex direction="column" textAlign="center" mb={{ sm: "25px", md: "45px" }}>
 				<Text color={textColor} fontSize={{ sm: "2xl", md: "3xl", lg: "4xl" }} fontWeight="bold" mb="8px">
-					Welcome back, {user?.user.user_firstname}! {isUpdate ? "Update" : "Build"} your profile
+					Welcome back, {artisan.first_name}! {isUpdate ? "Update" : "Build"} your profile
 				</Text>
 				<Text color="gray.400" fontWeight="normal" fontSize={{ sm: "sm", md: "lg" }}>
 					This information will let us know more about you.
@@ -328,7 +424,7 @@ function SignUpForm({ artisan, isUpdate }) {
 									/>
 
 									<PanelNavigation
-										handleSubmit={() => updateUserInWPMembership()}
+										handleSubmit={() => updateUserInWP()}
 										handleNext={() => businessTab.current.click()}
 									/>
 								</Flex>
@@ -353,7 +449,7 @@ function SignUpForm({ artisan, isUpdate }) {
 									<PanelNavigation
 										handlePrev={() => aboutTab.current.click()}
 										handleNext={() => accountTab.current.click()}
-										handleSubmit={updateBusinessInWPMembership}
+										handleSubmit={updateBusinessInWP}
 										prevColor={bgPrevButton}
 									/>
 								</Flex>
@@ -382,7 +478,7 @@ function SignUpForm({ artisan, isUpdate }) {
 									<PanelNavigation
 										handlePrev={() => businessTab.current.click()}
 										handleNext={() => addressTab.current.click()}
-										handleSubmit={() => updateOptInsInWPMembership()}
+										handleSubmit={() => updateOptInsInWP()}
 										prevColor={bgPrevButton}
 									/>
 								</Flex>
@@ -407,7 +503,7 @@ function SignUpForm({ artisan, isUpdate }) {
 									<PanelNavigation
 										handlePrev={() => accountTab.current.click()}
 										handleNext={() => summaryTab.current.click()}
-										handleSubmit={updateProfileInWPMembership}
+										handleSubmit={updateProfileInWP}
 										prevColor={bgPrevButton}
 									/>
 								</Flex>

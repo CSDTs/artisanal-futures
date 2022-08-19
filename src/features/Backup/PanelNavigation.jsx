@@ -54,7 +54,7 @@ export default function PanelNavigation({ handleSubmit, handlePrev, handleNext, 
 					</Text>
 				</Button>
 			)}
-			<Button
+			{/* <Button
 				variant="no-hover"
 				bg="linear-gradient(81.62deg, #f13860 2.25%, #f51928 79.87%)"
 				alignSelf="flex-end"
@@ -70,7 +70,7 @@ export default function PanelNavigation({ handleSubmit, handlePrev, handleNext, 
 				<Text fontSize="xs" color="#fff" fontWeight="bold">
 					Submit to WP
 				</Text>
-			</Button>
+			</Button> */}
 			{handleNext && (
 				<Button
 					variant="no-hover"

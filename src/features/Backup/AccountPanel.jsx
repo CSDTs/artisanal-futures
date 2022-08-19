@@ -19,15 +19,7 @@ import { FaUserAlt } from "react-icons/fa";
 import AvatarUpload from "../../components/AvatarUpload";
 import AuthService from "../../services/auth.service";
 
-export default function AccountPanel({
-	accountPayload,
-	setAccountPayload,
-	miscPayload,
-	setMiscPayload,
-	textColor,
-	membershipPayload,
-	setMembershipPayload,
-}) {
+export default function AccountPanel({ accountPayload, setAccountPayload, miscPayload, setMiscPayload, textColor }) {
 	const setAccountValue = (key, value) => {
 		setAccountPayload((data) => {
 			return {
@@ -44,6 +36,13 @@ export default function AccountPanel({
 			};
 		});
 	};
+	// useEffect(() => {
+	// 	console.log(accountPayload);
+	// }, [accountPayload]);
+
+	// useEffect(() => {
+	// 	console.log("Misc is " + JSON.stringify(miscPayload));
+	// }, [miscPayload]);
 
 	return (
 		<Flex direction={{ sm: "column", md: "row" }} w="100%" mb="24px">
@@ -99,8 +98,8 @@ export default function AccountPanel({
 				</FormControl>
 
 				<Stack direction="column" spacing="20px">
-					<FormControl onChange={(e) => setMiscValue("terms_of_service", e.target.checked)}>
-						<Checkbox isChecked={miscPayload.terms_of_service}>
+					<FormControl onChange={(e) => setMiscValue("tos", e.target.checked)}>
+						<Checkbox isChecked={miscPayload.tos}>
 							{" "}
 							Check here to indicate tha you have read and agree to our{" "}
 							<Link href={"/tos"} target="_blank" color="teal.400">
@@ -109,8 +108,8 @@ export default function AccountPanel({
 							</Link>
 						</Checkbox>
 					</FormControl>
-					<FormControl onChange={(e) => setMiscValue("collective_agreement", e.target.checked)}>
-						<Checkbox isChecked={miscPayload.collective_agreement}>
+					<FormControl onChange={(e) => setMiscValue("agreement", e.target.checked)}>
+						<Checkbox isChecked={miscPayload.agreement}>
 							Check here to indicate tha you have read and agree to our{" "}
 							<Link href={"/agreement"} target="_blank" color="teal.400">
 								{" "}

@@ -1,16 +1,19 @@
 import { Button, Menu, Center, MenuButton, Avatar, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import AuthService from "../../../../services/auth.service";
 export default function UserDropdown({ username }) {
 	const logUserOut = () => {
 		AuthService.logout();
 		window.location.reload();
 	};
+
+	const navigate = useNavigate();
 	return (
 		<Menu>
 			<MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
 				<Avatar size={"sm"} src={"https://avatars.dicebear.com/api/male/username.svg"} />
 			</MenuButton>
-			<MenuList alignItems={"center"}>
+			<MenuList alignItems={"center"} zIndex={2}>
 				<br />
 				<Center>
 					<Avatar size={"2xl"} src={"https://avatars.dicebear.com/api/male/username.svg"} />
@@ -21,7 +24,7 @@ export default function UserDropdown({ username }) {
 				</Center>
 				<br />
 				<MenuDivider />
-
+				<MenuItem onClick={() => navigate("/profile")}>My Profile</MenuItem>
 				<MenuItem>Account Settings</MenuItem>
 				<MenuItem onClick={logUserOut}>Logout</MenuItem>
 			</MenuList>

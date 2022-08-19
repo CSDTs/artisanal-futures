@@ -28,7 +28,7 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 	let formTypes = optInPayload.formType;
 
 	useEffect(() => {
-		setOptInPayload({ ...optInPayload, ...{ fourm: checkboxes } });
+		setOptInPayload({ ...optInPayload, ...{ formType: checkboxes } });
 	}, [checkboxes]);
 
 	return (
@@ -58,7 +58,7 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
-								isChecked={optInPayload.fourm.unmonitored}
+								isChecked={optInPayload.formType.unmonitored}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
@@ -90,7 +90,7 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
-								isChecked={optInPayload.fourm.monitored}
+								isChecked={optInPayload.formType.monitored}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
@@ -118,22 +118,22 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 							transition=".5s all ease"
 							border="1px solid lightgray"
 							align="center"
-							bg={checkboxes.privately_visible ? "teal.300" : "#fff"}
+							bg={checkboxes.private ? "teal.300" : "#fff"}
 							_hover={{ opacity: "0.8" }}
 						>
 							<Checkbox
-								isChecked={optInPayload.fourm.privately_visible}
+								isChecked={optInPayload.formType.private}
 								onChange={() =>
 									setCheckboxes((prevCheckboxes) => {
 										return {
 											...prevCheckboxes,
-											privately_visible: !prevCheckboxes.privately_visible,
+											private: !prevCheckboxes.private,
 										};
 									})
 								}
 								display="none"
 							/>
-							<Icon w="54px" h="54px" color={checkboxes.privately_visible ? "#fff" : iconColor} />
+							<Icon w="54px" h="54px" color={checkboxes.private ? "#fff" : iconColor} />
 						</Flex>
 					</FormLabel>
 					<Text color={textColor} fontWeight="bold" fontSize="md">
@@ -188,8 +188,8 @@ export default function OptInPanel({ optInPayload, setOptInPayload, checkboxes, 
 				</FormLabel>
 				<Switch
 					id="email-alerts"
-					onChange={(e) => setOptInPayload({ ...optInPayload, ...{ supply_chain: e.target.checked } })}
-					isChecked={optInPayload.supply_chain}
+					onChange={(e) => setOptInPayload({ ...optInPayload, ...{ supplyChain: e.target.checked } })}
+					isChecked={optInPayload.supplyChain}
 				/>
 			</FormControl>
 		</>
