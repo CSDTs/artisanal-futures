@@ -1,28 +1,28 @@
 import {
 	Box,
-	Flex,
-	Text,
-	IconButton,
 	Button,
-	Stack,
 	Collapse,
-	Icon,
 	Container,
+	Flex,
+	Icon,
+	IconButton,
+	Image,
 	Link,
 	Popover,
-	PopoverTrigger,
 	PopoverContent,
-	useColorModeValue,
+	PopoverTrigger,
+	Stack,
+	Text,
 	useBreakpointValue,
-	useDisclosure,
 	useColorMode,
-	Image,
+	useColorModeValue,
+	useDisclosure,
 } from "@chakra-ui/react";
 
-import { useState, useEffect } from "react";
-import AuthService from "../../../services/auth.service";
+import { ChevronDownIcon, ChevronRightIcon, CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import AuthService from "../../../services/auth.service";
 import UserDropdown from "../../ui/User/UserDropdown";
 export default function Navigation() {
 	const { isOpen, onToggle } = useDisclosure();
@@ -75,29 +75,23 @@ export default function Navigation() {
 					<Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
 						{!currentUser?.token && (
 							<>
-								<Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} onClick={() => navigate("/signin")}>
-									Sign In
-								</Button>
 								<Button
-									display={{ base: "none", md: "inline-flex" }}
+									as={"a"}
 									fontSize={"sm"}
-									fontWeight={600}
-									color={"white"}
-									bg={"pink.400"}
-									onClick={() => navigate("/signup")}
-									_hover={{
-										bg: "pink.300",
-									}}
+									fontWeight={400}
+									variant={"link"}
+									onClick={() => navigate("/registration")}
 								>
-									Sign Up
+									Become an Artisan
 								</Button>
+
 								<Button
 									display={{ base: "none", md: "inline-flex" }}
 									fontSize={"sm"}
 									fontWeight={600}
 									color={"white"}
 									bg={"blue.400"}
-									onClick={() => navigate("/new")}
+									onClick={() => navigate("/login")}
 									_hover={{
 										bg: "pink.300",
 									}}
@@ -302,13 +296,10 @@ const NAV_ITEMS = [
 	// 	],
 	// },
 	{
-		label: "Stores",
-		href: "/stores",
-	},
-	{
-		label: "Artisans",
+		label: "The Artisans",
 		href: "/artisans",
 	},
+
 	{
 		label: "Products",
 		href: "/products",

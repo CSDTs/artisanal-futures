@@ -35,7 +35,7 @@
 		"hint": "Charges are on a per hour basis",
 		"fields": [
 			{ "name": "Labor Rate Per Hour", "icon": "FaTshirt" },
-			{ "name": "Number of Workers", "icon": "FaTshirt" }
+			{ "name": "Number of Workers", "icon": "FaUserAlt" }
 		],
 		"is_additional_available": false,
 		"is_material_hours": false

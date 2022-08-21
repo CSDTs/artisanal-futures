@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Link, SimpleGrid, Stack, Tag, Text, useColorModeValue, Image } from "@chakra-ui/react";
+import { Box, Container, Flex, Image, Link, SimpleGrid, Stack, Tag, Text, useColorModeValue } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 const Logo = (props) => {
 	return (
@@ -160,8 +160,8 @@ export default function Footer() {
 					<Stack align={"flex-start"}>
 						<ListHeader>Legal</ListHeader>
 						<Link onClick={() => navigate("/agreement")}>The Artisanal Futures Collective Agreement</Link>
-						<Link onClick={() => navigate("/privacy")}>Privacy Policy</Link>
-						<Link onClick={() => navigate("/tos")}>Terms of Service</Link>
+						<Link onClick={() => navigate("/policies/privacy")}>Privacy Policy</Link>
+						<Link onClick={() => navigate("/policies/terms-of-service")}>Terms of Service</Link>
 					</Stack>
 					<Stack align={"flex-start"}>
 						<ListHeader>Follow Us</ListHeader>

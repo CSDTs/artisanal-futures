@@ -1,59 +1,58 @@
 import {
 	Avatar,
-	Link,
 	Box,
 	Button,
+	chakra,
 	Checkbox,
 	Flex,
 	FormControl,
+	FormHelperText,
 	FormLabel,
 	Grid,
 	Icon,
+	Image,
 	Input,
+	Link,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 	Stack,
-	VisuallyHidden,
-	chakra,
+	Switch,
 	Tab,
 	TabList,
-	Switch,
 	TabPanel,
 	TabPanels,
 	Tabs,
 	Text,
+	Textarea,
 	useColorModeValue,
 	useDisclosure,
-	FormHelperText,
-	Image,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
-	Textarea,
+	VisuallyHidden,
 } from "@chakra-ui/react";
 // Custom components
-import React, { useRef, useState } from "react";
-import { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { BsCircleFill } from "react-icons/bs";
 import { FaCube, FaUserAlt } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import ImageUpload from "../../components/ImageUpload";
 import AuthService from "../../services/auth.service";
+import ProfileService from "../../services/profile.service";
+import ShopService from "../../services/shop.service";
 import AccountPanel from "./AccountPanel";
 import BusinessPanel from "./BusinessPanel";
 import OptInPanel from "./OptInPanel";
 import PanelHeading from "./PanelHeading";
 import PanelNavigation from "./PanelNavigation";
+import PanelTab from "./PanelTab";
 import ProfilePanel from "./ProfilePanel";
 import SummaryPanel from "./SummaryPanel";
-import axios from "axios";
-import ShopService from "../../services/shop.service";
-import ProfileService from "../../services/profile.service";
-import { useNavigate } from "react-router-dom";
-import PanelTab from "./PanelTab";
 
 import MemberService from "../../services/member.service";
 function SignUpForm({ artisan, isUpdate }) {
@@ -181,7 +180,11 @@ function SignUpForm({ artisan, isUpdate }) {
 		});
 
 		await updateOptInsInWPMembership();
-		return AuthService.updateUserInformation(accountPayload).then(() =>
+		return AuthService.updateUserInformation({
+			...accountPayload,
+			name: accountPayload.first_name + " " + accountPayload.last_name,
+			nickname: accountPayload.first_name + " " + accountPayload.last_name,
+		}).then(() =>
 			MemberService.postMembershipData(222, { full_name: accountPayload.first_name + " " + accountPayload.last_name })
 		);
 	}
@@ -212,7 +215,8 @@ function SignUpForm({ artisan, isUpdate }) {
 		await updateProfileInWPMembership();
 		await MemberService.publishMembershipData(222);
 
-		navigate("/stores");
+		navigate("/artisans");
+		window.location.reload();
 	}
 
 	return (

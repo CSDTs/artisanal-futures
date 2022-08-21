@@ -18,16 +18,7 @@ const Feature = ({ title, text, icon, onClick }) => {
 				}}
 			>
 				<Stack>
-					<Flex
-						w={"100%"}
-						h={16}
-						align={"center"}
-						justify={"center"}
-						// color={"white"}
-						rounded={"full"}
-						//
-						mb={1}
-					>
+					<Flex w={"100%"} h={16} align={"center"} justify={"center"} rounded={"full"} mb={1}>
 						{icon}
 					</Flex>
 					<Heading
@@ -48,27 +39,41 @@ const Feature = ({ title, text, icon, onClick }) => {
 
 export default function Features() {
 	const navigate = useNavigate();
+
+	const FEATURE_DATA = [
+		{
+			icon: FcShop,
+			title: "Shop Our Stores",
+			text: "Browse our artisans' shops and webpages",
+			handleClick: () => navigate("/artisans"),
+		},
+		{
+			icon: FcGraduationCap,
+			title: "Share Knowledge",
+			text: "Share your artisanal knowledge with others",
+			handleClick: () => (window.location.href = `${import.meta.env.VITE_FOURM_URL}`),
+		},
+		{
+			icon: FcServices,
+			title: "Utilize Free Tools",
+			text: "Use our collection of free tools",
+			handleClick: () => navigate("/tools"),
+		},
+	];
+
 	return (
 		<Box p={4} bg={"gray.200"} mt={"3rem"}>
 			<SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
-				<Feature
-					icon={<Icon as={FcShop} w={10} h={10} />}
-					title={"Shop Our Stores"}
-					text={"Browse our artisans' shops and webpages"}
-					onClick={() => navigate("/stores")}
-				/>
-				<Feature
-					icon={<Icon as={FcGraduationCap} w={10} h={10} />}
-					title={"Share Knowledge"}
-					text={"Share your artisanal knowledge with others"}
-					onClick={() => (window.location.href = "https://fourm.artisanalfutures.org/")}
-				/>
-				<Feature
-					icon={<Icon as={FcServices} w={10} h={10} />}
-					title={"Utilize Free Tools"}
-					text={"Use our collection of free tools"}
-					onClick={() => navigate("/tools")}
-				/>
+				{FEATURE_DATA.map((feature, index) => (
+					<section key={"feature-" + index}>
+						<Feature
+							icon={<Icon as={feature.icon} w={10} h={10} />}
+							title={feature.title}
+							text={feature.text}
+							onClick={feature.handleClick}
+						/>
+					</section>
+				))}
 			</SimpleGrid>
 		</Box>
 	);

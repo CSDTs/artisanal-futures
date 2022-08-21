@@ -1,6 +1,7 @@
 import { Heading, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react";
+import MemberService from "../../services/member.service";
 import ProfileService from "../../services/profile.service";
 import ShopService from "../../services/shop.service";
 import SignUpForm from "../SignUpForm";

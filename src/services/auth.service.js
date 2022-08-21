@@ -14,6 +14,7 @@ const loginHeaders = {
 // const validateHeaders = {
 // 	Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
 // };
+
 const login = (payload) => {
 	return axios
 		.post(WP_API_URL + "jwt-auth/v1/token", payload, {
@@ -24,10 +25,37 @@ const login = (payload) => {
 			if (response.data.token) {
 				localStorage.setItem("user", JSON.stringify(response.data));
 			}
+
 			return response.data;
 		});
 };
 
+const loginAlt = (payload) => {
+	return axios
+		.post(WP_API_URL + "jwt-auth/v1/token", payload, {
+			loginHeaders,
+		})
+		.then((response) => {
+			if (response.data.token) {
+				localStorage.setItem("user", JSON.stringify(response.data));
+				return axios
+					.get(WP_API_URL + "wp/v2/users/" + response.data.user_id, {
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: "Bearer  " + JSON.parse(localStorage.getItem("user")).token,
+						},
+					})
+					.then((res) => {
+						let user = JSON.parse(localStorage.getItem("user"));
+						user = { ...user, ...{ membership_id: res.data.acf.membership } };
+						localStorage.setItem("user", JSON.stringify(user));
+						return response.data;
+					});
+			}
+
+			return response.data;
+		});
+};
 const verifyToken = () => {
 	return axios
 		.post(
@@ -74,6 +102,8 @@ const getUserInformation = () => {
 		user = { ...user, ...{ membership_id: response.data[0].acf.membership } };
 		localStorage.setItem("user_id", response.data[0].id);
 		localStorage.setItem("user", JSON.stringify(user));
+
+		console.log(response.data[0].acf.membership);
 		return response.data;
 	});
 };
@@ -121,6 +151,7 @@ const AuthService = {
 	getUserInformation,
 	updateArtisanInformation,
 	verifyToken,
+	loginAlt,
 };
 
 export default AuthService;

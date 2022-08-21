@@ -1,32 +1,39 @@
+import { CloseIcon } from "@chakra-ui/icons";
 import {
+	Box,
+	Button,
+	Center,
+	chakra,
 	Container,
+	Flex,
 	Heading,
-	Text,
+	Link,
+	SimpleGrid,
 	SkeletonCircle,
 	SkeletonText,
-	Box,
-	SimpleGrid,
-	Center,
-	Flex,
+	Text,
 } from "@chakra-ui/react";
-import ProfileCard from "./ProfileCard";
-import useSWR from "swr";
 import axios from "axios";
-import MemberService from "../../services/member.service";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
+import useSWR from "swr";
+import AuthService from "../../services/auth.service";
+import MemberService from "../../services/member.service";
+import ProfileCard from "./ProfileCard";
 const override = {
 	display: "block",
 	margin: "0 auto",
 };
 export default function Profile() {
-	const { user, isLoading, isError } = MemberService.getMemberInformation(
-		JSON.parse(localStorage.getItem("user")).membership_id
-	);
+	const { user: member, isLoading, isError } = MemberService.getCurrentMemberInformation();
+	const user = AuthService.getCurrentUser();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log(user);
-	}, [user]);
+		if (isError && !AuthService.getCurrentUser()) navigate("/login");
+	}, []);
+
 	return (
 		<Container maxW={"6xl"} mt={6}>
 			{/* <Center py={6}>
@@ -41,8 +48,45 @@ export default function Profile() {
 					</Flex>
 				</Box>
 			</Center> */}
+			{!isError && <ProfileCard slug={member?.slug} user={member?.acf} isLoading={isLoading} />}
+			{/* {isError && user && <ProfileCard slug={""} user={user} isLoading={isLoading} />} */}
 
-			<ProfileCard slug={user?.slug} user={user?.acf} isLoading={isLoading} />
+			{isError && user && (
+				<Box textAlign="center" py={10} px={6}>
+					<Box display="inline-block">
+						<Flex
+							flexDirection="column"
+							justifyContent="center"
+							alignItems="center"
+							bg={"red.500"}
+							rounded={"50px"}
+							w={"55px"}
+							h={"55px"}
+							textAlign="center"
+						>
+							<CloseIcon boxSize={"20px"} color={"white"} />
+						</Flex>
+					</Box>
+					<Heading as="h2" size="xl" mt={6} mb={2}>
+						Account Setup Undergoing Maintenance
+					</Heading>
+					<Text color={"gray.500"}>
+						Hey,{" "}
+						<chakra.span color={"blue.500"} fontWeight="500">
+							{user?.user_display_name.split(" ")[0]}
+						</chakra.span>
+						! It seems like you were granted access to Artisanal Futures, with the next step being setting up your
+						profile and store on the site. However, that service is temporarily down for maintenance. Check back later
+						to finish setting up your account. If you have any questions, please let us know at{" "}
+						<Link href="email:artisanalfutures@gmail.com" color={"teal.500"} fontWeight="bold">
+							artisanalfutures@gmail.com
+						</Link>
+					</Text>
+					<Button mt={8} colorScheme={"teal"} onClick={() => navigate("/")}>
+						Back to Homepage
+					</Button>
+				</Box>
+			)}
 		</Container>
 	);
 }

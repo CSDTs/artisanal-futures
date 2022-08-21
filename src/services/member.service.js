@@ -7,12 +7,16 @@ const WP_ACF_URL = `${BASE_URL}acf/v3`;
 
 const WP_API_MEMBERSHIP = "https://fourm.artisanalfutures.org/wp-json/acf/v3/af_members/";
 
+const checkMembershipStatus = () => {
+	return localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).membership_id : null;
+};
+
 const getWPData = (url) => {
 	return axios
 		.get(WP_API_URL + url, {
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+				// Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
 			},
 		})
 		.then((response) => {
@@ -88,6 +92,23 @@ const getMemberInformation = (id) => {
 	};
 };
 
+const getCurrentMemberInformation = () => {
+	const id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).membership_id : -1;
+
+	const address = `https://fourm.artisanalfutures.org/wp-json/wp/v2/af_members/${id}`;
+	const fetcher = async (url) => await axios.get(url).then((res) => res.data);
+
+	const { data, error } = useSWR(address, fetcher, {
+		revalidateOnFocus: true, // auto revalidate when the window is focused
+	});
+
+	return {
+		user: data,
+		isLoading: !error && !data,
+		isError: error,
+	};
+};
+
 const getMemberInformationBySlug = (slug) => {
 	const address = `https://fourm.artisanalfutures.org/wp-json/wp/v2/af_members`;
 	const fetcher = async (url) => await axios.get(url, { params: { slug: slug } }).then((res) => res.data[0].acf);
@@ -105,6 +126,8 @@ const getMemberInformationBySlug = (slug) => {
 
 const MemberService = {
 	getWPData,
+	getCurrentMemberInformation,
+	checkMembershipStatus,
 	getMemberInformation,
 	publishMembershipData,
 	postMembershipData,

@@ -1,10 +1,10 @@
-import { Button, Menu, Center, MenuButton, Avatar, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { Avatar, Button, Center, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../../services/auth.service";
 export default function UserDropdown({ username }) {
 	const logUserOut = () => {
 		AuthService.logout();
-		window.location.reload();
+		window.location.href = "/";
 	};
 
 	const navigate = useNavigate();
