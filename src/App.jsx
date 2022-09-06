@@ -3,11 +3,10 @@ import "./App.css";
 import Footer from "./components/layout/Footer";
 import Navigation from "./components/layout/Navigation";
 
-import NewArtisanLogin from "./features/NewArtisanLogin";
 import ProductSearch from "./features/ProductSearch";
 import ShopRateCalculator from "./features/ShopRateCalculator";
 import SignInForm from "./features/SignInForm";
-import SignUpForm from "./features/SignUpForm";
+// import SignUpForm from "./features/SignUpForm";
 import Agreement from "./pages/Agreement";
 import ArtisanDetails from "./pages/ArtisanDetails";
 import Artisans from "./pages/Artisans";
@@ -23,10 +22,14 @@ import SignIn from "./pages/SignIn";
 import Tools from "./pages/Tools";
 
 import VendorProfile from "./pages/VendorProfile";
+
+import { chakra } from "@chakra-ui/react";
+import { UpdateWizard } from "./features/Profile";
 function App() {
 	return (
 		<div className="App">
 			<Navigation />
+
 			<Routes>
 				<Route path="/" element={<Homepage />} />
 
@@ -40,14 +43,13 @@ function App() {
 
 				<Route path="/contact" element={<Contact />} />
 
-				<Route path="/signup" element={<SignUpForm />} />
+				{/* <Route path="/signup" element={<SignUpForm />} /> */}
 				<Route path="/signin" element={<SignInForm />} />
 
 				<Route path="/agreement" element={<Agreement />} />
 
-				<Route path="/new" element={<NewArtisanLogin />} />
-
 				<Route path="/profile" element={<Profile />} />
+				<Route path="/update-profile" element={<UpdateWizard />} />
 
 				<Route path="/policies/" element={<PolicyInformation />} />
 				<Route path="/policies/:name" element={<PolicyInformation />} />
@@ -55,6 +57,7 @@ function App() {
 				<Route path="/registration" element={<Registration />} />
 				<Route path="/login" element={<SignIn />} />
 			</Routes>
+
 			<Footer />
 		</div>
 	);

@@ -40,6 +40,7 @@ const postMembershipData = (id, payload) => {
 			}
 		)
 		.then((response) => {
+			console.log(response.data);
 			return response.data;
 		});
 };

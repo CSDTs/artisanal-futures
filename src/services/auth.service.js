@@ -30,6 +30,44 @@ const login = (payload) => {
 		});
 };
 
+const isApproved = () => {
+	if (!JSON.parse(localStorage.getItem("user"))) return;
+	let payload = {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer  " + JSON.parse(localStorage.getItem("user")).token,
+		},
+	};
+
+	return axios.get(WP_API_URL + "wp/v2/users/me", payload).then((response) => {
+		console.log(response.data?.afc?.is_approved || false);
+		// let user = JSON.parse(localStorage.getItem("user"));
+		// user = { ...user, ...{ membership_id: response.data[0].acf.membership } };
+		// localStorage.setItem("user_id", response.data[0].id);
+		// localStorage.setItem("user", JSON.stringify(user));
+
+		// console.log(response.data[0].acf.membership);
+		// return response.data;
+	});
+};
+
+const setProfileImage = () => {
+	let payload = {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer  " + JSON.parse(localStorage.getItem("user")).token,
+		},
+	};
+
+	return axios
+		.get(WP_API_URL + "wp/v2/af_members/" + JSON.parse(localStorage.getItem("user")).membership_id, payload)
+		.then((response) => {
+			let user = JSON.parse(localStorage.getItem("user"));
+			user = { ...user, ...{ profile_image: response.data.acf.profile_image } };
+			localStorage.setItem("user", JSON.stringify(user));
+			return true;
+		});
+};
 const loginAlt = (payload) => {
 	return axios
 		.post(WP_API_URL + "jwt-auth/v1/token", payload, {
@@ -48,7 +86,9 @@ const loginAlt = (payload) => {
 					.then((res) => {
 						let user = JSON.parse(localStorage.getItem("user"));
 						user = { ...user, ...{ membership_id: res.data.acf.membership } };
+						// user = { ...user, ...{ avatar: res.data.acf.profile_image } };
 						localStorage.setItem("user", JSON.stringify(user));
+
 						return response.data;
 					});
 			}
@@ -112,7 +152,7 @@ const updateUserInformation = (payload) => {
 	if (!JSON.parse(localStorage.getItem("user"))) throw new Error("User not logged in");
 	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
 	return axios
-		.post(WP_API_URL + "wp/v2/users/" + JSON.parse(localStorage.getItem("user_id")), temp, {
+		.post(WP_API_URL + "wp/v2/users/" + JSON.parse(localStorage.getItem("user")).user_id, temp, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
@@ -152,6 +192,8 @@ const AuthService = {
 	updateArtisanInformation,
 	verifyToken,
 	loginAlt,
+	isApproved,
+	setProfileImage,
 };
 
 export default AuthService;

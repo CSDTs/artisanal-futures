@@ -36,15 +36,10 @@ import {
 // Custom components
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { AiFillSetting } from "react-icons/ai";
-import { BsCircleFill } from "react-icons/bs";
-import { FaCube, FaUserAlt } from "react-icons/fa";
-import { MdModeEdit } from "react-icons/md";
+
 import { useNavigate } from "react-router-dom";
-import ImageUpload from "../../components/ImageUpload";
-import AuthService from "../../services/auth.service";
-import ProfileService from "../../services/profile.service";
-import ShopService from "../../services/shop.service";
+import AuthService from "../../../../services/auth.service";
+
 import AccountPanel from "./AccountPanel";
 import BusinessPanel from "./BusinessPanel";
 import OptInPanel from "./OptInPanel";
@@ -54,13 +49,15 @@ import PanelTab from "./PanelTab";
 import ProfilePanel from "./ProfilePanel";
 import SummaryPanel from "./SummaryPanel";
 
-import MemberService from "../../services/member.service";
-function SignUpForm({ artisan, isUpdate }) {
+import MemberService from "../../../../services/member.service";
+
+export default function UpdateWizard() {
 	const { user, isLoading, isError } = MemberService.getMemberInformationACF(
 		JSON.parse(localStorage.getItem("user")).membership_id,
 		true
 	);
 
+	const userID = JSON.parse(localStorage.getItem("user")).membership_id;
 	const textColor = useColorModeValue("gray.700", "white");
 	const bgPrevButton = useColorModeValue("gray.100", "gray.100");
 	const iconColor = useColorModeValue("gray.300", "gray.700");
@@ -92,6 +89,9 @@ function SignUpForm({ artisan, isUpdate }) {
 					preview: user.profile_image,
 				};
 			});
+		// if (user) userID = JSON.parse(localStorage.getItem("user")).membership_id;
+
+		console.log(userID);
 	}, [user]);
 
 	const [activeBullets, setActiveBullets] = useState({
@@ -176,7 +176,7 @@ function SignUpForm({ artisan, isUpdate }) {
 
 	async function updateUserInWPMembership() {
 		uploadMedia(accountPayload, (resp) => {
-			MemberService.postMembershipData(222, { profile_image: resp.data.source_url });
+			MemberService.postMembershipData(userID, { profile_image: resp.data.source_url });
 		});
 
 		await updateOptInsInWPMembership();
@@ -185,46 +185,59 @@ function SignUpForm({ artisan, isUpdate }) {
 			name: accountPayload.first_name + " " + accountPayload.last_name,
 			nickname: accountPayload.first_name + " " + accountPayload.last_name,
 		}).then(() =>
-			MemberService.postMembershipData(222, { full_name: accountPayload.first_name + " " + accountPayload.last_name })
+			MemberService.postMembershipData(userID, {
+				full_name: accountPayload.first_name + " " + accountPayload.last_name,
+			})
 		);
 	}
 
 	async function updateBusinessInWPMembership() {
 		uploadMedia(businessPayload, (resp) => {
-			MemberService.postMembershipData(222, { business: { thumbnail_image: resp.data.source_url } });
+			MemberService.postMembershipData(userID, { business: { thumbnail_image: resp.data.source_url } });
 		});
 
-		return MemberService.postMembershipData(222, { business: businessPayload });
+		return MemberService.postMembershipData(userID, { business: businessPayload });
 	}
 
 	async function updateProfileInWPMembership() {
 		uploadMedia(profilePayload, (resp) => {
-			MemberService.postMembershipData(222, { profile: { cover_image: resp.data.source_url } });
+			MemberService.postMembershipData(userID, { profile: { cover_image: resp.data.source_url } });
 		});
-		return MemberService.postMembershipData(222, { profile: profilePayload });
+		return MemberService.postMembershipData(userID, { profile: profilePayload });
 	}
 
 	async function updateOptInsInWPMembership() {
-		return MemberService.postMembershipData(222, { modifiers: miscPayload });
+		return MemberService.postMembershipData(userID, { modifiers: miscPayload });
+	}
+	async function updateStatusInWPMembership() {
+		return MemberService.postMembershipData(userID, { first_time_setup: true });
 	}
 
 	async function submitWPData() {
+		await updateStatusInWPMembership();
 		await updateUserInWPMembership();
 		await updateBusinessInWPMembership();
 		await updateOptInsInWPMembership();
 		await updateProfileInWPMembership();
-		await MemberService.publishMembershipData(222);
+		await MemberService.publishMembershipData(userID);
 
-		navigate("/artisans");
+		navigate("/profile");
 		window.location.reload();
 	}
 
 	return (
 		<Flex direction="column" minH="100vh" align="center" pt={{ sm: "125px", lg: "75px" }}>
 			<Flex direction="column" textAlign="center" mb={{ sm: "25px", md: "45px" }}>
-				<Text color={textColor} fontSize={{ sm: "2xl", md: "3xl", lg: "4xl" }} fontWeight="bold" mb="8px">
-					Welcome back, {user?.user.user_firstname}! {isUpdate ? "Update" : "Build"} your profile
-				</Text>
+				{user?.user.user_firstname ? (
+					<Text color={textColor} fontSize={{ sm: "2xl", md: "3xl", lg: "4xl" }} fontWeight="bold" mb="8px">
+						Welcome back, {user?.user.user_firstname}! Let's update your profile
+					</Text>
+				) : (
+					<Text color={textColor} fontSize={{ sm: "2xl", md: "3xl", lg: "4xl" }} fontWeight="bold" mb="8px">
+						Welcome to Artisanal Futures! Let's create your profile
+					</Text>
+				)}
+
 				<Text color="gray.400" fontWeight="normal" fontSize={{ sm: "sm", md: "lg" }}>
 					This information will let us know more about you.
 				</Text>
@@ -454,5 +467,3 @@ function SignUpForm({ artisan, isUpdate }) {
 		</Flex>
 	);
 }
-
-export default SignUpForm;

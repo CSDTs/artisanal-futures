@@ -1,37 +1,37 @@
 import {
 	Avatar,
-	Link,
 	Box,
 	Button,
+	chakra,
 	Checkbox,
 	Flex,
 	FormControl,
+	FormHelperText,
 	FormLabel,
 	Grid,
 	Icon,
+	Image,
 	Input,
+	Link,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 	Stack,
-	VisuallyHidden,
-	chakra,
+	Switch,
 	Tab,
 	TabList,
-	Switch,
 	TabPanel,
 	TabPanels,
 	Tabs,
 	Text,
+	Textarea,
 	useColorModeValue,
 	useDisclosure,
-	FormHelperText,
-	Image,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
-	Textarea,
+	VisuallyHidden,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -47,8 +47,7 @@ export default function PanelNavigation({ handleSubmit, handlePrev, handleNext, 
 					mt="24px"
 					w={{ sm: "75px", lg: "100px" }}
 					h="35px"
-					onClick={handlePrev}
-				>
+					onClick={handlePrev}>
 					<Text fontSize="xs" color="gray.700" fontWeight="bold">
 						PREV
 					</Text>
@@ -65,13 +64,12 @@ export default function PanelNavigation({ handleSubmit, handlePrev, handleNext, 
 					setLoading(true);
 					handleSubmit().then(() => setLoading(false));
 				}}
-				isLoading={loading}
-			>
+				isLoading={loading}>
 				<Text fontSize="xs" color="#fff" fontWeight="bold">
 					Submit to WP
 				</Text>
 			</Button> */}
-			{handleNext && (
+			{handleNext && !isSubmit && (
 				<Button
 					variant="no-hover"
 					bg="linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)"
@@ -79,10 +77,28 @@ export default function PanelNavigation({ handleSubmit, handlePrev, handleNext, 
 					mt="24px"
 					w={{ sm: "75px", lg: "100px" }}
 					h="35px"
-					onClick={isSubmit ? handleSubmit : handleNext}
-				>
+					onClick={isSubmit ? handleSubmit : handleNext}>
 					<Text fontSize="xs" color="#fff" fontWeight="bold">
 						{isSubmit ? "SUBMIT" : "NEXT"}
+					</Text>
+				</Button>
+			)}
+
+			{handleNext && isSubmit && (
+				<Button
+					variant="no-hover"
+					bg="linear-gradient(81.62deg, #f13860 2.25%, #f51928 79.87%)"
+					alignSelf="flex-end"
+					mt="24px"
+					w={{ sm: "75px", lg: "100px" }}
+					h="35px"
+					onClick={() => {
+						setLoading(true);
+						handleSubmit().then(() => setLoading(false));
+					}}
+					isLoading={loading}>
+					<Text fontSize="xs" color="#fff" fontWeight="bold">
+						SUBMIT
 					</Text>
 				</Button>
 			)}

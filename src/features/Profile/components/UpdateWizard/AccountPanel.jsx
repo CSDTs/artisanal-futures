@@ -1,33 +1,8 @@
-import {
-	Avatar,
-	Link,
-	Box,
-	Checkbox,
-	Flex,
-	FormControl,
-	FormLabel,
-	Input,
-	Stack,
-	VisuallyHidden,
-	chakra,
-	Text,
-} from "@chakra-ui/react";
-// Custom components
-import { useEffect } from "react";
-import ImageUpload from "../../components/ImageUpload";
-import { FaUserAlt } from "react-icons/fa";
-import AvatarUpload from "../../components/AvatarUpload";
-import AuthService from "../../services/auth.service";
+import { Box, Checkbox, Flex, FormControl, FormLabel, Input, Link, Stack, Text } from "@chakra-ui/react";
 
-export default function AccountPanel({
-	accountPayload,
-	setAccountPayload,
-	miscPayload,
-	setMiscPayload,
-	textColor,
-	membershipPayload,
-	setMembershipPayload,
-}) {
+import AvatarUpload from "../AvatarUpload";
+
+export default function AccountPanel({ accountPayload, setAccountPayload, miscPayload, setMiscPayload, textColor }) {
 	const setAccountValue = (key, value) => {
 		setAccountPayload((data) => {
 			return {
@@ -52,8 +27,7 @@ export default function AccountPanel({
 				minW={{ sm: "110px", xl: "150px" }}
 				h={{ sm: "110px", xl: "150px" }}
 				mx={{ sm: "auto", md: "40px", xl: "85px" }}
-				mb={{ sm: "25px" }}
-			>
+				mb={{ sm: "25px" }}>
 				<AvatarUpload
 					heading={"Profile Image"}
 					selectedFile={accountPayload.selectedFile}

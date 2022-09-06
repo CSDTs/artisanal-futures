@@ -1,41 +1,41 @@
 import {
 	Avatar,
-	Link,
 	Box,
 	Button,
+	chakra,
 	Checkbox,
 	Flex,
 	FormControl,
+	FormHelperText,
 	FormLabel,
 	Grid,
 	Icon,
+	Image,
 	Input,
+	Link,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 	Stack,
-	VisuallyHidden,
-	chakra,
+	Switch,
 	Tab,
 	TabList,
-	Switch,
 	TabPanel,
 	TabPanels,
 	Tabs,
 	Text,
 	useColorModeValue,
 	useDisclosure,
-	FormHelperText,
-	Image,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
+	VisuallyHidden,
 } from "@chakra-ui/react";
-import { FaUserAlt } from "react-icons/fa";
 import axios from "axios";
-import { useEffect, useState, useId } from "react";
-import AuthService from "../../services/auth.service";
+import { useEffect, useId, useState } from "react";
+import { FaUserAlt } from "react-icons/fa";
+import AuthService from "../../../../services/auth.service";
 export default function AvatarUpload({ selectedFile, heading, fileType, setSelectedFile, updateOverride }) {
 	const [preview, setPreview] = useState();
 	const id = useId();
@@ -71,8 +71,7 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 				color="gray.700"
 				_dark={{
 					color: "gray.50",
-				}}
-			>
+				}}>
 				{heading}
 			</FormLabel>
 			<Flex
@@ -86,8 +85,7 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 					color: "gray.500",
 				}}
 				borderStyle="dashed"
-				rounded="md"
-			>
+				rounded="md">
 				<Stack spacing={1} textAlign="center" cursor={"pointer"}>
 					<chakra.label
 						htmlFor="file-upload"
@@ -104,8 +102,7 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 							_dark: {
 								color: "brand.300",
 							},
-						}}
-					>
+						}}>
 						<Box w={"100%"} justifyContent="center" display={"flex"}>
 							{!selectedFile && !updateOverride && (
 								<Avatar bg="gray.300" icon={<FaUserAlt fontSize="2.5rem" />} size="xl" />
@@ -121,8 +118,7 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 							_dark={{
 								color: "gray.400",
 							}}
-							alignItems="baseline"
-						>
+							alignItems="baseline">
 							<VisuallyHidden>
 								<input id="file-upload" name="file-upload" type="file" onChange={onSelectFile} />
 							</VisuallyHidden>
@@ -133,8 +129,7 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 								color="gray.500"
 								_dark={{
 									color: "gray.50",
-								}}
-							>
+								}}>
 								PNG, JPG, GIF up to 10MB
 							</Text>
 						)}

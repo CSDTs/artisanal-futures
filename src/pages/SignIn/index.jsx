@@ -18,39 +18,43 @@ import {
 	useColorModeValue,
 	useDisclosure,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PuffLoader } from "react-spinners";
+
+import Loading from "../../components/Loading";
 import AuthService from "../../services/auth.service";
-const override = {
-	display: "block",
-	margin: "0 auto",
-};
 
 export default function Login() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
-	const [approval, setApproval] = useState(false);
-	const [artisan, setArtisan] = useState(false);
+
 	const navigate = useNavigate();
 	const { isOpen: isVisible, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
 	const logInUser = () => {
+		setIsLoading(true);
 		AuthService.loginAlt({ username, password })
 			.then(() => {
-				navigate("/profile");
-				window.location.reload();
+				AuthService.setProfileImage()
+					.catch(() => {
+						console.error("Error setting profile image");
+					})
+					.finally(() => {
+						navigate("/profile");
+						window.location.reload();
+					});
 			})
 			.catch(() => {
-				console.error("Nope, not going to happen");
+				console.error("Error logging in");
+				setIsLoading(false);
 				onOpen();
 			});
 	};
 
 	const populateData = () => {
-		setUserName("ahunn");
-		setPassword("DTp4IWqQG)bF8m#x%qrgW!4U");
+		setUserName(import.meta.env.VITE_TEST_USERNAME);
+		setPassword(import.meta.env.VITE_TEST_PASS);
 	};
 
 	useEffect(() => {
@@ -64,7 +68,7 @@ export default function Login() {
 					<Stack align={"center"}>
 						<Heading fontSize={"4xl"}>Sign in to your account</Heading>
 						<Text fontSize={"lg"} color={"gray.600"}>
-							to enjoy all of our cool <Link color={"blue.400"}>features</Link> <Link onClick={populateData}>✌️</Link>
+							to customize your profile and store <Link onClick={populateData}>✌️</Link>
 						</Text>
 					</Stack>
 
@@ -102,8 +106,7 @@ export default function Login() {
 									_hover={{
 										bg: "blue.500",
 									}}
-									onClick={logInUser}
-								>
+									onClick={logInUser}>
 									Sign in
 								</Button>
 							</Stack>
@@ -111,8 +114,7 @@ export default function Login() {
 					</Box>
 				</Stack>
 			)}
-
-			<PuffLoader color={"#000000"} loading={isLoading} cssOverride={override} size={150} />
+			<Loading isLoading={isLoading} />
 		</Flex>
 	);
 }
