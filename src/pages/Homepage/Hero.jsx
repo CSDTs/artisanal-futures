@@ -23,8 +23,7 @@ export default function Hero() {
 					}}
 					zIndex={1}
 					bg={bg}
-					border="solid 1px transparent"
-				>
+					border="solid 1px transparent">
 					<Icon
 						display={{
 							base: "none",
@@ -41,8 +40,7 @@ export default function Hero() {
 						fill="currentColor"
 						viewBox="0 0 100 100"
 						preserveAspectRatio="none"
-						aria-hidden="true"
-					>
+						aria-hidden="true">
 						<polygon points="50,0 100,0 50,100 0,100" />
 					</Icon>
 					<Box
@@ -61,8 +59,7 @@ export default function Hero() {
 							md: 16,
 							lg: 20,
 							xl: 28,
-						}}
-					>
+						}}>
 						<Box
 							w="full"
 							textAlign={{
@@ -70,8 +67,7 @@ export default function Hero() {
 								lg: "left",
 							}}
 							justifyContent="center"
-							alignItems="center"
-						>
+							alignItems="center">
 							<chakra.h1
 								fontSize={{
 									base: "4xl",
@@ -84,14 +80,12 @@ export default function Hero() {
 								color="gray.900"
 								_dark={{
 									color: "white",
-								}}
-							>
+								}}>
 								<chakra.span
 									display={{
 										base: "block",
 										xl: "inline",
-									}}
-								>
+									}}>
 									Artisanal Futures{" "}
 								</chakra.span>
 							</chakra.h1>
@@ -112,8 +106,7 @@ export default function Hero() {
 									sm: "auto",
 									lg: 0,
 								}}
-								color="gray.500"
-							>
+								color="gray.500">
 								Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
 								fugiat veniam occaecat fugiat aliqua.
 							</chakra.p>
@@ -129,10 +122,9 @@ export default function Hero() {
 									sm: "center",
 									lg: "start",
 								}}
-								fontWeight="extrabold"
-							>
-								<Button colorScheme={"gray"} onClick={() => navigate("/stores")}>
-									Shop Our Stores
+								fontWeight="extrabold">
+								<Button colorScheme={"gray"} onClick={() => navigate("/artisans")}>
+									Browse Our Artisans
 								</Button>
 							</Box>
 						</Box>
@@ -155,8 +147,7 @@ export default function Hero() {
 				w={{
 					lg: "50%",
 				}}
-				border="solid 1px transparent"
-			>
+				border="solid 1px transparent">
 				<Image h={[56, 72, 96, "full"]} w="full" fit="cover" src="/img/hero.jpg" alt="" loading="lazy" />
 			</Box>
 		</Box>

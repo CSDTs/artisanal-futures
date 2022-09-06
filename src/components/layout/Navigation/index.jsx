@@ -46,8 +46,7 @@ export default function Navigation() {
 				borderBottom={1}
 				borderStyle={"solid"}
 				borderColor={useColorModeValue("gray.200", "gray.900")}
-				align={"center"}
-			>
+				align={"center"}>
 				<Container maxW={"6xl"} flexDir={"row"} alignItems={"center"} display={"flex"}>
 					<Flex flex={{ base: 1, md: "auto" }} ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
 						<IconButton
@@ -80,8 +79,7 @@ export default function Navigation() {
 									fontSize={"sm"}
 									fontWeight={400}
 									variant={"link"}
-									onClick={() => navigate("/registration")}
-								>
+									onClick={() => navigate("/registration")}>
 									Become an Artisan
 								</Button>
 
@@ -94,8 +92,7 @@ export default function Navigation() {
 									onClick={() => navigate("/login")}
 									_hover={{
 										bg: "pink.300",
-									}}
-								>
+									}}>
 									Sign In
 								</Button>
 							</>
@@ -145,8 +142,7 @@ const DesktopNav = () => {
 								_hover={{
 									textDecoration: "none",
 									color: linkHoverColor,
-								}}
-							>
+								}}>
 								{navItem.label}
 							</Link>
 						</PopoverTrigger>
@@ -177,8 +173,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
 			display={"block"}
 			p={2}
 			rounded={"md"}
-			_hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
-		>
+			_hover={{ bg: useColorModeValue("pink.50", "gray.900") }}>
 			<Stack direction={"row"} align={"center"}>
 				<Box>
 					<Text transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
@@ -193,8 +188,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
 					_groupHover={{ opacity: "100%", transform: "translateX(0)" }}
 					justify={"flex-end"}
 					align={"center"}
-					flex={1}
-				>
+					flex={1}>
 					<Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
 				</Flex>
 			</Stack>
@@ -220,15 +214,20 @@ const MobileNavItem = ({ label, children, href }) => {
 			<Flex
 				py={2}
 				as={Link}
-				// href={href ?? "#"}
-				onClick={() => navigate(href ?? "#")}
+				onClick={() => {
+					if (href === "https://fourm.artisanalfutures.org/") {
+						window.location.href = "https://fourm.artisanalfutures.org/";
+						return;
+					}
+
+					navigate(href ?? "#");
+				}}
 				// href={href ?? "#"}
 				justify={"space-between"}
 				align={"center"}
 				_hover={{
 					textDecoration: "none",
-				}}
-			>
+				}}>
 				<Text fontWeight={600} color={useColorModeValue("gray.600", "gray.200")}>
 					{label}
 				</Text>
@@ -250,8 +249,7 @@ const MobileNavItem = ({ label, children, href }) => {
 					borderLeft={1}
 					borderStyle={"solid"}
 					borderColor={useColorModeValue("gray.200", "gray.700")}
-					align={"start"}
-				>
+					align={"start"}>
 					{children &&
 						children.map((child) => (
 							<Link key={child.label} py={2} href={child.href}>
