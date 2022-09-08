@@ -25,7 +25,7 @@ You may wish to respond to something by disagreeing with it. That’s fine. But 
 
 Instead, provide reasoned counter-arguments that improve the conversation.
 
-#### Your Participation Counts
+##### Your Participation Counts
 
 The conversations we have here set the tone for every new arrival. Help us influence the future of this community by choosing to engage in discussions that make this forum an interesting place to be — and avoiding those that do not.
 
@@ -33,7 +33,7 @@ Our forum and website provides tools that enable the community to collectively i
 
 Let’s leave our community better than we found it.
 
-#### If You See a Problem, Flag It
+##### If You See a Problem, Flag It
 
 Moderators have special authority; they are responsible for this forum. But so are you. With your help, moderators can be community facilitators, not just janitors or police.
 
@@ -41,7 +41,7 @@ When you see bad behavior, don’t reply. It encourages the bad behavior by ackn
 
 In order to maintain our community, moderators reserve the right to remove any content and any user account for any reason at any time. Moderators do not preview new posts; the moderators and site operators take no responsibility for any content posted by the community. New members are approved for forum use when they sign up for an account.
 
-#### Always Be Civil
+##### Always Be Civil
 
 Nothing sabotages a healthy conversation like rudeness:
 
@@ -54,7 +54,7 @@ These are not concrete terms with precise definitions — avoid even the appeara
 
 This is a public forum, and search engines index these discussions. Keep the language, links, and images safe for family and friends.
 
-#### Keep It Tidy
+##### Keep It Tidy
 
 Make the effort to put things in the right place, so that we can spend more time discussing and less cleaning up. So:
 
@@ -66,15 +66,15 @@ Make the effort to put things in the right place, so that we can spend more time
 
 Rather than posting “+1” or “Agreed”, use the Like button.
 
-#### Post Only Your Own Stuff
+##### Post Only Your Own Stuff
 
 You may not post descriptions of, links to, or methods for stealing someone’s intellectual property (software, video, audio, images), or for breaking any other law.
 
-#### Powered by You
+##### Powered by You
 
 This site is operated by your friendly local staff and you, the community. If you have any further questions about how things should work here, open a new topic in the site feedback category and let’s discuss! If there’s a critical or urgent issue that can’t be handled by a meta topic or flag, contact us via the staff page.
 
-#### Terms of Service
+##### Terms of Service
 
 Yes, legalese is boring, but we must protect ourselves – and by extension, you and your data – against unfriendly folks. We have a Terms of Service describing your (and our) behavior and rights related to content, privacy, and laws. To use this service, you must agree to abide by our TOS.
 

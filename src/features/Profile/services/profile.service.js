@@ -28,7 +28,13 @@ const uploadMedia = (payload, callback) => {
 	let headers = {};
 	headers["Content-Disposition"] = "form-data; filename='" + file.name + "'";
 	headers["Authorization"] = `Bearer ${AuthService.getCurrentUser().token}`;
-	axios.post(WP_MEDIA_URL, formData, { headers: headers }).then((res) => callback(res));
+	axios.post(WP_MEDIA_URL, formData, { headers: headers }).then((res) => {
+		callback(res);
+	});
+};
+
+const updateProfileImage = (url) => {
+	AuthService.updateCurrentUser({ profile_image: url });
 };
 
 const updateProfileDataWithMedia = (payload, mediaPayload) => {
@@ -39,7 +45,10 @@ const updateProfileDataWithMedia = (payload, mediaPayload) => {
 };
 
 const updateUserDataWithMedia = (payload, mediaPayload) => {
-	let callback = (res) => updateProfileData(mediaPayload(res.data));
+	let callback = (res) => {
+		if (res.data?.source_url) updateProfileImage(res.data.source_url);
+		updateProfileData(mediaPayload(res.data));
+	};
 	uploadMedia(payload, callback);
 
 	return AuthService.updateUserInformation({
@@ -54,7 +63,8 @@ const updateUserDataWithMedia = (payload, mediaPayload) => {
 };
 
 const getProfileData = () => {
-	const userID = AuthService.getCurrentUser().membership_id;
+	const userID = AuthService.getCurrentUser()?.membership_id;
+
 	const address = `${ACF_MEMBERS_URL}${userID}`;
 	const fetcher = async (url) => await axios.get(url).then((res) => res.data.acf);
 

@@ -1,5 +1,6 @@
 import { Box, Container, Flex, Heading, Spacer, Stack, Text } from "@chakra-ui/react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import TeamCard from "../components/TeamCard";
 import ToolCard from "../components/ui/Card/ToolCard";
 export default function Tools() {
 	const navigate = useNavigate();
@@ -20,11 +21,18 @@ export default function Tools() {
 					alignItems="center"
 					justifyContent="left">
 					<Stack direction={"row"} spacing={6}>
-						<ToolCard
+						<TeamCard
+							title={"Shop Rate Calculator"}
+							subtitle={"Calculates per hour cost of your shop"}
+							type={"Finance"}
+							image={"/img/shoprate.png"}
+							callback={() => navigate("/tools/shop-rate-calculator")}
+						/>
+						{/* <ToolCard
 							title={"Shop Rate Calculator"}
 							brief={"Calculates per hour cost of shop"}
 							url={`/tools/shop-rate-calculator`}
-						/>
+						/> */}
 					</Stack>
 				</Flex>
 			</Container>

@@ -1,7 +1,8 @@
 import { Box, Checkbox, Flex, FormControl, FormLabel, Input, Link, Stack, Text } from "@chakra-ui/react";
+import { useState } from "react";
 
 import { AvatarUpload } from "../../MediaUpload/";
-
+import { Prompt } from "./LoginDebugger";
 export default function AccountPanel({
 	accountPayload,
 	setAccountPayload,
@@ -26,6 +27,9 @@ export default function AccountPanel({
 			};
 		});
 	};
+
+	const [password, setPass] = useState("");
+	const [username, setUsername] = useState(accountPayload.email);
 
 	return (
 		<Flex direction={{ sm: "column", md: "row" }} w="100%" mb="24px">
@@ -60,13 +64,13 @@ export default function AccountPanel({
 					</FormLabel>
 					<Input borderRadius="15px" placeholder="eg. Smith" fontSize="xs" value={accountPayload.last_name} />
 				</FormControl>
-				<FormControl isDisabled>
+				<FormControl isDisabled onChange={(e) => setAccountValue("username", e.target.value)}>
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 						Username
 					</FormLabel>
 					<Input borderRadius="15px" placeholder="eg. tsmith" fontSize="xs" value={accountPayload.username} />
 				</FormControl>
-				<FormControl isDisabled>
+				<FormControl isDisabled onChange={(e) => setAccountValue("email", e.target.value)}>
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 						Email Address
 					</FormLabel>
@@ -78,18 +82,27 @@ export default function AccountPanel({
 						value={accountPayload.email}
 					/>
 				</FormControl>
+
 				{/* <FormControl onChange={(e) => setAccountValue("current_password", e.target.value)}>
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 						Current Password
 					</FormLabel>
 					<Input borderRadius="15px" placeholder="eg. SuperSecretPassword123" fontSize="xs" type="password" />
-				</FormControl>
-				<FormControl onChange={(e) => setAccountValue("password", e.target.value)}>
+				</FormControl> */}
+
+				{/* <FormControl onChange={(e) => setAccountValue("current_password", e.target.value)}>
+					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
+						Current Password
+					</FormLabel>
+					<Input borderRadius="15px" placeholder="eg. SuperSecretPassword123" fontSize="xs" type="password" />
+				</FormControl>*/}
+				{/* <FormControl onChange={(e) => setAccountValue("password", e.target.value)}>
 					<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 						New Password
 					</FormLabel>
 					<Input borderRadius="15px" placeholder="eg. SuperSecretPassword123" fontSize="xs" type="password" />
 				</FormControl> */}
+				{/* <Prompt payload={{ username, password }} /> */}
 				<Stack direction="column" spacing="20px">
 					<FormControl onChange={(e) => setMiscValue("terms_of_service", e.target.checked)}>
 						<Checkbox isChecked={miscPayload.terms_of_service}>

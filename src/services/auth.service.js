@@ -74,6 +74,7 @@ const logout = () => {
 const updateUserInformation = (payload) => {
 	if (!getCurrentUser()) throw new Error("User not logged in");
 	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
+
 	return axios
 		.post(WP_USER_URL + getCurrentUser().user_id, temp, {
 			headers: {
@@ -132,10 +133,10 @@ const AuthService = {
 	logout,
 	getCurrentUser,
 	updateUserInformation,
-
+	getCurrentUserToken,
 	// updateArtisanInformation,
 	verifyToken,
-
+	updateCurrentUser,
 	setProfileImage,
 };
 

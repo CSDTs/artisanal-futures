@@ -1,4 +1,4 @@
-## Terms of Service
+### Terms of Service
 
 These terms govern use of the Internet forum at [https://forum.artisanalfutures.org](https://forum.artisanalfutures.org) and artisanalfutures.org and all subdomains. To use these, you must agree to these terms.
 
@@ -51,14 +51,10 @@ Your permission to use the forum is subject to the following conditions:
 7.  You may not falsely imply that you’re affiliated with or endorsed by ArtisanalFutures.
 8.  You may not hyperlink to images or other non-hypertext content on the forum on other webpages.
 9.  You may not remove any marks showing proprietary ownership from materials you download from the forum.
-10. You may not show any part of the forum on other websites with iframe.
-
+10. You may not show any part of the forum on other websites with 'iframe'.
 11. You may not disable, avoid, or circumvent any security or access restrictions of the forum.
-
 12. You may not strain the infrastructure of the forum with an unreasonable volume of requests, or requests designed to impose an unreasonable load on information systems underlying the forum.
-
 13. You may not impersonate others through the forum.
-
 14. You may not encourage or help anyone in violation of these terms.
 
 #### Content Standards
@@ -127,7 +123,7 @@ The following provisions survive the end of our agreement: Your Content, Feedbac
 
 #### Disputes
 
-The Artistianal Futures Collective Agreement will govern any dispute related to these terms or your use of the forum.
+The Artisanal Futures Collective Agreement will govern any dispute related to these terms or your use of the forum.
 
 You and ArtisanalFutures agree to seek injunctions related to these terms only in state or federal court in Oklahoma City, OK. Neither you nor ArtisanalFutures will object to jurisdiction, forum, or venue in those courts.
 

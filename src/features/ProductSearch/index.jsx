@@ -5,6 +5,7 @@ import { Container, Heading, Text } from "@chakra-ui/react";
 import Filter from "./components/Filters/SearchBar";
 import ProductGrid from "./components/ProductGrid";
 
+import Loading from "../../components/Loading";
 import FilterBar from "./components/Filters/FilterBar";
 import ProductService from "./services/product.service";
 
@@ -110,7 +111,9 @@ export default function ProductSearch() {
 				filteredTags={filteredTags}
 				setProducts={setApiProducts}
 			/>
-			<ProductGrid products={filtered} />
+			{!isLoadingProducts && <ProductGrid products={filtered} />}
+
+			<Loading isLoading={isLoadingProducts} />
 		</>
 	);
 }

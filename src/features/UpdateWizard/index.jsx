@@ -17,15 +17,15 @@ import PanelNavigation from "./components/PanelNavigation";
 import PanelTab from "./components/PanelTab";
 import ProfilePanel from "./components/ProfilePanel";
 import SummaryPanel from "./components/SummaryPanel";
-
+import WizardService from "./services/wizard.service";
 export default function UpdateWizard() {
 	const { user, business, profile, modifiers, profile_image, isLoading, isError } = ProfileService.getProfileData();
 
 	const [accountPayload, setAccountPayload] = useState({
 		first_name: "",
 		last_name: "",
-		username: AuthService.getCurrentUser().user_nicename,
-		email: AuthService.getCurrentUser().user_email,
+		username: AuthService.getCurrentUser()?.user_nicename,
+		email: AuthService.getCurrentUser()?.user_email,
 		selectedFile: null,
 		preview: null,
 		description: "User has not agreed to the TOS and Collective Agreement.",
@@ -68,7 +68,7 @@ export default function UpdateWizard() {
 		preview: null,
 	});
 
-	const userID = AuthService.getCurrentUser().membership_id;
+	// const userID = AuthService.getCurrentUser().membership_id;
 	const textColor = useColorModeValue("gray.700", "white");
 	const bgPrevButton = useColorModeValue("gray.100", "gray.100");
 	const iconColor = useColorModeValue("gray.300", "gray.700");
@@ -79,6 +79,10 @@ export default function UpdateWizard() {
 		privately_visible: false,
 		invisible: false,
 	});
+
+	useEffect(() => {
+		if (isError && !AuthService.getCurrentUser()) navigate("/login");
+	}, [isError]);
 
 	useEffect(() => {
 		if (user)
@@ -118,32 +122,71 @@ export default function UpdateWizard() {
 
 	const navigate = useNavigate();
 
+	const [verifyPayload, setVerifyPayload] = useState({
+		username: accountPayload.email,
+		password: "",
+	});
 	async function submitWPData() {
-		// Determines whether to go through wizard first time setup or through profile settings
-		await ProfileService.updateProfileData({ first_time_setup: true });
+		// if (accountPayload.current_password && accountPayload.email !== AuthService.getCurrentUser().user_email)
+		// 	console.log("Fetching new token for email change");
+		// if (!accountPayload.current_password && accountPayload.email !== AuthService.getCurrentUser().user_email)
+		// 	console.log("Needs to enter current password to fetch new token for email change");
+
+		// if (accountPayload.email === AuthService.getCurrentUser().user_email) console.log("Don't bother with email change");
+
+		// if (accountPayload.current_password && accountPayload.password)
+		// 	console.log("Fetching new token for password change");
+		// if (!accountPayload.current_password && accountPayload.password)
+		// 	console.log("Needs to enter current password to fetch new token for password change");
+
+		// if (!accountPayload.password) console.log("Don't bother with password change");
+
+		// if (accountPayload.current_password && accountPayload.username !== AuthService.getCurrentUser().user_nicename)
+		// 	console.log("Fetching new token for username change");
+		// if (!accountPayload.current_password && accountPayload.username !== AuthService.getCurrentUser().user_nicename)
+		// 	console.log("Needs to enter current username to fetch new token for password change");
+
+		// if (accountPayload.username === AuthService.getCurrentUser().user_nicename)
+		// 	console.log("Don't bother with username change");
+
+		// let currentToken = AuthService.getCurrentUserToken();
+		// let verifyToken = "";
+		// WizardService.getToken({
+		// 	username: "ahunnddd",
+		// 	password: accountPayload?.current_password,
+		// }).then((data) => {
+		// 	console.log(data);
+		// 	verifyToken = data.token;
+		// 	console.log(currentToken);
+		// 	console.log(verifyToken);
+		// 	console.log(currentToken == verifyToken);
+		// });
+
+		// // Determines whether to go through wizard first time setup or through profile settings
+		// await ProfileService.updateProfileData({ first_time_setup: true });
 
 		// User profile data update
 		await ProfileService.updateUserDataWithMedia(accountPayload, (res) => {
 			return { profile_image: res.source_url };
 		});
 
-		// Business data update
-		await ProfileService.updateProfileDataWithMedia({ business: businessPayload }, (res) => {
-			return { business: { thumbnail_image: res.source_url } };
-		});
+		// // Business data update
+		// await ProfileService.updateProfileDataWithMedia({ business: businessPayload }, (res) => {
+		// 	return { business: { thumbnail_image: res.source_url } };
+		// });
 
-		// Preferences update
-		await ProfileService.updateProfileData({ modifiers: miscPayload });
+		// // Preferences update
+		// await ProfileService.updateProfileData({ modifiers: miscPayload });
 
-		// Public Profile Data
-		await ProfileService.updateProfileDataWithMedia({ profile: profilePayload }, (res) => {
-			return { profile: { cover_image: res.source_url } };
-		});
+		// // Public Profile Data
+		// await ProfileService.updateProfileDataWithMedia({ profile: profilePayload }, (res) => {
+		// 	return { profile: { cover_image: res.source_url } };
+		// });
 
 		// await MemberService.publishMembershipData(userID);
 
 		// navigate("/profile");
-		// window.location.reload();
+		window.location.reload();
 	}
 
 	return (

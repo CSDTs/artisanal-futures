@@ -24,6 +24,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserDropdown from "./components/UserDropdown";
+
+import { Prompt } from "../../features/LogInPrompt/";
 export default function Navigation() {
 	const { isOpen, onToggle } = useDisclosure();
 	const { colorMode, toggleColorMode } = useColorMode();
@@ -76,6 +78,7 @@ export default function Navigation() {
 							<>
 								<Button
 									as={"a"}
+									display={{ base: "none", md: "inline-flex" }}
 									fontSize={"sm"}
 									fontWeight={400}
 									variant={"link"}
@@ -197,11 +200,61 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
 };
 
 const MobileNav = () => {
+	const [currentUser, setCurrentUser] = useState("");
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		setCurrentUser(AuthService.getCurrentUser());
+	}, []);
 	return (
 		<Stack bg={useColorModeValue("white", "gray.800")} p={4} display={{ md: "none" }}>
 			{NAV_ITEMS.map((navItem) => (
 				<MobileNavItem key={navItem.label} {...navItem} />
 			))}
+
+			{!currentUser?.token && (
+				<>
+					<Stack spacing={4} onClick={() => navigate("/registration")}>
+						<Flex
+							py={2}
+							as={Link}
+							justify={"space-between"}
+							align={"center"}
+							_hover={{
+								textDecoration: "none",
+							}}>
+							<Text fontWeight={600} color={useColorModeValue("gray.600", "gray.200")}>
+								Become an Artisan
+							</Text>
+						</Flex>
+					</Stack>
+
+					<Stack spacing={4} onClick={() => navigate("/login")}>
+						<Flex
+							py={2}
+							as={Link}
+							justify={"space-between"}
+							align={"center"}
+							_hover={{
+								textDecoration: "none",
+							}}>
+							<Text
+								px={"8"}
+								py={"2"}
+								borderRadius={"5"}
+								fontWeight={600}
+								color={useColorModeValue("gray.50", "gray.600")}
+								bg={"blue.400"}
+								_hover={{
+									bg: "pink.300",
+								}}>
+								Sign In
+							</Text>
+						</Flex>
+					</Stack>
+				</>
+			)}
 		</Stack>
 	);
 };
@@ -294,7 +347,7 @@ const NAV_ITEMS = [
 	// 	],
 	// },
 	{
-		label: "The Artisans",
+		label: " Artisans",
 		href: "/artisans",
 	},
 
@@ -303,7 +356,7 @@ const NAV_ITEMS = [
 		href: "/products",
 	},
 	{
-		label: "Share Knowledge",
+		label: "Fourms",
 		href: "https://fourm.artisanalfutures.org/",
 	},
 	{

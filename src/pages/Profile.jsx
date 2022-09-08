@@ -16,7 +16,7 @@ export default function Profile() {
 
 	useEffect(() => {
 		if (isError && !AuthService.getCurrentUser()) navigate("/login");
-	}, []);
+	}, [isError]);
 
 	useEffect(() => {
 		console.log(member);
