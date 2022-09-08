@@ -1,30 +1,28 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/layout/Footer";
-import Navigation from "./components/layout/Navigation";
+import Footer from "./layout/Footer";
+import Navigation from "./layout/Navigation";
 
-import ProductSearch from "./features/ProductSearch";
 import ShopRateCalculator from "./features/ShopRateCalculator";
-import SignInForm from "./features/SignInForm";
-// import SignUpForm from "./features/SignUpForm";
+
 import Agreement from "./pages/Agreement";
-import ArtisanDetails from "./pages/ArtisanDetails";
+
 import Artisans from "./pages/Artisans";
-import Contact from "./pages/Contact";
 import Homepage from "./pages/Homepage";
 import PolicyInformation from "./pages/PolicyInformation";
+import Registration from "./pages/Registration";
 
 import Products from "./pages/Products";
 import Profile from "./pages/Profile";
-import Registration from "./pages/Registration";
+
 import SignIn from "./pages/SignIn";
 
 import Tools from "./pages/Tools";
 
-import VendorProfile from "./pages/VendorProfile";
+import PageNotFound from "./pages/PageNotFound";
 
-import { chakra } from "@chakra-ui/react";
-import { UpdateWizard } from "./features/Profile";
+import UpdateWizard from "./features/UpdateWizard";
+import ArtisanProfile from "./pages/ArtisanProfile";
 function App() {
 	return (
 		<div className="App">
@@ -34,17 +32,12 @@ function App() {
 				<Route path="/" element={<Homepage />} />
 
 				<Route path="/artisans" element={<Artisans />} />
-				<Route path="/artisans/:name" element={<ArtisanDetails />} />
+				<Route path="/artisans/:name" element={<ArtisanProfile />} />
 
-				<Route path="/products" element={<ProductSearch />} />
+				<Route path="/products" element={<Products />} />
 
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/tools/shop-rate-calculator" element={<ShopRateCalculator />} />
-
-				<Route path="/contact" element={<Contact />} />
-
-				{/* <Route path="/signup" element={<SignUpForm />} /> */}
-				<Route path="/signin" element={<SignInForm />} />
 
 				<Route path="/agreement" element={<Agreement />} />
 
@@ -56,6 +49,8 @@ function App() {
 
 				<Route path="/registration" element={<Registration />} />
 				<Route path="/login" element={<SignIn />} />
+
+				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 
 			<Footer />

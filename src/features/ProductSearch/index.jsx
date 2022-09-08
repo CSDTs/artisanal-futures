@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 import { Container, Heading, Text } from "@chakra-ui/react";
 
-import Filter from "./features/Filters/SearchBar";
-import ProductGrid from "./features/ProductGrid";
+import Filter from "./components/Filters/SearchBar";
+import ProductGrid from "./components/ProductGrid";
 
-import FilterBar from "./features/Filters/FilterBar";
+import FilterBar from "./components/Filters/FilterBar";
 import ProductService from "./services/product.service";
 
 const AdjustText = (text, key) => {
@@ -94,12 +94,7 @@ export default function ProductSearch() {
 	}, [products]);
 
 	return (
-		<Container maxW={"6xl"} mt={6}>
-			<Heading mb={6}>Products</Heading>
-
-			<Text mt={1} display="block" fontSize="lg" lineHeight="normal" fontWeight="semibold" marginBottom={"2rem"}>
-				Search through all our artisans' products and support small businesses
-			</Text>
+		<>
 			<Filter
 				attributes={attributes}
 				products={products}
@@ -116,6 +111,6 @@ export default function ProductSearch() {
 				setProducts={setApiProducts}
 			/>
 			<ProductGrid products={filtered} />
-		</Container>
+		</>
 	);
 }
