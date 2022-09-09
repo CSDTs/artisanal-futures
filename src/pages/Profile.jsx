@@ -29,6 +29,9 @@ export default function Profile() {
 			)}
 			{!isLoading && !isError && !member?.acf?.first_time_setup && <UpdateProfileCard user={user} />}
 
+			{/* Error fetching membership id, but user is logged in. Means first time setup */}
+			{!isLoading && isError && AuthService.getCurrentUser() && <UpdateProfileCard user={user} />}
+
 			<Loading isLoading={isLoading} />
 		</Container>
 	);

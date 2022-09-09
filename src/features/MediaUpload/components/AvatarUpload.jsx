@@ -15,6 +15,7 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 
 		const objectUrl = URL.createObjectURL(selectedFile);
 		setPreview(objectUrl);
+		setSelectedFile("preview", objectUrl);
 
 		// free memory when ever this component is unmounted
 		return () => URL.revokeObjectURL(objectUrl);

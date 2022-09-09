@@ -137,6 +137,7 @@ const AuthService = {
 	// updateArtisanInformation,
 	verifyToken,
 	updateCurrentUser,
+	setCurrentUser,
 	setProfileImage,
 };
 

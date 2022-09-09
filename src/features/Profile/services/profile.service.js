@@ -83,7 +83,25 @@ const getProfileData = () => {
 	};
 };
 
-// Sinc
+const createMembershipId = () => {
+	const address = "https://fourm.artisanalfutures.org/wp-json/wp/v2/af_members";
+
+	return axios
+		.post(
+			address,
+			{ title: AuthService.getCurrentUser().user_display_name, fields: { user: AuthService.getCurrentUser().user_id } },
+			{
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + AuthService.getCurrentUserToken(),
+				},
+			}
+		)
+		.then((response) => {
+			return response.data;
+		});
+};
+
 const publishMembershipData = (id) => {
 	const address = `https://fourm.artisanalfutures.org/wp-json/wp/v2/af_members/${id}`;
 	return axios
@@ -108,6 +126,7 @@ const ProfileService = {
 	updateProfileDataWithMedia,
 	updateUserDataWithMedia,
 	getProfileData,
+	createMembershipId,
 };
 
 export default ProfileService;

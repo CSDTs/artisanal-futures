@@ -1,18 +1,18 @@
 import {
 	Avatar,
-	Link,
 	Box,
+	chakra,
 	Checkbox,
 	Flex,
 	FormControl,
 	FormLabel,
-	Input,
-	Stack,
-	VisuallyHidden,
-	chakra,
 	Image,
-	Text,
+	Input,
+	Link,
 	SimpleGrid,
+	Stack,
+	Text,
+	VisuallyHidden,
 	Wrap,
 } from "@chakra-ui/react";
 // Custom components
@@ -29,7 +29,7 @@ export default function SummaryPanel({ account, business, profile, optional, tex
 								Account Information
 							</FormLabel>
 						</FormControl>
-						<Avatar bg="gray.300" src={profile.artisan_image} size="xl" />
+						<Avatar bg="gray.300" src={account.preview} size="xl" />
 						<Text color={textColor} fontSize="sm" fontWeight="400" mt={1}>
 							{account.first_name + " " + account.last_name}
 						</Text>

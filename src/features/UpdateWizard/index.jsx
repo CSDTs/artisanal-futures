@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 import AuthService from "../../services/auth.service";
+import MemberService from "../../services/member.service";
 import ProfileService from "../Profile/services/profile.service";
 
 import AccountPanel from "./components/AccountPanel";
@@ -24,8 +25,7 @@ export default function UpdateWizard() {
 	const [accountPayload, setAccountPayload] = useState({
 		first_name: "",
 		last_name: "",
-		username: AuthService.getCurrentUser()?.user_nicename,
-		email: AuthService.getCurrentUser()?.user_email,
+
 		selectedFile: null,
 		preview: null,
 		description: "User has not agreed to the TOS and Collective Agreement.",
@@ -85,6 +85,7 @@ export default function UpdateWizard() {
 	}, [isError]);
 
 	useEffect(() => {
+		console.log(profile_image);
 		if (user)
 			setAccountPayload({
 				...accountPayload,
@@ -105,6 +106,10 @@ export default function UpdateWizard() {
 				};
 			});
 	}, [user]);
+
+	useEffect(() => {
+		console.log(accountPayload);
+	}, [accountPayload]);
 
 	const [activeBullets, setActiveBullets] = useState({
 		about: true,
@@ -163,44 +168,51 @@ export default function UpdateWizard() {
 		// });
 
 		// // Determines whether to go through wizard first time setup or through profile settings
-		// await ProfileService.updateProfileData({ first_time_setup: true });
 
+		// if (isError) {
+		// 	await ProfileService.createMembershipId().then((data) => {
+		// 		AuthService.updateCurrentUser({ membership_id: data.id });
+		// 	});
+		// }
+
+		await ProfileService.updateProfileData({ first_time_setup: true });
 		// User profile data update
 		await ProfileService.updateUserDataWithMedia(accountPayload, (res) => {
 			return { profile_image: res.source_url };
 		});
 
-		// // Business data update
-		// await ProfileService.updateProfileDataWithMedia({ business: businessPayload }, (res) => {
-		// 	return { business: { thumbnail_image: res.source_url } };
-		// });
+		// Business data update
+		await ProfileService.updateProfileDataWithMedia({ business: businessPayload }, (res) => {
+			return { business: { thumbnail_image: res.source_url } };
+		});
 
-		// // Preferences update
-		// await ProfileService.updateProfileData({ modifiers: miscPayload });
+		// Preferences update
+		await ProfileService.updateProfileData({ modifiers: miscPayload });
 
-		// // Public Profile Data
-		// await ProfileService.updateProfileDataWithMedia({ profile: profilePayload }, (res) => {
-		// 	return { profile: { cover_image: res.source_url } };
-		// });
+		// Public Profile Data
+		await ProfileService.updateProfileDataWithMedia({ profile: profilePayload }, (res) => {
+			return { profile: { cover_image: res.source_url } };
+		});
 
-		// await MemberService.publishMembershipData(userID);
-
-		// navigate("/profile");
+		await MemberService.publishMembershipData(AuthService.getCurrentUser().membership_id);
+		navigate("/profile");
 		window.location.reload();
+
+		//
 	}
 
 	return (
 		<>
 			<Loading isLoading={isLoading} />
 
-			{isError && (
+			{isError && !isLoading && (
 				<Flex direction="column" align="center" pt={{ sm: "125px", lg: "75px" }}>
 					<Heading>
 						There was an error with loading the profile wizard. Please refresh your page, or try again later.
 					</Heading>
 				</Flex>
 			)}
-			{!isLoading && (
+			{!isError && !isLoading && (
 				<Flex direction="column" minH="100vh" align="center" pt={{ sm: "125px", lg: "75px" }}>
 					<Flex direction="column" textAlign="center" mb={{ sm: "25px", md: "45px" }}>
 						{user?.user_firstname ? (

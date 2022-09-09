@@ -24,6 +24,15 @@ const getToken = (payload) => {
 		});
 };
 
+const checkIfUsernameAvailable = (username) => {
+	return axios
+		.get(TOKEN_URL, payload, {
+			headers: { "Content-Type": "application/json" },
+		})
+		.then((response) => {
+			return response.data;
+		});
+};
 // Make the change
 // Log user out via deleting local storage
 // Retrieve the new email and password from state
