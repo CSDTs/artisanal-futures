@@ -1,6 +1,7 @@
 [
 	{
 		"name": "Monthly Cost",
+		"slug": "fixed",
 		"alt": "Fixed Costs",
 		"description": "Fixed costs are calculated monthly. Things like rent, gas, etc. are included in this.",
 		"hint": "Charges should be recorded on a monthly basis.",
@@ -15,6 +16,7 @@
 	},
 	{
 		"name": "Material Cost",
+		"slug": "material",
 		"alt": "Material Costs",
 		"description": "These costs are intended for one project (to give the best estimate).",
 		"hint": "Charges are intended for one project.",
@@ -27,12 +29,13 @@
 	},
 	{
 		"name": "Labor Cost",
+		"slug": "labor",
 		"alt": "Labor Costs",
 		"description": "These costs are based on your current staffing operations",
 		"hint": "Charges are on a per hour basis",
 		"fields": [
 			{ "name": "Labor Rate Per Hour", "icon": "FaTshirt" },
-			{ "name": "Number of Workers", "icon": "FaTshirt" }
+			{ "name": "Number of Workers", "icon": "FaUserAlt" }
 		],
 		"is_additional_available": false,
 		"is_material_hours": false
