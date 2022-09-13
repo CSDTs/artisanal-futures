@@ -39,7 +39,7 @@ export default function ProductDetails(props) {
 
 	return (
 		<>
-			<Container maxW={"7xl"}>
+			<Container maxW={"4xl"}>
 				<SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 8, md: 10 }} py={{ base: 16, md: 20 }}>
 					<Flex>
 						<Image
@@ -47,8 +47,9 @@ export default function ProductDetails(props) {
 							alt={"product image"}
 							src={props.image}
 							align={"center"}
-							w={"100%"}
+							w={{ base: "100%", md: "75%", lg: "100%" }}
 							h={"max-content"}
+							mx={{ md: "auto" }}
 						/>
 					</Flex>
 					<Stack spacing={{ base: 4, md: 8 }}>
@@ -57,7 +58,7 @@ export default function ProductDetails(props) {
 								{props.name}
 							</Heading>
 
-							<Text color={useColorModeValue("gray.900", "gray.400")} fontWeight={300} fontSize={"2xl"}>
+							<Text color={useColorModeValue("gray.900", "gray.400")} fontWeight={300} fontSize={"xl"}>
 								{props.the_artisan}
 							</Text>
 						</Box>
@@ -68,11 +69,15 @@ export default function ProductDetails(props) {
 							// divider={<StackDivider borderColor={useColorModeValue("gray.200", "gray.600")} />}
 						>
 							<VStack spacing={{ base: 4, sm: 6 }}>
-								<Text color={useColorModeValue("gray.500", "gray.400")} fontSize={"2xl"} fontWeight={"300"}>
+								{/* <Text color={useColorModeValue("gray.500", "gray.400")} fontSize={"2xl"} fontWeight={"300"}>
+									{props.description ||
+										"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "}
+								</Text> */}
+								<Text fontSize={"lg"}>
+									{" "}
 									{props.description ||
 										"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "}
 								</Text>
-								<Text fontSize={"lg"}>{props.description}</Text>
 							</VStack>
 
 							<Accordion allowMultiple py={4}>
@@ -84,8 +89,7 @@ export default function ProductDetails(props) {
 													fontSize={{ base: "16px", lg: "18px" }}
 													color={"#319795"}
 													fontWeight={"500"}
-													textTransform={"uppercase"}
-												>
+													textTransform={"uppercase"}>
 													Store Attributes
 												</Text>
 											</Box>
@@ -113,8 +117,7 @@ export default function ProductDetails(props) {
 													fontSize={{ base: "16px", lg: "18px" }}
 													color={"#319795"}
 													fontWeight={"500"}
-													textTransform={"uppercase"}
-												>
+													textTransform={"uppercase"}>
 													Product Details
 												</Text>
 											</Box>
@@ -154,8 +157,7 @@ export default function ProductDetails(props) {
 													fontSize={{ base: "16px", lg: "18px" }}
 													color={"#319795"}
 													fontWeight={"500"}
-													textTransform={"uppercase"}
-												>
+													textTransform={"uppercase"}>
 													Environmental Impact
 												</Text>
 											</Box>
@@ -216,8 +218,7 @@ export default function ProductDetails(props) {
 								transform: "translateY(2px)",
 								boxShadow: "lg",
 							}}
-							onClick={() => window.open(props.url, "_blank")}
-						>
+							onClick={() => window.open(props.url, "_blank")}>
 							Head to Store
 						</Button>
 					</Stack>

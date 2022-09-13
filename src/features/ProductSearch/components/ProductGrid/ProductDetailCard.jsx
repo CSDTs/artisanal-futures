@@ -3,6 +3,7 @@ import {
 	Flex,
 	Image,
 	Modal,
+	ModalBody,
 	ModalCloseButton,
 	ModalContent,
 	ModalOverlay,
@@ -25,11 +26,13 @@ export default function ProductDetailCard(props) {
 
 	return (
 		<>
-			<Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
+			<Modal isOpen={isOpen} onClose={onClose} size={"4xl"} scrollBehavior={"inside"}>
 				<ModalOverlay />
-				<ModalContent maxW="70rem">
+				<ModalContent maxW="5xl">
 					<ModalCloseButton />
-					<ProductDetails {...props} />
+					<ModalBody>
+						<ProductDetails {...props} />
+					</ModalBody>
 				</ModalContent>
 			</Modal>
 
@@ -43,14 +46,13 @@ export default function ProductDetailCard(props) {
 						maxW="sm"
 						borderWidth="1px"
 						rounded="lg"
-						shadow="lg"
-					>
+						shadow="lg">
 						<Image
 							src={displayedProduct.imageUrl}
 							alt={displayedProduct.imageAlt}
 							roundedTop="lg"
 							objectFit={"cover"}
-							w="sm"
+							w={"sm"}
 							h={"280px"}
 							onClick={props.onCLick}
 							fallbackSrc="https://via.placeholder.com/250"
@@ -63,8 +65,7 @@ export default function ProductDetailCard(props) {
 									fontWeight="semibold"
 									letterSpacing="wide"
 									fontSize="xs"
-									textTransform="uppercase"
-								>
+									textTransform="uppercase">
 									{ProductUtil.formatPrinciplesDisplay(props.principles)}
 								</Box>
 							</Box>

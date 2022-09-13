@@ -18,6 +18,8 @@ import {
 	Stack,
 	useColorModeValue,
 	useDisclosure,
+	Wrap,
+	WrapItem,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { BsFilter } from "react-icons/bs";
@@ -51,8 +53,7 @@ export default function FilterBar({ availableArtisans, attributes, filteredTags,
 										onChange={handleTagGroupChange}
 										value={artisan}
 										isChecked={filteredTags.includes(artisan)}
-										key={artisan}
-									>
+										key={artisan}>
 										{artisan}
 									</Checkbox>
 								))}
@@ -69,8 +70,7 @@ export default function FilterBar({ availableArtisans, attributes, filteredTags,
 										key={`${principle}-opt`}
 										value={principle}
 										onChange={handleTagGroupChange}
-										isChecked={filteredTags.includes(principle)}
-									>
+										isChecked={filteredTags.includes(principle)}>
 										{principle}
 									</Checkbox>
 								))}
@@ -89,29 +89,34 @@ export default function FilterBar({ availableArtisans, attributes, filteredTags,
 			</Drawer>
 
 			<Flex direction={"row"} justifyContent={"space-between"}>
-				<ButtonGroup>
-					<Button ref={btnRef} colorScheme="teal" onClick={onOpen} mb={4}>
-						<BsFilter />
-						&nbsp;All Filters
-					</Button>
-					<Button
-						colorScheme="teal"
-						fontSize={"sm"}
-						variant="link"
-						onClick={() => {
-							console.log("clear");
-						}}
-						mb={4}
-						isDisabled
-					>
-						(Clear Selected)
-					</Button>
-				</ButtonGroup>
+				<Wrap spacing={{ base: 0, md: 4 }} align="center">
+					<WrapItem>
+						<Button ref={btnRef} colorScheme="teal" onClick={onOpen} fontSize={{ base: "sm" }}>
+							<BsFilter />
+							&nbsp;All Filters
+						</Button>
+					</WrapItem>
+					{/* TODO: Add clear selected filters functionality */}
+					{/* <WrapItem>
+						<Button
+							colorScheme="teal"
+							fontSize={"sm"}
+							variant="link"
+							onClick={() => {
+								console.log("clear");
+							}}
+							// mb={4}
+							py={"auto"}
+							isDisabled>
+							(Clear Selected)
+						</Button>
+					</WrapItem> */}
+				</Wrap>
 
 				<Stack direction={"row"}>
 					<InputGroup marginBottom={"1rem"}>
 						<InputLeftElement pointerEvents="none" children={<BsFilter color="gray.300" />} />
-						<Input type="text" placeholder="Sort products by keyword" ref={keywordRef} />
+						<Input type="text" placeholder="Sort products by keyword" ref={keywordRef} fontSize={{ base: "sm" }} />
 					</InputGroup>
 					<Button
 						isLoading={fetching}
@@ -124,12 +129,12 @@ export default function FilterBar({ availableArtisans, attributes, filteredTags,
 							borderColor: "teal.500",
 							border: "1px",
 						}}
+						fontSize={{ base: "sm" }}
 						onClick={() => {
 							ProductService.getSortedProductResult(keywordRef.current.value || "dress", isFetching).then((data) => {
 								setProducts(data);
 							});
-						}}
-					>
+						}}>
 						Sort using AI
 					</Button>
 				</Stack>
