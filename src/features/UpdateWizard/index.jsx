@@ -132,73 +132,40 @@ export default function UpdateWizard() {
 		password: "",
 	});
 	async function submitWPData() {
-		// if (accountPayload.current_password && accountPayload.email !== AuthService.getCurrentUser().user_email)
-		// 	console.log("Fetching new token for email change");
-		// if (!accountPayload.current_password && accountPayload.email !== AuthService.getCurrentUser().user_email)
-		// 	console.log("Needs to enter current password to fetch new token for email change");
-
-		// if (accountPayload.email === AuthService.getCurrentUser().user_email) console.log("Don't bother with email change");
-
-		// if (accountPayload.current_password && accountPayload.password)
-		// 	console.log("Fetching new token for password change");
-		// if (!accountPayload.current_password && accountPayload.password)
-		// 	console.log("Needs to enter current password to fetch new token for password change");
-
-		// if (!accountPayload.password) console.log("Don't bother with password change");
-
-		// if (accountPayload.current_password && accountPayload.username !== AuthService.getCurrentUser().user_nicename)
-		// 	console.log("Fetching new token for username change");
-		// if (!accountPayload.current_password && accountPayload.username !== AuthService.getCurrentUser().user_nicename)
-		// 	console.log("Needs to enter current username to fetch new token for password change");
-
-		// if (accountPayload.username === AuthService.getCurrentUser().user_nicename)
-		// 	console.log("Don't bother with username change");
-
-		// let currentToken = AuthService.getCurrentUserToken();
-		// let verifyToken = "";
-		// WizardService.getToken({
-		// 	username: "ahunnddd",
-		// 	password: accountPayload?.current_password,
-		// }).then((data) => {
-		// 	console.log(data);
-		// 	verifyToken = data.token;
-		// 	console.log(currentToken);
-		// 	console.log(verifyToken);
-		// 	console.log(currentToken == verifyToken);
-		// });
-
-		// // Determines whether to go through wizard first time setup or through profile settings
-
-		// if (isError) {
-		// 	await ProfileService.createMembershipId().then((data) => {
-		// 		AuthService.updateCurrentUser({ membership_id: data.id });
-		// 	});
-		// }
-
 		await ProfileService.updateProfileData({ first_time_setup: true });
-		// User profile data update
-		await ProfileService.updateUserDataWithMedia(accountPayload, (res) => {
-			return { profile_image: res.source_url };
-		});
 
-		// Business data update
-		await ProfileService.updateProfileDataWithMedia({ business: businessPayload }, (res) => {
-			return { business: { thumbnail_image: res.source_url } };
-		});
+		if (accountPayload.selectedFile)
+			await ProfileService.uploadMediaAlt(accountPayload)
+				.then((res) => {
+					ProfileService.updateUserDataWithMediaAlt(accountPayload, res.data.source_url);
+				})
+				.catch((err) => console.log(err));
+		else await ProfileService.updateAccountData(accountPayload);
 
-		// Preferences update
+		if (businessPayload.selectedFile)
+			await ProfileService.uploadMediaAlt(businessPayload)
+				.then((res) => {
+					Object.assign(businessPayload, { thumbnail_image: res.data.source_url });
+					ProfileService.updateProfileData({ business: businessPayload });
+				})
+				.catch((err) => console.log(err));
+		else ProfileService.updateProfileData({ business: businessPayload });
+
 		await ProfileService.updateProfileData({ modifiers: miscPayload });
 
-		// Public Profile Data
-		await ProfileService.updateProfileDataWithMedia({ profile: profilePayload }, (res) => {
-			return { profile: { cover_image: res.source_url } };
+		if (profilePayload.selectedFile)
+			await ProfileService.uploadMediaAlt(profilePayload)
+				.then((res) => {
+					Object.assign(profilePayload, { cover_image: res.data.source_url });
+					ProfileService.updateProfileData({ profile: profilePayload });
+				})
+				.catch((err) => console.log(err));
+		else ProfileService.updateProfileData({ profile: profilePayload });
+
+		await MemberService.publishMembershipData(AuthService.getCurrentUser().membership_id).then((data) => {
+			navigate("/profile");
+			window.location.reload();
 		});
-
-		await MemberService.publishMembershipData(AuthService.getCurrentUser().membership_id);
-		navigate("/profile");
-		window.location.reload();
-
-		//
 	}
 
 	return (

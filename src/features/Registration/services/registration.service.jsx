@@ -94,11 +94,31 @@ const updateCurrentUser = (payload) => {
 	// 		return response.data;
 	// 	});
 };
+
+const updateUserACFInformation = (payload) => {
+	if (!AuthService.getCurrentUser()) throw new Error("User not logged in");
+	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
+
+	return axios
+		.post("https://fourm.artisanalfutures.org/wp-json/acf/v3/users/" + AuthService.getCurrentUser().user_id, temp, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + AuthService.getCurrentUserToken(),
+			},
+		})
+		.then((response) => {
+			console.log(response);
+
+			return response.data;
+		});
+};
+
 const RegistrationService = {
 	fetchArtisans,
 	createNewUser,
 	updateCurrentUser,
 	login,
+	updateUserACFInformation,
 };
 
 export default RegistrationService;

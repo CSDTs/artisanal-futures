@@ -48,9 +48,10 @@ export default function Gateway() {
 						password: temp.password,
 					}).then(() => {
 						ProfileService.createMembershipId().then((data) => {
-							AuthService.updateCurrentUser({ membership_id: data.id });
-							navigate("/profile");
-							window.location.reload();
+							RegistrationService.updateUserACFInformation({ fields: { membership: data.id } }).then((data) => {
+								navigate("/profile");
+								window.location.reload();
+							});
 						});
 					});
 				}

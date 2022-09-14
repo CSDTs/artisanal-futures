@@ -11,7 +11,12 @@ export default function Sidebar({ artisan, profile_image, business, profile }) {
 					<div className="col-lg-3 order-lg-2">
 						<div className="card-profile-image">
 							<a href="#">
-								<img src={profile_image} className="rounded-circle" />
+								<Image
+									src={profile_image}
+									className="rounded-circle"
+									fallbackSrc={`https://avatars.dicebear.com/api/identicon/${artisan.full_name}.svg`}
+									boxSize="180px"
+								/>
 							</a>
 						</div>
 					</div>
@@ -26,14 +31,18 @@ export default function Sidebar({ artisan, profile_image, business, profile }) {
 						<div className="h5 mt-4">
 							<i className="ni business_briefcase-24 mr-2">
 								{/* TODO: Add title description field to WP_JSON */}
-								Owner of {business.name}
+								{profile.business_information}
+								{/* Owner of {business.name} */}
 							</i>
 						</div>
-						<div>
-							<chakra.a className="ni education_hat mr-2" fontSize={"sm"} href={business.website}>
-								{business.website || "TBD"}
-							</chakra.a>
-						</div>
+						{business.website && (
+							<div>
+								<chakra.a className="ni education_hat mr-2" fontSize={"sm"} href={business.website}>
+									{business.website || "TBD"}
+								</chakra.a>
+							</div>
+						)}
+
 						<hr className="my-4" />
 					</div>
 					<div>
@@ -64,15 +73,20 @@ export default function Sidebar({ artisan, profile_image, business, profile }) {
 						<hr className="my-4" />
 					</div>
 					<div>
-						<div className="col-4 left">
-							<Text className="btn btn-sm btn-primary" textAlign={"center"}>
-								Headlines
-							</Text>
-						</div>
+						{profile.misc_information && (
+							<>
+								<div className="col-4 left">
+									<Text className="btn btn-sm btn-primary" textAlign={"center"}>
+										Headlines
+									</Text>
+								</div>
 
-						<div className="h5 font-weight-600">{profile.misc_information}</div>
+								<div className="h5 font-weight-600">{profile.misc_information}</div>
 
-						<hr className="my-4" />
+								<hr className="my-4" />
+							</>
+						)}
+
 						<div hidden>
 							<div className="col-4 left">
 								<span className="btn btn-sm btn-info">Connect & Follow</span>

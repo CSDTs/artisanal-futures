@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // Chakra imports
 import {
 	Avatar,
@@ -10,6 +10,7 @@ import {
 	Flex,
 	Icon,
 	Image,
+	Skeleton,
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
@@ -22,6 +23,8 @@ export default function TeamCard({ title, subtitle, type, image, callback }) {
 	let mainText = useColorModeValue("gray.800", "white");
 	let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
 	let iconColor = useColorModeValue("brand.200", "white");
+
+	const [hasLoaded, setHasLoaded] = useState(false);
 	return (
 		<Box role="group" w={{ base: "100%", md: "345px" }}>
 			<Flex
@@ -55,7 +58,18 @@ export default function TeamCard({ title, subtitle, type, image, callback }) {
 						<Icon w="24px" h="24px" as={IoEllipsisHorizontalSharp} color={iconColor} />
 					</Button>
 				</Flex> */}
-				<Image src={image} maxW="100%" borderRadius="20px" mb="10px" boxShadow="base" />
+				<Skeleton isLoaded={hasLoaded}>
+					<Image
+						src={image}
+						maxW="100%"
+						borderRadius="20px"
+						mb="10px"
+						boxShadow="base"
+						onLoad={() => {
+							setHasLoaded(true);
+						}}
+					/>
+				</Skeleton>
 				<Text
 					_groupHover={{
 						color: "white",

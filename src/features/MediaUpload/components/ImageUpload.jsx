@@ -1,46 +1,23 @@
-import {
-	Avatar,
-	Link,
-	Box,
-	Button,
-	Checkbox,
-	Flex,
-	FormControl,
-	FormLabel,
-	Grid,
-	Icon,
-	Input,
-	Stack,
-	VisuallyHidden,
-	chakra,
-	Tab,
-	TabList,
-	Switch,
-	TabPanel,
-	TabPanels,
-	Tabs,
-	Text,
-	useColorModeValue,
-	useDisclosure,
-	FormHelperText,
-	Image,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
-} from "@chakra-ui/react";
-import { useEffect, useState, useId } from "react";
-export default function ImageUpload({ selectedFile, heading, fileType, setSelectedFile, updateOverride }) {
+import { chakra, Flex, FormControl, FormLabel, Icon, Stack, Text, VisuallyHidden } from "@chakra-ui/react";
+import { useEffect, useId, useState } from "react";
+
+export default function ImageUpload({
+	selectedFile,
+	heading,
+	subheading,
+	color,
+	fileType,
+	setSelectedFile,
+	updateOverride,
+}) {
 	const [preview, setPreview] = useState();
 
 	useEffect(() => {
 		setSelectedFile("preview", preview);
 	}, [preview]);
+
 	const id = useId();
-	// create a preview as a side effect, whenever selected file is changed
+
 	useEffect(() => {
 		if (!selectedFile) {
 			setPreview(undefined);
@@ -49,6 +26,7 @@ export default function ImageUpload({ selectedFile, heading, fileType, setSelect
 
 		const objectUrl = URL.createObjectURL(selectedFile);
 		setPreview(objectUrl);
+		setSelectedFile("preview", objectUrl);
 
 		// free memory when ever this component is unmounted
 		return () => URL.revokeObjectURL(objectUrl);
@@ -63,17 +41,21 @@ export default function ImageUpload({ selectedFile, heading, fileType, setSelect
 		// I've kept this example simple by using the first image instead of multiple
 		setSelectedFile(fileType, e.target.files[0]);
 	};
+
 	return (
 		<FormControl>
+			<FormLabel color={color} fontSize="xs" fontWeight="bold">
+				{heading}
+			</FormLabel>
+
 			<FormLabel
 				fontSize="sm"
 				fontWeight="md"
 				color="gray.700"
 				_dark={{
 					color: "gray.50",
-				}}
-			>
-				{heading}
+				}}>
+				{subheading}
 			</FormLabel>
 			<Flex
 				mt={1}
@@ -86,8 +68,7 @@ export default function ImageUpload({ selectedFile, heading, fileType, setSelect
 					color: "gray.500",
 				}}
 				borderStyle="dashed"
-				rounded="md"
-			>
+				rounded="md">
 				<Stack spacing={1} textAlign="center">
 					{!selectedFile && !updateOverride && (
 						<Icon
@@ -100,8 +81,7 @@ export default function ImageUpload({ selectedFile, heading, fileType, setSelect
 							stroke="currentColor"
 							fill="none"
 							viewBox="0 0 48 48"
-							aria-hidden="true"
-						>
+							aria-hidden="true">
 							<path
 								d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
 								strokeWidth="2"
@@ -118,8 +98,7 @@ export default function ImageUpload({ selectedFile, heading, fileType, setSelect
 						_dark={{
 							color: "gray.400",
 						}}
-						alignItems="baseline"
-					>
+						alignItems="baseline">
 						<chakra.label
 							htmlFor={id}
 							cursor="pointer"
@@ -135,22 +114,29 @@ export default function ImageUpload({ selectedFile, heading, fileType, setSelect
 								_dark: {
 									color: "brand.300",
 								},
-							}}
-						>
-							{!selectedFile && <span>Upload a file</span>}
+							}}>
+							{!selectedFile && (
+								<chakra.span
+									color="teal.500"
+									_hover={{
+										color: "teal.300",
+										textDecoration: "underline",
+									}}>
+									Click to upload a file
+								</chakra.span>
+							)}
 							<VisuallyHidden>
 								<input id={id} name={id} type="file" onChange={onSelectFile} />
 							</VisuallyHidden>
 						</chakra.label>
-						{!selectedFile && <Text pl={1}>or drag and drop</Text>}
+						{/* {!selectedFile && <Text pl={1}>or drag and drop</Text>} */}
 					</Flex>
 					<Text
 						fontSize="xs"
 						color="gray.500"
 						_dark={{
 							color: "gray.50",
-						}}
-					>
+						}}>
 						PNG, JPG, GIF up to 10MB
 					</Text>
 				</Stack>

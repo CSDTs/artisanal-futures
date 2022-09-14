@@ -119,6 +119,8 @@ export default function BusinessPanel({ businessPayload, setBusinessPayload, tex
 
 			<ImageUpload
 				heading={"Cover Photo"}
+				subheading={"Photo is used to showcase your business on the site"}
+				color={textColor}
 				selectedFile={businessPayload.selectedFile}
 				fileType={"selectedFile"}
 				setSelectedFile={setBusinessValue}

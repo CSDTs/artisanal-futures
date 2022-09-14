@@ -33,6 +33,25 @@ const uploadMedia = (payload, callback) => {
 	});
 };
 
+const uploadMediaAlt = (payload) => {
+	if (!payload.selectedFile) return;
+
+	let formData = new FormData();
+	let file = payload.selectedFile;
+	formData.append("file", file);
+	formData.append("title", file.name);
+
+	let headers = {};
+	headers["Content-Disposition"] = "form-data; filename='" + file.name + "'";
+	headers["Authorization"] = `Bearer ${AuthService.getCurrentUser().token}`;
+	return axios
+		.post(WP_MEDIA_URL, formData, { headers: headers })
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => console.log(err));
+};
+
 const updateProfileImage = (url) => {
 	AuthService.updateCurrentUser({ profile_image: url });
 };
@@ -44,6 +63,12 @@ const updateProfileDataWithMedia = (payload, mediaPayload) => {
 	return updateProfileData(payload);
 };
 
+const updateProfileDataWithMediaAlt = (payload, mediaPayload) => {
+	let media = Object.values(payload)[0];
+	let callback = (res) => updateProfileData(mediaPayload(res.data));
+	uploadMedia(media, callback);
+	return updateProfileData(payload);
+};
 const updateUserDataWithMedia = (payload, mediaPayload) => {
 	let callback = (res) => {
 		if (res.data?.source_url) updateProfileImage(res.data.source_url);
@@ -62,6 +87,36 @@ const updateUserDataWithMedia = (payload, mediaPayload) => {
 	);
 };
 
+const updateUserDataWithMediaAlt = (payload, source_url) => {
+	if (source_url) updateProfileImage(source_url);
+	updateProfileData({ profile_image: source_url });
+
+	return AuthService.updateUserInformation({
+		...payload,
+		name: payload.first_name + " " + payload.last_name,
+		nickname: payload.first_name + " " + payload.last_name,
+	})
+		.then(() =>
+			updateProfileData({
+				full_name: payload.first_name + " " + payload.last_name,
+			})
+		)
+		.catch((err) => console.log(err));
+};
+
+const updateAccountData = (payload) => {
+	return AuthService.updateUserInformation({
+		...payload,
+		name: payload.first_name + " " + payload.last_name,
+		nickname: payload.first_name + " " + payload.last_name,
+	})
+		.then(() =>
+			updateProfileData({
+				full_name: payload.first_name + " " + payload.last_name,
+			})
+		)
+		.catch((err) => console.log(err));
+};
 const getProfileData = () => {
 	const userID = AuthService.getCurrentUser()?.membership_id;
 
@@ -98,6 +153,7 @@ const createMembershipId = () => {
 			}
 		)
 		.then((response) => {
+			if (response.data.id) AuthService.updateCurrentUser({ membership_id: response.data.id });
 			return response.data;
 		});
 };
@@ -127,6 +183,11 @@ const ProfileService = {
 	updateUserDataWithMedia,
 	getProfileData,
 	createMembershipId,
+	uploadMediaAlt,
+	updateProfileImage,
+	updateUserDataWithMediaAlt,
+	updateAccountData,
+	updateProfileDataWithMediaAlt,
 };
 
 export default ProfileService;
