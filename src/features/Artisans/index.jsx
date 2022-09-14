@@ -1,4 +1,4 @@
-import BusinessListings from "./components/BusinessListings";
+import ArtisanListings from "./components/ArtisanListings";
 import ArtisanService from "./services/artisan.service";
 
-export { BusinessListings, ArtisanService };
+export { ArtisanListings, ArtisanService };
