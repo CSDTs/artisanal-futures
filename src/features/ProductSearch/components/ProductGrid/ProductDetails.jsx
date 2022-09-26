@@ -23,6 +23,7 @@ import {
 	Tfoot,
 	Th,
 	Thead,
+	Tooltip,
 	Tr,
 	UnorderedList,
 	useColorModeValue,
@@ -37,6 +38,9 @@ export default function ProductDetails(props) {
 
 	const [assessmentData, setAssessmentData] = useState(JSON.parse(props.assessment[0].data).calculation);
 
+	useEffect(() => {
+		console.log(assessmentReference, assessmentData);
+	}, [assessmentReference]);
 	return (
 		<>
 			<Container maxW={"4xl"}>
@@ -166,7 +170,7 @@ export default function ProductDetails(props) {
 									</h2>
 									<AccordionPanel pb={4}>
 										<Text>{props.assessment[0].description}</Text>
-
+										<Text my={2}>Hover over each key to see more information.</Text>
 										<TableContainer>
 											<Table variant="simple">
 												<TableCaption>{props.assessment[0].type}</TableCaption>
@@ -181,10 +185,17 @@ export default function ProductDetails(props) {
 													{assessmentReference &&
 														Object.keys(assessmentReference).map((entry) => (
 															<Tr key={entry}>
-																<Td>{assessmentReference[entry].name}</Td>
+																{/* <Td>{assessmentReference[entry].name}</Td> */}
 
+																<Td>
+																	<Tooltip
+																		label={assessmentReference[entry].group + " -- " + assessmentReference[entry].name}
+																		aria-label={"A tooltip for " + assessmentReference[entry].id}>
+																		{assessmentReference[entry].id}
+																	</Tooltip>
+																</Td>
 																<Td isNumeric>
-																	{assessmentData[assessmentReference[entry].index]}
+																	{assessmentData[assessmentReference[entry].index].toFixed(3)}
 																	{assessmentReference[entry].unit}
 																</Td>
 															</Tr>

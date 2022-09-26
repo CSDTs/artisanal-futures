@@ -63,7 +63,7 @@ const updateProfileDataWithMedia = (payload, mediaPayload) => {
 	return updateProfileData(payload);
 };
 
-const updateProfileDataWithMediaAlt = (payload, mediaPayload) => {
+const updateProfileDataWithMediaAlt = (payload) => {
 	let media = Object.values(payload)[0];
 	let callback = (res) => updateProfileData(mediaPayload(res.data));
 	uploadMedia(media, callback);
@@ -139,7 +139,7 @@ const getProfileData = () => {
 };
 
 const createMembershipId = () => {
-	const address = "https://fourm.artisanalfutures.org/wp-json/wp/v2/af_members";
+	const address = "https://forum.artisanalfutures.org/wp-json/wp/v2/af_members";
 
 	return axios
 		.post(
@@ -159,7 +159,7 @@ const createMembershipId = () => {
 };
 
 const publishMembershipData = (id) => {
-	const address = `https://fourm.artisanalfutures.org/wp-json/wp/v2/af_members/${id}`;
+	const address = `https://forum.artisanalfutures.org/wp-json/wp/v2/af_members/${id}`;
 	return axios
 		.post(
 			address,
