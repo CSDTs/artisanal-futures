@@ -22,4 +22,4 @@ Any commits made to the **main** branch will automatically upload to Vercel. Ple
 
 ## Contact
 
-Email [Andrew Hunn](email:ahunn@umich.edu) or [csdtdevelopers@umich.edu](email:csdtdevelopers@umich.edu).
+Email [Andrew Hunn](mailto:ahunn@umich.edu) or [csdtdevelopers@umich.edu](mailto:csdtdevelopers@umich.edu).
