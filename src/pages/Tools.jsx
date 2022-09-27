@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, Spacer, Stack, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Skeleton, Spacer, Stack, Text } from "@chakra-ui/react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TeamCard from "../components/TeamCard";
 import ToolCard from "../components/ui/Card/ToolCard";

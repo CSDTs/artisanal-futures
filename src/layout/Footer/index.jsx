@@ -22,14 +22,14 @@ export default function Footer() {
 					<Stack align={"flex-start"}>
 						<ListHeader>Products</ListHeader>
 						<Link onClick={() => navigate("/products")}>All</Link>
-						<Link onClick={() => navigate("/stores")}>Stores</Link>
+						<Link onClick={() => navigate("/artisans")}>Artisans</Link>
 						<Link onClick={() => navigate("/tools")}>Tools</Link>
 					</Stack>
 					<Stack align={"flex-start"}>
 						<ListHeader>The Collective</ListHeader>
 						<Link href={"#"}>About Us</Link>
-						<Link onClick={() => navigate("/signup")}>Become an Artisan</Link>
-						<Link onClick={() => navigate("/contact")}>Contact Us</Link>
+						<Link onClick={() => navigate("/registration")}>Become an Artisan</Link>
+						<Link onClick={() => navigate("/registration")}>Contact Us</Link>
 					</Stack>
 					<Stack align={"flex-start"}>
 						<ListHeader>Legal</ListHeader>

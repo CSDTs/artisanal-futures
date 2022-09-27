@@ -60,6 +60,14 @@ export default function ProductSearch() {
 		setFilteredTags(tags);
 	};
 
+	const handleTagRemoval = (selected) => {
+		let tags = [...filteredTags];
+
+		if (tags.includes(selected)) tags = tags.filter((tag) => tag != selected);
+
+		setFilteredTags(tags);
+	};
+
 	const handleFiltering = () => {
 		//If user doesn't do anything, just return the set of apps as is.
 
@@ -110,6 +118,8 @@ export default function ProductSearch() {
 				handleTagGroupChange={handleTagGroupChange}
 				filteredTags={filteredTags}
 				setProducts={setApiProducts}
+				setFilteredTags={setFilteredTags}
+				handleTagRemoval={handleTagRemoval}
 			/>
 			{!isLoadingProducts && <ProductGrid products={filtered} />}
 

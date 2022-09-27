@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import faq from "../data/markdown/faq.md";
 import privacy from "../data/markdown/privacy.md";
 import tos from "../data/markdown/tos.md";
+import { LoadContainer } from "../layout";
 const policies = {
 	"terms-of-service": {
 		name: "Terms of Service",
@@ -24,6 +25,8 @@ export default function PolicyInformation() {
 	const { name } = useParams();
 
 	const [text, setText] = useState();
+	const [isLoading, setIsLoading] = useState(true);
+	const [isError, setIsError] = useState(false);
 
 	useEffect(() => {
 		if (name && name in policies)
@@ -31,8 +34,11 @@ export default function PolicyInformation() {
 				.then((response) => response.text())
 				.then((text) => {
 					setText(text);
+					setIsLoading(false);
 				})
-				.catch((error) => {});
+				.catch((error) => {
+					setIsError(true);
+				});
 		else {
 			setText();
 		}
@@ -40,7 +46,7 @@ export default function PolicyInformation() {
 
 	const navigate = useNavigate();
 	return (
-		<Container maxW={"6xl"} mt={6}>
+		<LoadContainer isLoading={isLoading} isError={isError}>
 			<ReactMarkdown components={ChakraUIRenderer()} children={text} skipHtml />
 			{!text && (
 				<>
@@ -55,6 +61,6 @@ export default function PolicyInformation() {
 					</UnorderedList>
 				</>
 			)}
-		</Container>
+		</LoadContainer>
 	);
 }

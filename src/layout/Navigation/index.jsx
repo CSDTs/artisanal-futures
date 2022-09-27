@@ -132,8 +132,8 @@ const DesktopNav = () => {
 								p={2}
 								// href={navItem.href ?? "#"}
 								onClick={() => {
-									if (navItem.href === "https://fourm.artisanalfutures.org/") {
-										window.location.href = "https://fourm.artisanalfutures.org/";
+									if (navItem.href === "https://forum.artisanalfutures.org/") {
+										window.location.href = "https://forum.artisanalfutures.org/";
 										return;
 									}
 
@@ -268,8 +268,8 @@ const MobileNavItem = ({ label, children, href }) => {
 				py={2}
 				as={Link}
 				onClick={() => {
-					if (href === "https://fourm.artisanalfutures.org/") {
-						window.location.href = "https://fourm.artisanalfutures.org/";
+					if (href === "https://forum.artisanalfutures.org/") {
+						window.location.href = "https://forum.artisanalfutures.org/";
 						return;
 					}
 
@@ -356,8 +356,8 @@ const NAV_ITEMS = [
 		href: "/products",
 	},
 	{
-		label: "Fourms",
-		href: "https://fourm.artisanalfutures.org/",
+		label: "Forums",
+		href: "https://forum.artisanalfutures.org/",
 	},
 	{
 		label: "Tools",

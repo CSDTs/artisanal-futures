@@ -6,16 +6,16 @@ import AuthService from "../../../services/auth.service";
  * General use fetches for any type of user
  */
 
-const BASE_URL = "https://fourm.artisanalfutures.org/wp-json/";
+const BASE_URL = "https://forum.artisanalfutures.org/wp-json/";
 const WP_ENDPOINT = `${import.meta.env.VITE_API_URL}wp/v2`;
 const ACF_ENDPOINT = `${import.meta.env.VITE_API_URL}acf/v3`;
 
-const WP_API_MEMBERSHIP = "https://fourm.artisanalfutures.org/wp-json/acf/v3/af_members/";
+const WP_API_MEMBERSHIP = "https://forum.artisanalfutures.org/wp-json/acf/v3/af_members/";
 const TOKEN_URL = import.meta.env.VITE_API_URL + "jwt-auth/v1/token";
-const SIMP_JWT_REGISTER_URL = "https://fourm.artisanalfutures.org/wp-json/simple-jwt-login/v1/users";
+const SIMP_JWT_REGISTER_URL = "https://forum.artisanalfutures.org/wp-json/simple-jwt-login/v1/users";
 
 // const SIMP_JWT_REGISTER_URL =
-// 	"https://fourm.artisanalfutures.org/?rest_route=/simple-jwt-login/v1/users";
+// 	"https://forum.artisanalfutures.org/?rest_route=/simple-jwt-login/v1/users";
 
 const fetchArtisans = (id = "") => {
 	const address = `${WP_ENDPOINT}/af_members/${id}`;
@@ -94,11 +94,31 @@ const updateCurrentUser = (payload) => {
 	// 		return response.data;
 	// 	});
 };
+
+const updateUserACFInformation = (payload) => {
+	if (!AuthService.getCurrentUser()) throw new Error("User not logged in");
+	let temp = Object.entries(payload).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {});
+
+	return axios
+		.post("https://forum.artisanalfutures.org/wp-json/acf/v3/users/" + AuthService.getCurrentUser().user_id, temp, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + AuthService.getCurrentUserToken(),
+			},
+		})
+		.then((response) => {
+			console.log(response);
+
+			return response.data;
+		});
+};
+
 const RegistrationService = {
 	fetchArtisans,
 	createNewUser,
 	updateCurrentUser,
 	login,
+	updateUserACFInformation,
 };
 
 export default RegistrationService;

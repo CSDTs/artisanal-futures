@@ -1,22 +1,34 @@
-import { Flex, Box, chakra } from "@chakra-ui/react";
+import { Box, chakra, Flex, Skeleton } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export default function ToolCard({ title, brief, url }) {
 	const navigate = useNavigate();
 	return (
 		<Flex direction="column" justifyContent="center" alignItems="center" w="sm" mx="auto" onClick={() => navigate(url)}>
-			<Box
-				bg="gray.300"
-				h={64}
-				w="full"
-				rounded="lg"
-				shadow="md"
-				bgSize="cover"
-				bgPos="center"
-				style={{
-					backgroundImage: "url(/img/shoprate.png)",
-				}}
-			></Box>
+			<Skeleton>
+				<div>contents wrapped</div>
+				{/* <Box
+					bg="gray.300"
+					h={64}
+					w="full"
+					rounded="lg"
+					shadow="md"
+					bgSize="cover"
+					bgPos="center"
+					style={{
+						backgroundImage: "url(/img/shoprate.png)",
+					}}></Box> */}
+				{/* <Image
+					bg="gray.300"
+					h={64}
+					w="full"
+					rounded="lg"
+					shadow="md"
+					bgSize="cover"
+					bgPos="center"
+					src="/img/shoprate.png"
+				/> */}
+			</Skeleton>
 
 			<Box
 				w={{
@@ -30,8 +42,7 @@ export default function ToolCard({ title, brief, url }) {
 				mt={-10}
 				shadow="lg"
 				rounded="lg"
-				overflow="hidden"
-			>
+				overflow="hidden">
 				<chakra.h3
 					py={2}
 					textAlign="center"
@@ -41,8 +52,7 @@ export default function ToolCard({ title, brief, url }) {
 					_dark={{
 						color: "white",
 					}}
-					letterSpacing={1}
-				>
+					letterSpacing={1}>
 					{title}
 				</chakra.h3>
 
@@ -54,16 +64,14 @@ export default function ToolCard({ title, brief, url }) {
 					bg="gray.200"
 					_dark={{
 						bg: "gray.700",
-					}}
-				>
+					}}>
 					<chakra.span
 						fontWeight="bold"
 						color="gray.800"
 						textAlign={"center"}
 						_dark={{
 							color: "gray.200",
-						}}
-					>
+						}}>
 						{brief}
 					</chakra.span>
 					{/* <chakra.button

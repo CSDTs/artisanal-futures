@@ -73,13 +73,13 @@ export default function ProfileCard({ isLoading, user, slug }) {
 									Icon={MdOutlineAccountBox}
 								/>
 							)}
-							{user?.business?.website && (
+							{/* {user?.business?.website && (
 								<ProfileCardButton
 									callback={() => window.open(user?.business?.website, "_blank").focus()}
 									title="Store"
 									Icon={MdOutlineStorefront}
 								/>
-							)}
+							)} */}
 
 							{(user?.membership_id || user?.profile) && (
 								<ProfileCardButton

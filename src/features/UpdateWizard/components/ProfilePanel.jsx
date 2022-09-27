@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Stack, Textarea } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Stack, Textarea } from "@chakra-ui/react";
 
 import { ImageUpload } from "../../MediaUpload/";
 
@@ -20,29 +20,29 @@ export default function ProfilePanel({ profilePayload, setProfilePayload, textCo
 				</FormLabel>
 				<Textarea
 					borderRadius="15px"
-					placeholder="eg. Artisanal Futures"
+					placeholder="eg. I am the owner and operator of this really cool business. "
 					fontSize="xs"
 					value={profilePayload.about_me}
 				/>
 			</FormControl>
 			<FormControl onChange={(e) => setProfileValue("business_information", e.target.value)}>
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-					Business Information
+					What is your title?
 				</FormLabel>
-				<Textarea
+				<Input
 					borderRadius="15px"
-					placeholder="eg. Detroit, MI"
+					placeholder="eg. Owner and operator of My Company"
 					fontSize="xs"
 					value={profilePayload.business_information}
 				/>
 			</FormControl>
 			<FormControl onChange={(e) => setProfileValue("misc_information", e.target.value)}>
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
-					Any other information you wish to let people know?
+					Any news on your business you want to share with others?
 				</FormLabel>
 				<Textarea
 					borderRadius="15px"
-					placeholder="eg. https://www.google.com"
+					placeholder="eg. For the next two weeks, we are offering a BOGO"
 					fontSize="xs"
 					value={profilePayload.misc_information}
 				/>
@@ -50,6 +50,8 @@ export default function ProfilePanel({ profilePayload, setProfilePayload, textCo
 
 			<ImageUpload
 				heading={"Cover Photo"}
+				subheading={"Photo is used for your profile, both public and private"}
+				color={textColor}
 				selectedFile={profilePayload.selectedFile}
 				fileType={"selectedFile"}
 				setSelectedFile={setProfileValue}

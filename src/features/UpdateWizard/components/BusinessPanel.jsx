@@ -54,6 +54,24 @@ export default function BusinessPanel({ businessPayload, setBusinessPayload, tex
 					value={businessPayload.website}
 				/>
 			</FormControl>
+			<FormControl onChange={(e) => setBusinessValue("phone_number", e.target.value)}>
+				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
+					Does your business have a phone number? If so, please provide a phone number:
+				</FormLabel>
+				<Input borderRadius="15px" placeholder="eg. 313-333-3333" fontSize="xs" value={businessPayload.phone_number} />
+			</FormControl>
+			<FormControl onChange={(e) => setBusinessValue("email", e.target.value)}>
+				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
+					Does your business have an email address? If so, please provide an email for inquiries:
+				</FormLabel>
+				<Input
+					borderRadius="15px"
+					type={"email"}
+					placeholder="eg. contact@mysuperawesomebusiness.com"
+					fontSize="xs"
+					value={businessPayload.email}
+				/>
+			</FormControl>
 			<FormControl onChange={(e) => setBusinessValue("business_and_customer_description", e.target.value)}>
 				<FormLabel color={textColor} fontSize="xs" fontWeight="bold">
 					Briefly describe your business and customers
@@ -101,6 +119,8 @@ export default function BusinessPanel({ businessPayload, setBusinessPayload, tex
 
 			<ImageUpload
 				heading={"Cover Photo"}
+				subheading={"Photo is used to showcase your business on the site"}
+				color={textColor}
 				selectedFile={businessPayload.selectedFile}
 				fileType={"selectedFile"}
 				setSelectedFile={setBusinessValue}

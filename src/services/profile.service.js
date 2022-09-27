@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const WP_API_URL = "https://fourm.artisanalfutures.org/wp-json/wp/v2";
+const WP_API_URL = "https://forum.artisanalfutures.org/wp-json/wp/v2";
 
 const getProfile = (id) => {
 	return axios

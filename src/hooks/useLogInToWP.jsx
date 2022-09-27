@@ -9,7 +9,7 @@ const useLogInToWP = (payload) => {
 	};
 	useEffect(() => {
 		axios
-			.post("https://fourm.artisanalfutures.org/wp-json/jwt-auth/v1/token", payload, { headers })
+			.post("https://forum.artisanalfutures.org/wp-json/jwt-auth/v1/token", payload, { headers })
 			.then((response) => {
 				console.log(response);
 				if (response.data.token) {
