@@ -4,17 +4,15 @@ import { Features, Hero } from "../features/Homepage";
 
 export default function Homepage() {
 	return (
-		<>
-			<Container maxW={"container.xl"}>
-				<Hero />
-				<Features />
+		<Container maxW={"6xl"}>
+			<Hero />
+			<Features />
 
-				<Box textAlign="center">
-					<Heading mt={"3rem"}>Artisanal Technologies for Generative Justice</Heading>
-					<Image src="/img/flowchart.png" w={"100%"}></Image>
-				</Box>
-			</Container>
-		</>
+			<Box textAlign="center">
+				<Heading mt={"3rem"}>Artisanal Technologies for Generative Justice</Heading>
+				<Image src="/img/flowchart.png" w={"100%"} loading="lazy"></Image>
+			</Box>
+		</Container>
 	);
 }
 
