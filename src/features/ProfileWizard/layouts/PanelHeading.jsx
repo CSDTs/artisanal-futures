@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
-export default function PanelHeading({ title, subtitle, textColor }) {
+const PanelHeading = ({ title, subtitle, textColor }) => {
 	return (
 		<Flex mb="40px">
 			<Flex direction="column" align="center" justify="center" textAlign="center" w="80%" mx="auto">
@@ -13,4 +14,12 @@ export default function PanelHeading({ title, subtitle, textColor }) {
 			</Flex>
 		</Flex>
 	);
-}
+};
+
+PanelHeading.propTypes = {
+	title: PropTypes.string,
+	subtitle: PropTypes.string,
+	textColor: PropTypes.string,
+};
+
+export default PanelHeading;

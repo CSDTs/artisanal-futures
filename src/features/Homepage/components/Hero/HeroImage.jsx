@@ -1,5 +1,7 @@
 import { Box, Image } from "@chakra-ui/react";
-export default function HeroImage({ url, alt }) {
+import PropTypes from "prop-types";
+
+const HeroImage = ({ url, alt }) => {
 	return (
 		<Box
 			position={{
@@ -21,4 +23,11 @@ export default function HeroImage({ url, alt }) {
 			<Image h={[56, 72, 96, "full"]} w="full" fit="cover" src={url} alt={alt} loading="lazy" />
 		</Box>
 	);
-}
+};
+
+HeroImage.propTypes = {
+	url: PropTypes.string.isRequired,
+	alt: PropTypes.string,
+};
+
+export default HeroImage;

@@ -9,7 +9,7 @@ import MemberService from "../services/member.service";
 import Loading from "../components/Loading";
 import { ProfileCard, UpdateProfileCard } from "../features/Profile";
 
-export default function Profile() {
+const Profile = () => {
 	const { user: member, isLoading, isError } = MemberService.getCurrentMemberInformation();
 	const user = AuthService.getCurrentUser();
 	const navigate = useNavigate();
@@ -17,10 +17,6 @@ export default function Profile() {
 	useEffect(() => {
 		if (isError && !AuthService.getCurrentUser()) navigate("/login");
 	}, [isError]);
-
-	useEffect(() => {
-		console.log(member);
-	}, [member]);
 
 	return (
 		<Container maxW={"6xl"} mt={6}>
@@ -35,4 +31,6 @@ export default function Profile() {
 			<Loading isLoading={isLoading} />
 		</Container>
 	);
-}
+};
+
+export default Profile;

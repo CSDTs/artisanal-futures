@@ -1,4 +1,4 @@
-import { Container, Heading, Link, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Button, ListItem, UnorderedList } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import faq from "../data/markdown/faq.md";
 import privacy from "../data/markdown/privacy.md";
 import tos from "../data/markdown/tos.md";
-import { LoadContainer } from "../layout";
+import { LoadContainer, PageHeading } from "../layout";
 const policies = {
 	"terms-of-service": {
 		name: "Terms of Service",
@@ -21,7 +21,7 @@ const policies = {
 		data: faq,
 	},
 };
-export default function PolicyInformation() {
+const PolicyInformation = () => {
 	const { name } = useParams();
 
 	const [text, setText] = useState();
@@ -38,8 +38,10 @@ export default function PolicyInformation() {
 				})
 				.catch((error) => {
 					setIsError(true);
+					console.error(error);
 				});
 		else {
+			setIsLoading(false);
 			setText();
 		}
 	}, [name]);
@@ -47,15 +49,20 @@ export default function PolicyInformation() {
 	const navigate = useNavigate();
 	return (
 		<LoadContainer isLoading={isLoading} isError={isError}>
+			{/* eslint-disable-next-line react/no-children-prop */}
 			<ReactMarkdown components={ChakraUIRenderer()} children={text} skipHtml />
 			{!text && (
 				<>
-					<Heading>Artisanal Futures Legal Policies</Heading>
-
+					<PageHeading
+						title={"Artisanal Futures Legal Policies"}
+						subtitle={"Take a look at our policies and guidelines"}
+					/>
 					<UnorderedList>
 						{Object.keys(policies).map((policy) => (
 							<ListItem key={policy}>
-								<Link onClick={() => navigate(`/policies/${policy}`)}>{policy}</Link>
+								<Button variant="link" onClick={() => navigate(`/policies/${policy}`)}>
+									{policies[policy].name}
+								</Button>
 							</ListItem>
 						))}
 					</UnorderedList>
@@ -63,4 +70,6 @@ export default function PolicyInformation() {
 			)}
 		</LoadContainer>
 	);
-}
+};
+
+export default PolicyInformation;

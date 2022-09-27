@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export default function PageNotFound() {
+const PageNotFound = () => {
 	const navigate = useNavigate();
 	return (
 		<Box textAlign="center" py={10} px={6}>
@@ -17,7 +17,7 @@ export default function PageNotFound() {
 				Page Not Found
 			</Text>
 			<Text color={"gray.500"} mb={6}>
-				The page you're looking for does not seem to exist
+				The page you are looking for does not seem to exist
 			</Text>
 
 			<Button
@@ -32,4 +32,6 @@ export default function PageNotFound() {
 			</Button>
 		</Box>
 	);
-}
+};
+
+export default PageNotFound;

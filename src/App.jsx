@@ -21,7 +21,7 @@ import Tools from "./pages/Tools";
 
 import PageNotFound from "./pages/PageNotFound";
 
-import UpdateWizard from "./features/UpdateWizard";
+import ProfileWizard from "./features/ProfileWizard";
 import ArtisanProfile from "./pages/ArtisanProfile";
 function App() {
 	return (
@@ -42,7 +42,7 @@ function App() {
 				<Route path="/agreement" element={<Agreement />} />
 
 				<Route path="/profile" element={<Profile />} />
-				<Route path="/update-profile" element={<UpdateWizard />} />
+				<Route path="/update-profile" element={<ProfileWizard />} />
 
 				<Route path="/policies/" element={<PolicyInformation />} />
 				<Route path="/policies/:name" element={<PolicyInformation />} />

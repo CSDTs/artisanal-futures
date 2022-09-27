@@ -2,9 +2,11 @@ import { Flex, Icon, Tab, Text } from "@chakra-ui/react";
 
 import { BsCircleFill } from "react-icons/bs";
 
-export default function PanelTab({ tabRef, handleClick, next, current, isLast, textColor, title }) {
+import PropTypes from "prop-types";
+
+const PanelTab = ({ tabRef, handleClick, next, current, isLast, textColor, title }) => {
 	return (
-		<Tab ref={tabRef} _focus="none" w={{ sm: "120px", md: "250px", lg: "300px" }} onClick={handleClick}>
+		<Tab ref={tabRef} focus="none" w={{ sm: "120px", md: "250px", lg: "300px" }} onClick={handleClick}>
 			<Flex
 				direction="column"
 				justify="center"
@@ -21,8 +23,7 @@ export default function PanelTab({ tabRef, handleClick, next, current, isLast, t
 					bottom: current ? "40px" : "38px",
 					zIndex: -1,
 					transition: "all .3s ease",
-				}}
-			>
+				}}>
 				<Icon
 					as={BsCircleFill}
 					color={current ? textColor : "gray.300"}
@@ -36,11 +37,22 @@ export default function PanelTab({ tabRef, handleClick, next, current, isLast, t
 					transition="all .3s ease"
 					fontSize="sm"
 					_hover={{ color: textColor }}
-					display={{ sm: "none", md: "block" }}
-				>
+					display={{ sm: "none", md: "block" }}>
 					{title}
 				</Text>
 			</Flex>
 		</Tab>
 	);
-}
+};
+
+PanelTab.propTypes = {
+	tabRef: PropTypes.object,
+	handleClick: PropTypes.func,
+	next: PropTypes.bool,
+	current: PropTypes.bool,
+	isLast: PropTypes.bool,
+	textColor: PropTypes.string,
+	title: PropTypes.string,
+};
+
+export default PanelTab;

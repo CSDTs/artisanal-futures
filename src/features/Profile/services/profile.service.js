@@ -34,6 +34,7 @@ const uploadMedia = (payload, callback) => {
 };
 
 const uploadMediaAlt = (payload) => {
+	console.log(payload);
 	if (!payload.selectedFile) return;
 
 	let formData = new FormData();

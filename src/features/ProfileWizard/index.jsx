@@ -1,26 +1,19 @@
 import { Box, Flex, Heading, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue } from "@chakra-ui/react";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import Loading from "../../components/Loading";
 
-import AuthService from "../../services/auth.service";
-import MemberService from "../../services/member.service";
-import ProfileService from "../Profile/services/profile.service";
+import { AccountPanel, BusinessPanel, OptInPanel, ProfilePanel, SummaryPanel } from "./components/Panels";
+import { PanelHeading, PanelNavigation, PanelTab } from "./layouts/";
 
-import AccountPanel from "./components/AccountPanel";
-import BusinessPanel from "./components/BusinessPanel";
-import OptInPanel from "./components/OptInPanel";
-import PanelHeading from "./components/PanelHeading";
-import PanelNavigation from "./components/PanelNavigation";
-import PanelTab from "./components/PanelTab";
-import ProfilePanel from "./components/ProfilePanel";
-import SummaryPanel from "./components/SummaryPanel";
+import AuthService from "../../services/auth.service";
 import WizardService from "./services/wizard.service";
-export default function UpdateWizard() {
-	const { user, business, profile, modifiers, profile_image, isLoading, isError } = ProfileService.getProfileData();
+
+export default function ProfileWizard() {
+	const { user, business, profile, modifiers, profile_image, isLoading, isError } = WizardService.getProfileData();
 
 	const [accountPayload, setAccountPayload] = useState({
 		first_name: "",
@@ -68,10 +61,8 @@ export default function UpdateWizard() {
 		preview: null,
 	});
 
-	// const userID = AuthService.getCurrentUser().membership_id;
 	const textColor = useColorModeValue("gray.700", "white");
 	const bgPrevButton = useColorModeValue("gray.100", "gray.100");
-	const iconColor = useColorModeValue("gray.300", "gray.700");
 
 	const [checkboxes, setCheckboxes] = useState({
 		unmonitored: false,
@@ -85,7 +76,6 @@ export default function UpdateWizard() {
 	}, [isError]);
 
 	useEffect(() => {
-		console.log(profile_image);
 		if (user)
 			setAccountPayload({
 				...accountPayload,
@@ -107,10 +97,6 @@ export default function UpdateWizard() {
 			});
 	}, [user]);
 
-	useEffect(() => {
-		console.log(accountPayload);
-	}, [accountPayload]);
-
 	const [activeBullets, setActiveBullets] = useState({
 		about: true,
 		business: false,
@@ -127,44 +113,57 @@ export default function UpdateWizard() {
 
 	const navigate = useNavigate();
 
-	const [verifyPayload, setVerifyPayload] = useState({
-		username: accountPayload.email,
-		password: "",
-	});
+	const labelProps = {
+		color: textColor,
+		fontSize: "xs",
+		fontWeight: "bold",
+	};
+
+	const inputProps = {
+		borderRadius: "15px",
+		fontSize: "xs",
+	};
+
 	async function submitWPData() {
-		await ProfileService.updateProfileData({ first_time_setup: true });
+		await WizardService.updateProfileData({ first_time_setup: true });
 
 		if (accountPayload.selectedFile)
-			await ProfileService.uploadMediaAlt(accountPayload)
+			await WizardService.uploadMedia(accountPayload)
 				.then((res) => {
-					ProfileService.updateUserDataWithMediaAlt(accountPayload, res.data.source_url);
+					console.log(res);
+					WizardService.uploadAvatar(accountPayload, res.data.source_url);
 				})
 				.catch((err) => console.log(err));
-		else await ProfileService.updateAccountData(accountPayload);
+		else await WizardService.updateAccountData(accountPayload);
 
 		if (businessPayload.selectedFile)
-			await ProfileService.uploadMediaAlt(businessPayload)
+			await WizardService.uploadMedia(businessPayload)
 				.then((res) => {
 					Object.assign(businessPayload, { thumbnail_image: res.data.source_url });
-					ProfileService.updateProfileData({ business: businessPayload });
+					WizardService.updateProfileData({ business: businessPayload });
 				})
 				.catch((err) => console.log(err));
-		else ProfileService.updateProfileData({ business: businessPayload });
+		else WizardService.updateProfileData({ business: businessPayload });
 
-		await ProfileService.updateProfileData({ modifiers: miscPayload });
+		await WizardService.updateProfileData({ modifiers: miscPayload });
 
 		if (profilePayload.selectedFile)
-			await ProfileService.uploadMediaAlt(profilePayload)
+			await WizardService.uploadMedia(profilePayload)
 				.then((res) => {
 					Object.assign(profilePayload, { cover_image: res.data.source_url });
-					ProfileService.updateProfileData({ profile: profilePayload });
+					WizardService.updateProfileData({ profile: profilePayload });
 				})
 				.catch((err) => console.log(err));
-		else ProfileService.updateProfileData({ profile: profilePayload });
+		else WizardService.updateProfileData({ profile: profilePayload });
 
-		await MemberService.publishMembershipData(AuthService.getCurrentUser().membership_id).then((data) => {
-			navigate("/profile");
-			window.location.reload();
+		await WizardService.publishMembershipData(AuthService.getCurrentUser().membership_id).then((res) => {
+			if (res.status === 200) {
+				navigate("/profile");
+				window.location.reload();
+			} else {
+				// TODO: Add error alert to notify user to try again later
+				throw new Error("User was unsuccessful with updating information.");
+			}
 		});
 	}
 
@@ -184,11 +183,11 @@ export default function UpdateWizard() {
 					<Flex direction="column" textAlign="center" mb={{ sm: "25px", md: "45px" }}>
 						{user?.user_firstname ? (
 							<Text color={textColor} fontSize={{ sm: "2xl", md: "3xl", lg: "4xl" }} fontWeight="bold" mb="8px">
-								Welcome back, {user?.user_firstname}! Let's update your profile
+								Welcome back, {user?.user_firstname}! Let&apos;s update your profile
 							</Text>
 						) : (
 							<Text color={textColor} fontSize={{ sm: "2xl", md: "3xl", lg: "4xl" }} fontWeight="bold" mb="8px">
-								Welcome to Artisanal Futures! Let's create your profile
+								Welcome to Artisanal Futures! Let&apos;s create your profile
 							</Text>
 						)}
 
@@ -295,7 +294,8 @@ export default function UpdateWizard() {
 												setAccountPayload={setAccountPayload}
 												miscPayload={miscPayload}
 												setMiscPayload={setMiscPayload}
-												textColor={textColor}
+												labelProps={labelProps}
+												inputProps={inputProps}
 											/>
 
 											<PanelNavigation handleNext={() => businessTab.current.click()} />
@@ -316,7 +316,8 @@ export default function UpdateWizard() {
 											<BusinessPanel
 												businessPayload={businessPayload}
 												setBusinessPayload={setBusinessPayload}
-												textColor={textColor}
+												labelProps={labelProps}
+												inputProps={inputProps}
 											/>
 											<PanelNavigation
 												handlePrev={() => aboutTab.current.click()}
@@ -368,7 +369,8 @@ export default function UpdateWizard() {
 											<ProfilePanel
 												profilePayload={profilePayload}
 												setProfilePayload={setProfilePayload}
-												textColor={textColor}
+												labelProps={labelProps}
+												inputProps={inputProps}
 											/>
 											<PanelNavigation
 												handlePrev={() => accountTab.current.click()}

@@ -1,5 +1,7 @@
 import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
-export default function FeatureCard({ title, text, icon, onClick }) {
+import PropTypes from "prop-types";
+
+function FeatureCard({ title, text, icon, onClick }) {
 	return (
 		<Box
 			role="group"
@@ -32,3 +34,11 @@ export default function FeatureCard({ title, text, icon, onClick }) {
 		</Box>
 	);
 }
+FeatureCard.propTypes = {
+	title: PropTypes.string,
+	text: PropTypes.string,
+	icon: PropTypes.element,
+	onClick: PropTypes.func,
+};
+
+export default FeatureCard;

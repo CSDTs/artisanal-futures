@@ -16,7 +16,7 @@ const FEATURE_DATA = [
 		title: "Share Knowledge",
 		text: "Share your artisanal knowledge with others",
 		callback: () => {
-			window.location.href = import.meta.env.VITE_FOURM_URL;
+			window.location.href = import.meta.env.VITE_FORUM_URL;
 		},
 	},
 	{
@@ -27,7 +27,7 @@ const FEATURE_DATA = [
 	},
 ];
 
-export default function Features() {
+const Features = () => {
 	const navigate = useNavigate();
 
 	const handleClick = (callback, link) => {
@@ -51,4 +51,5 @@ export default function Features() {
 			</SimpleGrid>
 		</Box>
 	);
-}
+};
+export default Features;

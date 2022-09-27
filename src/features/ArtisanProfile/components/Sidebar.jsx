@@ -1,23 +1,39 @@
-import { Button, chakra, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-
+//Sidebar.jsx
+import { chakra, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { MdOutlineEmail, MdOutlineLocationOn, MdOutlinePhone } from "react-icons/md";
+
+import PropTypes from "prop-types";
+
 import "./CustomProfile.scss";
-export default function Sidebar({ artisan, profile_image, business, profile }) {
+
+/**
+ * This component is responsible for rendering the artisan's public and business information in their profile.
+ */
+
+/**
+ * Props:
+ * -artisan: artisan object from WP_JSON
+ * -profile_image: a url to their profile image
+ * -business: business object from WP_JSON
+ * -profile: profile object from WP_JSON
+ */
+
+const Sidebar = ({ artisan, profile_image, business, profile }) => {
 	return (
 		<div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
 			<div className="card card-profile shadow">
 				<div className="row justify-content-center">
 					<div className="col-lg-3 order-lg-2">
 						<div className="card-profile-image">
-							<a href="#">
+							<Link href={business?.website || "#"}>
 								<Image
 									src={profile_image}
 									className="rounded-circle"
+									alt={"A logo or profile shot of the artisan"}
 									fallbackSrc={`https://avatars.dicebear.com/api/identicon/${artisan.full_name}.svg`}
 									boxSize="180px"
 								/>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -30,9 +46,10 @@ export default function Sidebar({ artisan, profile_image, business, profile }) {
 						</div>
 						<div className="h5 mt-4">
 							<i className="ni business_briefcase-24 mr-2">
-								{/* TODO: Add title description field to WP_JSON */}
+								{/**
+								 * TODO: Add title description field to WP_JSON
+								 */}
 								{profile.business_information}
-								{/* Owner of {business.name} */}
 							</i>
 						</div>
 						{business.website && (
@@ -86,38 +103,18 @@ export default function Sidebar({ artisan, profile_image, business, profile }) {
 								<hr className="my-4" />
 							</>
 						)}
-
-						<div hidden>
-							<div className="col-4 left">
-								<span className="btn btn-sm btn-info">Connect & Follow</span>
-							</div>
-							<Text>Coming Soon</Text>
-							<Flex hidden>
-								<Text p={"15"}>
-									<a href="#">
-										<FaFacebook />
-									</a>
-								</Text>
-								<Text p={"15"}>
-									<a href="#">
-										<FaTwitter />
-									</a>
-								</Text>
-								<Text p={"15"}>
-									<a href="#">
-										<FaLinkedin />
-									</a>
-								</Text>
-								<Text p={"15"}>
-									<a href="#">
-										<FaInstagram />
-									</a>
-								</Text>
-							</Flex>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
+
+export default Sidebar;
+
+Sidebar.propTypes = {
+	artisan: PropTypes.object,
+	profile: PropTypes.object,
+	business: PropTypes.object,
+	profile_image: PropTypes.string,
+};

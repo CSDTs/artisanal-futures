@@ -1,15 +1,7 @@
 import { chakra, Flex, FormControl, FormLabel, Icon, Stack, Text, VisuallyHidden } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 import { useEffect, useId, useState } from "react";
-
-export default function ImageUpload({
-	selectedFile,
-	heading,
-	subheading,
-	color,
-	fileType,
-	setSelectedFile,
-	updateOverride,
-}) {
+const ImageUpload = ({ selectedFile, heading, subheading, color, fileType, setSelectedFile, updateOverride }) => {
 	const [preview, setPreview] = useState();
 
 	useEffect(() => {
@@ -90,8 +82,8 @@ export default function ImageUpload({
 							/>
 						</Icon>
 					)}
-					{selectedFile && <img src={preview} />}
-					{updateOverride && !preview && <img src={updateOverride} />}
+					{selectedFile && <img src={preview} alt="User uploaded preview" />}
+					{updateOverride && !preview && <img src={updateOverride} alt="User uploaded preview" />}
 					<Flex
 						fontSize="sm"
 						color="gray.600"
@@ -126,7 +118,13 @@ export default function ImageUpload({
 								</chakra.span>
 							)}
 							<VisuallyHidden>
-								<input id={id} name={id} type="file" onChange={onSelectFile} />
+								<input
+									id={id}
+									name={id}
+									type="file"
+									onChange={onSelectFile}
+									aria-label="Image preview for file upload"
+								/>
 							</VisuallyHidden>
 						</chakra.label>
 						{/* {!selectedFile && <Text pl={1}>or drag and drop</Text>} */}
@@ -143,4 +141,15 @@ export default function ImageUpload({
 			</Flex>
 		</FormControl>
 	);
-}
+};
+ImageUpload.propTypes = {
+	selectedFile: PropTypes.object,
+	heading: PropTypes.string,
+	fileType: PropTypes.string,
+	setSelectedFile: PropTypes.func,
+	updateOverride: PropTypes.string,
+	subheading: PropTypes.string,
+	color: PropTypes.string,
+};
+
+export default ImageUpload;

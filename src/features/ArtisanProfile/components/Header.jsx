@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import "./CustomProfile.scss";
-export default function Header() {
+
+const Header = () => {
 	return (
 		<Box pt={8}>
 			<div className="header pb-8 pt-0 d-flex align-items-center main-header">
@@ -12,4 +13,6 @@ export default function Header() {
 			</div>
 		</Box>
 	);
-}
+};
+
+export default Header;

@@ -1,5 +1,7 @@
 import { Box, Button, chakra, Icon } from "@chakra-ui/react";
-export default function HeroData({ title, description, bg, callToAction }) {
+import PropTypes from "prop-types";
+
+const HeroData = ({ title, description, bg, callToAction }) => {
 	return (
 		<Box maxW="7xl" mx="auto">
 			<Box
@@ -127,4 +129,13 @@ export default function HeroData({ title, description, bg, callToAction }) {
 			</Box>
 		</Box>
 	);
-}
+};
+
+HeroData.propTypes = {
+	title: PropTypes.string,
+	description: PropTypes.string,
+	bg: PropTypes.string,
+	callToAction: PropTypes.object,
+};
+
+export default HeroData;

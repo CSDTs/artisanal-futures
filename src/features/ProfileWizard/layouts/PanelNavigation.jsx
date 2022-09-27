@@ -1,41 +1,8 @@
-import {
-	Avatar,
-	Box,
-	Button,
-	chakra,
-	Checkbox,
-	Flex,
-	FormControl,
-	FormHelperText,
-	FormLabel,
-	Grid,
-	Icon,
-	Image,
-	Input,
-	Link,
-	Modal,
-	ModalBody,
-	ModalCloseButton,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	ModalOverlay,
-	Stack,
-	Switch,
-	Tab,
-	TabList,
-	TabPanel,
-	TabPanels,
-	Tabs,
-	Text,
-	Textarea,
-	useColorModeValue,
-	useDisclosure,
-	VisuallyHidden,
-} from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 import { useState } from "react";
 
-export default function PanelNavigation({ handlePrev, handleNext, prevColor, isSubmit = false, handleSubmit = null }) {
+const PanelNavigation = ({ handlePrev, handleNext, prevColor, isSubmit = false, handleSubmit = null }) => {
 	const [loading, setLoading] = useState(false);
 	return (
 		<Flex justify={handlePrev ? "space-between" : "end"}>
@@ -53,22 +20,6 @@ export default function PanelNavigation({ handlePrev, handleNext, prevColor, isS
 					</Text>
 				</Button>
 			)}
-			{/* <Button
-				variant="no-hover"
-				bg="linear-gradient(81.62deg, #f13860 2.25%, #f51928 79.87%)"
-				alignSelf="flex-end"
-				mt="24px"
-				w={{ sm: "75px", lg: "100px" }}
-				h="35px"
-				onClick={() => {
-					setLoading(true);
-					handleSubmit().then(() => setLoading(false));
-				}}
-				isLoading={loading}>
-				<Text fontSize="xs" color="#fff" fontWeight="bold">
-					Submit to WP
-				</Text>
-			</Button> */}
 			{handleNext && !isSubmit && (
 				<Button
 					variant="no-hover"
@@ -104,4 +55,14 @@ export default function PanelNavigation({ handlePrev, handleNext, prevColor, isS
 			)}
 		</Flex>
 	);
-}
+};
+
+PanelNavigation.propTypes = {
+	handlePrev: PropTypes.func,
+	handleNext: PropTypes.func,
+	prevColor: PropTypes.string,
+	isSubmit: PropTypes.bool,
+	handleSubmit: PropTypes.func,
+};
+
+export default PanelNavigation;

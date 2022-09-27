@@ -1,11 +1,12 @@
 import { Avatar, Box, chakra, Flex, FormControl, FormLabel, Stack, Text, VisuallyHidden } from "@chakra-ui/react";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 
-export default function AvatarUpload({ selectedFile, heading, fileType, setSelectedFile, updateOverride }) {
+import PropTypes from "prop-types";
+const AvatarUpload = ({ selectedFile, heading, fileType, setSelectedFile, updateOverride }) => {
 	const [preview, setPreview] = useState();
-	const id = useId();
+
 	// create a preview as a side effect, whenever selected file is changed
 	useEffect(() => {
 		if (!selectedFile) {
@@ -77,7 +78,6 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 							)}
 							{selectedFile && <Avatar bg="gray.300" src={preview} size="xl" />}
 							{updateOverride && !preview && <Avatar bg="gray.300" src={updateOverride} size="xl" />}
-							{/* <FaUserAlt mx="auto" fontSize={48} /> */}
 						</Box>
 
 						<Flex
@@ -88,7 +88,13 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 							}}
 							alignItems="baseline">
 							<VisuallyHidden>
-								<input id="file-upload" name="file-upload" type="file" onChange={onSelectFile} />
+								<input
+									id="file-upload"
+									name="file-upload"
+									type="file"
+									accept=".png, .jpg, .jpeg, .gif"
+									onChange={onSelectFile}
+								/>
 							</VisuallyHidden>
 						</Flex>
 						{!selectedFile && (
@@ -106,4 +112,14 @@ export default function AvatarUpload({ selectedFile, heading, fileType, setSelec
 			</Flex>
 		</FormControl>
 	);
-}
+};
+
+AvatarUpload.propTypes = {
+	selectedFile: PropTypes.object,
+	heading: PropTypes.string,
+	fileType: PropTypes.string,
+	setSelectedFile: PropTypes.func,
+	updateOverride: PropTypes.string,
+};
+
+export default AvatarUpload;

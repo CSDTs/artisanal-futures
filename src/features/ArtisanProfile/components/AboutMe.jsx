@@ -1,7 +1,9 @@
 import { Image } from "@chakra-ui/react";
 
 import "./CustomProfile.scss";
-export default function AboutMe({ profile }) {
+
+import PropTypes from "prop-types";
+const AboutMe = ({ profile }) => {
 	return (
 		<div className="col-xl-8 order-xl-1">
 			<div className="card bg-secondary shadow">
@@ -13,11 +15,9 @@ export default function AboutMe({ profile }) {
 									<Image
 										w={"100%"}
 										maxH={"350px"}
-										alt="Artisan cover image"
-										src={
-											profile?.cover_image ||
-											"https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-										}
+										alt="Background of artisan's business"
+										fallbackSrc="/img/background-fallback.jpg"
+										src={profile?.cover_image}
 									/>
 								</div>
 
@@ -25,7 +25,7 @@ export default function AboutMe({ profile }) {
 									<h6 className="heading-small">About Me</h6>
 									<label className="form-control form-control-alternative about_me_control">
 										{profile?.about_me ||
-											" Lorem ipsum odor amet, consectetuer adipiscing elit. Ac purus in massa egestas mollis varius dignissim elementum."}
+											"This user has not set up their About Me section. In the meantime, check out their awesome work on their site!"}
 									</label>
 								</div>
 							</div>
@@ -35,4 +35,10 @@ export default function AboutMe({ profile }) {
 			</div>
 		</div>
 	);
-}
+};
+
+AboutMe.propTypes = {
+	profile: PropTypes.object,
+};
+
+export default AboutMe;
