@@ -23,6 +23,7 @@ import PageNotFound from "./pages/PageNotFound";
 
 import ProfileWizard from "./features/ProfileWizard";
 import ArtisanProfile from "./pages/ArtisanProfile";
+import Remix from "./pages/Remix";
 function App() {
 	return (
 		<div className="App">
@@ -49,6 +50,7 @@ function App() {
 
 				<Route path="/registration" element={<Registration />} />
 				<Route path="/login" element={<SignIn />} />
+				<Route path="/remix" element={<Remix />} />
 
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
