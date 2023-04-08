@@ -26,7 +26,7 @@ import ArtisanProfile from "./pages/ArtisanProfile";
 import Remix from "./pages/Remix";
 function App() {
 	return (
-		<div className="App">
+		<div className="App h-full">
 			<Navigation />
 
 			<Routes>

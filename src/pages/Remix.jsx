@@ -23,7 +23,7 @@ import {
 	Textarea,
 } from "@chakra-ui/react";
 import { isValidMotionProp, motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 const ChakraBox = chakra(motion.div, {
 	/**
 	 * Allow motion props and non-Chakra props to be forwarded.
@@ -82,24 +82,124 @@ const Remix = () => {
 		setIsUploading(false);
 	};
 
+	const handleDragAndDrop = (event) => {
+		event.preventDefault();
+		console.log(event.target);
+	};
+
+	// drag state
+	const [dragActive, setDragActive] = useState(false);
+	// ref
+	const inputRef = useRef(null);
+
+	// handle drag events
+	const handleDrag = function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		if (e.type === "dragenter" || e.type === "dragover") {
+			setDragActive(true);
+		} else if (e.type === "dragleave") {
+			setDragActive(false);
+		}
+	};
+
+	// triggers when file is dropped
+	const handleDrop = function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragActive(false);
+		if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+			// handleFiles(e.dataTransfer.files);
+		}
+	};
+
+	// triggers when file is selected with click
+	const handleChange = function (e) {
+		e.preventDefault();
+		if (e.target.files && e.target.files[0]) {
+			// handleFiles(e.target.files);
+		}
+	};
+
+	// triggers the input when the button is clicked
+	const onButtonClick = () => {
+		inputRef.current.click();
+	};
 	return (
-		<Container maxW={"6xl"} mt={6}>
+		<section className=" max-w-6xl mx-auto mt-6">
 			<Heading mb={6}>Craft Recomposition</Heading>
 			<Text mt={1} display="block" fontSize="lg" lineHeight="normal" fontWeight="semibold" marginBottom={"2rem"}>
 				Break down an image into its bill of materials, remix the results
 			</Text>
-			<Text>
+			<p className="text-base font-normal ">
 				To help imagine and re-imagine your craft, please choose what groups and kinds of materials could play a role.
 				Groups include Artisanal Futures associated collectives, regional businesses, and minority businesses. New kinds
 				of materials include other metals, fabrics, adhesives, and so forth. Try our example to learn more!
-			</Text>
+			</p>
+
+			<div className="grid grid-cols-2 gap-2">
+				<form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
+					<input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChange} />
+					<label id="label-file-upload" htmlFor="input-file-upload" className={dragActive ? "drag-active" : ""}>
+						<div>
+							<p>Drag and drop your file here or</p>
+							<button className="upload-button" onClick={onButtonClick}>
+								Upload a file
+							</button>
+						</div>
+					</label>
+					{dragActive && (
+						<div
+							id="drag-file-element"
+							onDragEnter={handleDrag}
+							onDragLeave={handleDrag}
+							onDragOver={handleDrag}
+							onDrop={handleDrop}></div>
+					)}
+				</form>
+				<form
+					className="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center aspect-square"
+					onDragEnter={handleDrag}
+					onSubmit={(e) => e.preventDefault()}>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
+						viewBox="0 0 20 20"
+						fill="currentColor">
+						<path
+							fill-rule="evenodd"
+							d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+							clip-rule="evenodd"
+						/>
+					</svg>
+					<p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
+						<span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
+					</p>
+					<input id="hidden-input" type="file" multiple className="hidden" />
+					<button
+						id="button"
+						className="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+						Upload a file
+					</button>
+				</form>
+			</div>
 
 			<Flex alignItems={"center"}>
 				<Box flex={1} p={5}>
 					<form onChange={handleImageUpload} onSubmit={handleImageSubmit}>
 						<FormControl display="flex" flexDir={"column"}>
 							<FormLabel htmlFor="file">Upload Image</FormLabel>
-							<Input type="file" name="file" id="file" placeholder="Import an image" py={5} w={"100%"} h={"100%"} />
+							<div className="h-80 w-80 bg-slate-200"></div>
+							<Input
+								type="file"
+								name="file"
+								id="file"
+								placeholder="Import an image"
+								py={5}
+								w={"100%"}
+								h={"100%"}
+								hidden
+							/>
 							{imageSrc && (
 								<AspectRatio w="100%" h="500px" ratio={1} mx="auto">
 									<img src={imageSrc ?? ""} alt="" />
@@ -251,7 +351,7 @@ const Remix = () => {
 					</Box>
 				</Box>
 			</Flex>
-		</Container>
+		</section>
 	);
 };
 export default Remix;
