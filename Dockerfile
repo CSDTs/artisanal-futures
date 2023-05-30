@@ -8,7 +8,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm ci
+
+# Install Vite globally
+RUN npm install -g vite
 
 # Copy the entire project to the working directory
 COPY . .
