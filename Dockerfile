@@ -19,14 +19,20 @@ COPY . .
 # Build the Vite React project
 RUN npm run build
 
-# Use a minimal base image for serving the build artifacts
-FROM nginx:alpine
+# Use a lightweight base image for serving the build artifacts
+FROM node:alpine
+
+# Install the `serve` package globally
+RUN npm install -g serve
+
+# Set the working directory
+WORKDIR /app
 
 # Copy the build artifacts from the previous stage
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist .
 
-# Expose port 5173
-EXPOSE 5173
+# Expose port 6900
+EXPOSE 6900
 
-# Start Nginx to serve the build artifacts
-CMD ["nginx", "-g", "daemon off;"]
+# Start the `serve` command to serve the build artifacts
+CMD ["serve", "-p", "6900", "-s", "."]
