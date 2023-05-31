@@ -1,6 +1,8 @@
 # Use a lightweight base image
 FROM node:alpine as build
 
+ARG ROOT_PATH=/
+
 # Set the working directory
 WORKDIR /app
 
