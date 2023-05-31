@@ -17,7 +17,7 @@ RUN npm install -g vite
 COPY . .
 
 # Build the Vite React project
-RUN npm run build
+RUN npm run build -- --base=${ROOT_PATH}
 
 # Use a lightweight base image for serving the build artifacts
 FROM node:alpine
