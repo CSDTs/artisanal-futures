@@ -25,7 +25,7 @@ export default function Tools() {
 							title={"Shop Rate Calculator"}
 							subtitle={"Calculates per hour cost of your shop"}
 							type={"Finance"}
-							image={"/img/shoprate.png"}
+							image={"img/shoprate.png"}
 							callback={() => navigate("/tools/shop-rate-calculator")}
 						/>
 						{/* <ToolCard

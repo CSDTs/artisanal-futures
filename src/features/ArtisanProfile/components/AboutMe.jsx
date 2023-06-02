@@ -16,7 +16,7 @@ const AboutMe = ({ profile }) => {
 										w={"100%"}
 										maxH={"350px"}
 										alt="Background of artisan's business"
-										fallbackSrc="/img/background-fallback.jpg"
+										fallbackSrc="img/background-fallback.jpg"
 										src={profile?.cover_image}
 									/>
 								</div>

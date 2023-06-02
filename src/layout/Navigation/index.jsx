@@ -67,7 +67,7 @@ export default function Navigation() {
 						>
 							Artisanal Futures
 						</Text> */}
-						<Image src={"/img/logo.png"} h={5} onClick={() => navigate("/")} />
+						<Image src={"img/logo.png"} h={5} onClick={() => navigate("/")} />
 
 						<Flex display={{ base: "none", md: "flex" }} ml={10}>
 							<DesktopNav />

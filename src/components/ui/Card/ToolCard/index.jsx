@@ -16,7 +16,7 @@ export default function ToolCard({ title, brief, url }) {
 					bgSize="cover"
 					bgPos="center"
 					style={{
-						backgroundImage: "url(/img/shoprate.png)",
+						backgroundImage: "url(img/shoprate.png)",
 					}}></Box> */}
 				{/* <Image
 					bg="gray.300"
@@ -26,7 +26,7 @@ export default function ToolCard({ title, brief, url }) {
 					shadow="md"
 					bgSize="cover"
 					bgPos="center"
-					src="/img/shoprate.png"
+					src="img/shoprate.png"
 				/> */}
 			</Skeleton>
 

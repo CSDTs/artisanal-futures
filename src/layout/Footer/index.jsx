@@ -62,7 +62,7 @@ export default function Footer() {
 						flexGrow: 1,
 						ml: 8,
 					}}>
-					<Image src={"/img/logo.png"} h={7} />
+					<Image src={"img/logo.png"} h={7} />
 				</Flex>
 				<Text pt={6} fontSize={"sm"} textAlign={"center"}>
 					© 2022 Artisanal Futures. All rights reserved
