@@ -39,5 +39,10 @@
 		],
 		"is_additional_available": false,
 		"is_material_hours": false
+	},
+	{
+		"name": "Profits",
+		"slug": "profits",
+		"profit_modifier": true
 	}
 ]

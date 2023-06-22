@@ -4,8 +4,6 @@ import {
 	ModalBody,
 	ModalCloseButton,
 	ModalContent,
-	ModalFooter,
-	ModalHeader,
 	ModalOverlay,
 	useDisclosure,
 } from "@chakra-ui/react";
@@ -20,16 +18,10 @@ export default function Prompt() {
 			<Modal onClose={onClose} isOpen={isOpen} isCentered>
 				<ModalOverlay />
 				<ModalContent>
-					{/* <ModalHeader>Modal Title</ModalHeader> */}
 					<ModalCloseButton />
 					<ModalBody>
 						<PromptBody />
 					</ModalBody>
-					{/* <ModalFooter>
-						<Button onClick={onClose} colorScheme="red">
-							Cancel
-						</Button>
-					</ModalFooter> */}
 				</ModalContent>
 			</Modal>
 		</>

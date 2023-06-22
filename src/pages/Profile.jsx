@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import MemberService from "../services/member.service";
 
-import Loading from "../components/Loading";
+import LoadingIndicator from "../components/LoadingIndicator";
 import { ProfileCard, UpdateProfileCard } from "../features/Profile";
 
 const Profile = () => {
@@ -18,6 +18,9 @@ const Profile = () => {
 		if (isError && !AuthService.getCurrentUser()) navigate("/login");
 	}, [isError]);
 
+	useEffect(() => {
+		if (isError && AuthService.getCurrentUser()) navigate("/welcome");
+	}, [isError]);
 	return (
 		<Container maxW={"6xl"} mt={6}>
 			{!isError && member?.acf?.first_time_setup && (
@@ -28,7 +31,7 @@ const Profile = () => {
 			{/* Error fetching membership id, but user is logged in. Means first time setup */}
 			{!isLoading && isError && AuthService.getCurrentUser() && <UpdateProfileCard user={user} />}
 
-			<Loading isLoading={isLoading} />
+			<LoadingIndicator isLoading={isLoading} />
 		</Container>
 	);
 };

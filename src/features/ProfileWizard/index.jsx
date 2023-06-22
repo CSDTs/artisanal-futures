@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import Loading from "../../components/Loading";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 import { AccountPanel, BusinessPanel, OptInPanel, ProfilePanel, SummaryPanel } from "./components/Panels";
 import { PanelHeading, PanelNavigation, PanelTab } from "./layouts/";
@@ -169,7 +169,7 @@ export default function ProfileWizard() {
 
 	return (
 		<>
-			<Loading isLoading={isLoading} />
+			<LoadingIndicator isLoading={isLoading} />
 
 			{isError && !isLoading && (
 				<Flex direction="column" align="center" pt={{ sm: "125px", lg: "75px" }}>

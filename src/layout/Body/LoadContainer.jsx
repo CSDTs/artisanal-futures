@@ -1,5 +1,5 @@
 import { Container, Text } from "@chakra-ui/react";
-import Loading from "../../components/Loading";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 export default function LoadContainer({
 	isLoading,
@@ -9,7 +9,7 @@ export default function LoadContainer({
 }) {
 	return (
 		<Container maxW={"6xl"} mt={6}>
-			<Loading isLoading={isLoading} />
+			<LoadingIndicator isLoading={isLoading} />
 			{!isLoading && <>{children}</>}
 			{isError && <Text>{errorMsg}</Text>}
 		</Container>
