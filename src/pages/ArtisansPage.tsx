@@ -1,11 +1,12 @@
 import ArtisanCard from "@/components/ArtisanCard";
 import PageContainer from "@/components/PageContainer";
-import BusinessCard from "@/features/Artisans/components/ArtisanCard";
+
+import { LoadContainer } from "@/layout";
+import { fetchArtisans } from "@/middleware/fetching";
+import { ArtisanACF } from "@/types";
 import { Fragment } from "react";
-import { ArtisanService } from "../features/Artisans";
-import { LoadContainer } from "../layout";
-export default function ArtisansPage() {
-	const { artisans, isLoading, isError } = ArtisanService.fetchArtisans();
+const ArtisansPage = () => {
+	const { artisans, isLoading, isError } = fetchArtisans();
 
 	const pageInfo = {
 		title: "Artisans",
@@ -13,7 +14,6 @@ export default function ArtisansPage() {
 	};
 	return (
 		<PageContainer {...pageInfo}>
-			{/* <ArtisanListings artisans={artisans} /> */}
 			<LoadContainer isLoading={isLoading} isError={false}>
 				{(isError || (!isLoading && artisans?.length === 0)) && (
 					<p className="mt-10 font-normal">
@@ -23,7 +23,7 @@ export default function ArtisansPage() {
 
 				{artisans?.length > 0 && (
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-						{artisans.map((store, index: number) => (
+						{artisans.map((store: ArtisanACF, index: number) => (
 							<Fragment key={index}>
 								{store.acf.business.name && (
 									<section>
@@ -37,4 +37,5 @@ export default function ArtisansPage() {
 			</LoadContainer>
 		</PageContainer>
 	);
-}
+};
+export default ArtisansPage;

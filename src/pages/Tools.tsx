@@ -26,6 +26,13 @@ const ToolsPage = () => {
 			image: "img/routing.png",
 			callback: () => navigate("/tools/routing"),
 		},
+		{
+			title: "Craft Recomposition",
+			subtitle: "Break down an image into its bill of materials",
+			type: "Logistics",
+			image: "img/routing.png",
+			callback: () => navigate("/craft-recomposition"),
+		},
 	];
 
 	return (

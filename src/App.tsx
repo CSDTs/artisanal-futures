@@ -10,9 +10,8 @@ import CollectiveAgreementPage from "./pages/CollectiveAgreementPage";
 import ArtisansPage from "./pages/ArtisansPage";
 import Homepage from "./pages/Homepage";
 import PolicyInformation from "./pages/PolicyInformation";
-import Registration from "./pages/Registration";
 
-import Products from "./pages/Products";
+import ProductsPage from "./pages/ProductsPage";
 import Profile from "./pages/Profile";
 
 import SignInPage from "./pages/SignInPage";
@@ -23,9 +22,15 @@ import PageNotFound from "./pages/PageNotFound";
 
 import OnboardingScreen from "./features/OnboardingScreen";
 import ProfileWizard from "./features/ProfileWizard";
+
+import MeasurementBox from "./features/PatternGenerator/components/MeasurementBox";
 import ArtisanProfile from "./pages/ArtisanProfile";
-import Remix from "./pages/Remix";
+import ContactPage from "./pages/ContactPage";
+import CraftRecompositionPage from "./pages/CraftRecompositionPage";
+import PatternGenerator from "./pages/PatternGenerator";
+import RegistrationPage from "./pages/RegistrationPage";
 function App() {
+	localStorage.removeItem("chakra-ui-color-mode");
 	return (
 		<div className="h-full App">
 			<Routes>
@@ -34,7 +39,7 @@ function App() {
 				<Route path="/artisans" element={<ArtisansPage />} />
 				<Route path="/artisans/:name" element={<ArtisanProfile />} />
 
-				<Route path="/products" element={<Products />} />
+				<Route path="/products" element={<ProductsPage />} />
 
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/shop-rate-calculator" element={<ShopRateCalculator />} />
@@ -47,12 +52,16 @@ function App() {
 				<Route path="/policies/" element={<PolicyInformation />} />
 				<Route path="/policies/:name" element={<PolicyInformation />} />
 
-				<Route path="/registration" element={<Registration />} />
+				<Route path="/contact" element={<ContactPage />} />
+				<Route path="/registration" element={<RegistrationPage />} />
+
 				<Route path="/login" element={<SignInPage />} />
-				<Route path="/remix" element={<Remix />} />
+				<Route path="/craft-recomposition" element={<CraftRecompositionPage />} />
 
 				<Route path="*" element={<PageNotFound />} />
 				<Route path="/welcome" element={<OnboardingScreen />} />
+
+				<Route path="/pattern-generator" element={<PatternGenerator />} />
 			</Routes>
 		</div>
 	);

@@ -1,5 +1,4 @@
-import Footer from "@/layout/Footer";
-import Navigation from "@/layout/Navigation";
+import { Footer, Navigation } from "@/layout";
 import { FC, ReactNode } from "react";
 interface IPageProps {
 	children: ReactNode;
@@ -11,9 +10,9 @@ const PageContainer: FC<IPageProps> = ({ title, subtitle, children }) => {
 		<div className="h-full min-h-screen flex flex-col justify-between ">
 			<div>
 				<Navigation />
-				<main className="max-w-6xl p-4 mx-auto mt-6">
-					{title && <h1 className="mb-6 text-4xl font-semibold">{title}</h1>}
-					{subtitle && <p className="mt-1 font-light">{subtitle}</p>}
+				<main className="max-w-6xl p-4 mt-6 mx-auto">
+					{title && <h1 className=" text-5xl font-semibold">{title}</h1>}
+					{subtitle && <p className="lead mt-2 mb-3 text-2xl text-slate-400">{subtitle}</p>}
 					{children}
 				</main>
 			</div>

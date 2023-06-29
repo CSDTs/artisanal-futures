@@ -1,6 +1,11 @@
 import { Heading, Text } from "@chakra-ui/react";
+import { FC } from "react";
 
-export default function PageHeading({ title, subtitle }) {
+interface IProps {
+	title: string;
+	subtitle: string;
+}
+const PageHeading: FC<IProps> = ({ title, subtitle }) => {
 	return (
 		<>
 			<Heading mb={6}>{title}</Heading>
@@ -9,4 +14,6 @@ export default function PageHeading({ title, subtitle }) {
 			</Text>
 		</>
 	);
-}
+};
+
+export default PageHeading;

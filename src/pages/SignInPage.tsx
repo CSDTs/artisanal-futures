@@ -61,10 +61,16 @@ const SignInPage = () => {
 	}, []);
 
 	return (
-		<section className="flex items-center content-center justify-center min-h-screen bg-slate-50 ">
+		<section className="flex items-center content-center justify-center min-h-screen bg-slate-50 flex-col ">
+			<div className="mb-auto p-4 text-left w-full">
+				<a href="/" className="text-blue-400 text-lg font-medium ">
+					<span className="text-3xl ">←</span> Back to homepage
+				</a>
+			</div>
 			{!isLoading && (
-				<div className="flex flex-col w-[32rem] gap-8 px-6 py-12 mx-auto">
+				<div className="my-auto flex flex-col w-[32rem] gap-8 px-6 py-12 mx-auto">
 					<div className="flex flex-col gap-4 text-center">
+						<img src="/img/logo.png" alt="Artisanal Futures Logo" className="w-1/2 mx-auto mb-2" />
 						<h1 className="text-4xl font-semibold">Sign in to your account</h1>
 						<p className="text-lg text-slate-600">
 							to customize your profile and store <span onClick={testLogInUser}>✌️</span>
@@ -135,6 +141,9 @@ const SignInPage = () => {
 				</div>
 			)}
 			<Loading isLoading={isLoading} />
+			<div className="mt-auto p-4">
+				<p className="font-normal text-slate-400">&copy; 2023 Artisanal Futures. All rights reserved.</p>
+			</div>
 		</section>
 	);
 };

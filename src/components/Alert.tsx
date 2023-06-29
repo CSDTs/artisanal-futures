@@ -9,10 +9,11 @@ interface IProps {
 const Alert: FC<IProps> = ({ type, callback, children }) => {
 	const alertType = {
 		error: "relative py-3 pl-4 pr-10 leading-normal text-red-700 bg-red-100 rounded-lg",
+		success: "relative py-3 pl-4 pr-10 leading-normal text-green-700 bg-green-100 rounded-lg",
 	};
 	return (
 		<div className={alertType[type as keyof typeof alertType]} role="alert">
-			<h3 className="">Error</h3>
+			<h3 className="capitalize ">{type}</h3>
 			{children}
 			<span className="absolute inset-y-0 right-0 flex items-center mr-4" onClick={callback}>
 				<svg className="w-4 h-4 fill-current" role="button" viewBox="0 0 20 20">

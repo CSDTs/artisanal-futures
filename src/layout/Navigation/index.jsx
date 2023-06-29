@@ -76,15 +76,9 @@ export default function Navigation() {
 					<Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
 						{!currentUser?.token && (
 							<>
-								<Button
-									as={"a"}
-									display={{ base: "none", md: "inline-flex" }}
-									fontSize={"sm"}
-									fontWeight={400}
-									variant={"link"}
-									onClick={() => navigate("/registration")}>
+								<button className="font-thin whitespace-nowrap hover:font-normal" onClick={() => navigate("/contact")}>
 									Become an Artisan
-								</Button>
+								</button>
 
 								<Button
 									display={{ base: "none", md: "inline-flex" }}
@@ -215,7 +209,7 @@ const MobileNav = () => {
 
 			{!currentUser?.token && (
 				<>
-					<Stack spacing={4} onClick={() => navigate("/registration")}>
+					<Stack spacing={4} onClick={() => navigate("/contact")}>
 						<Flex
 							py={2}
 							as={Link}

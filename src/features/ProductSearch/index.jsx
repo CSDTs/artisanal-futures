@@ -103,7 +103,7 @@ export default function ProductSearch() {
 	}, [products]);
 
 	return (
-		<>
+		<section className="mx-auto">
 			<Filter
 				attributes={attributes}
 				products={products}
@@ -111,19 +111,22 @@ export default function ProductSearch() {
 				handleSearch={handleSearchChange}
 				handleTags={handleTagGroupChange}
 			/>
-
-			<FilterBar
-				availableArtisans={availableArtisans}
-				attributes={apiAttributes}
-				handleTagGroupChange={handleTagGroupChange}
-				filteredTags={filteredTags}
-				setProducts={setApiProducts}
-				setFilteredTags={setFilteredTags}
-				handleTagRemoval={handleTagRemoval}
-			/>
-			{!isLoadingProducts && <ProductGrid products={filtered} />}
+			<div className="flex md:flex-row flex-col w-full ">
+				<div className="md:w-1/4 w-full">
+					<FilterBar
+						availableArtisans={availableArtisans}
+						attributes={apiAttributes}
+						handleTagGroupChange={handleTagGroupChange}
+						filteredTags={filteredTags}
+						setProducts={setApiProducts}
+						setFilteredTags={setFilteredTags}
+						handleTagRemoval={handleTagRemoval}
+					/>
+				</div>
+				{!isLoadingProducts && <ProductGrid products={filtered} />}
+			</div>
 
 			<LoadingIndicator isLoading={isLoadingProducts} />
-		</>
+		</section>
 	);
 }

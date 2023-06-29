@@ -1,4 +1,4 @@
-const formatToTitleString = (word) => {
+const formatToTitleString = (word: string) => {
 	return word
 		.toLowerCase()
 		.split(" ")
@@ -7,7 +7,7 @@ const formatToTitleString = (word) => {
 };
 
 // TODO: Verify attribute (principle) format to either update function or remove
-const sanitizeAttributes = (attributes) => {
+const sanitizeAttributes = (attributes: string) => {
 	let sanitizedAttributes = attributes.replace(",", "  ");
 	sanitizedAttributes = sanitizedAttributes.replace("d,", "d");
 	sanitizedAttributes = sanitizedAttributes.replace("e,", "e");
@@ -16,7 +16,7 @@ const sanitizeAttributes = (attributes) => {
 	return sanitizedAttributes;
 };
 
-const formatPrinciplesDisplay = (principles) => {
+const formatPrinciplesDisplay = (principles: string) => {
 	return principles.replaceAll(",", "  ").trim().replaceAll("  ", " • ");
 };
 const ProductUtil = {

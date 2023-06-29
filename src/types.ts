@@ -39,4 +39,10 @@ type ReturningUser = {
 	username: string;
 	password: string;
 };
-export type { AccountData, BusinessData, NewUser, ReturningUser };
+
+type ArtisanACF = {
+	acf: any;
+	slug: string;
+};
+
+export type { AccountData, ArtisanACF, BusinessData, NewUser, ReturningUser };

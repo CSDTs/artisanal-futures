@@ -1,37 +1,12 @@
 import ProfileService from "@/features/Profile/services/profile.service";
+import AuthService from "@/services/auth.service";
 import axios from "axios";
-import useSWR from "swr";
-import AuthService from "../../../services/auth.service";
 
-/**
- * General use fetches for any type of user
- */
-
-const BASE_URL = "https://forum.artisanalfutures.org/wp-json/";
-const WP_ENDPOINT = `${import.meta.env.VITE_API_URL}wp/v2`;
-const ACF_ENDPOINT = `${import.meta.env.VITE_API_URL}acf/v3`;
-
-const WP_API_MEMBERSHIP = "https://forum.artisanalfutures.org/wp-json/acf/v3/af_members/";
 const WP_API_USERS = "https://forum.artisanalfutures.org/wp-json/acf/v3/users/";
 const TOKEN_URL = import.meta.env.VITE_API_URL + "jwt-auth/v1/token";
 const SIMP_JWT_REGISTER_URL = "https://forum.artisanalfutures.org/wp-json/simple-jwt-login/v1/users";
 
 import { NewUser, ReturningUser } from "@/types";
-
-const fetchArtisans = (id = "") => {
-	const address = `${WP_ENDPOINT}/af_members/${id}`;
-	const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-
-	const { data, error } = useSWR(address, fetcher, {
-		revalidateOnFocus: true,
-	});
-
-	return {
-		data: data,
-		isLoading: !error && !data,
-		isError: error,
-	};
-};
 
 const login = (payload: ReturningUser) => {
 	return postToWordPressAPI(TOKEN_URL, payload)
@@ -103,9 +78,7 @@ const postToWordPressAPI = async (endpoint: string, payload: Object) => {
 };
 
 const RegistrationService = {
-	fetchArtisans,
 	createNewUser,
-
 	login,
 	updateUserACFInformation,
 };
