@@ -25,11 +25,7 @@ const ArtisansPage = () => {
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
 						{artisans.map((store: ArtisanACF, index: number) => (
 							<Fragment key={index}>
-								{store.acf.business.name && (
-									<section>
-										<ArtisanCard {...store.acf} slug={store.slug} />
-									</section>
-								)}
+								{store.acf.business.name && <ArtisanCard {...store.acf} slug={store.slug} key={index} />}
 							</Fragment>
 						))}
 					</div>

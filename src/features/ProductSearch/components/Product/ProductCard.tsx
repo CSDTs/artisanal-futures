@@ -1,7 +1,6 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 
-import ProductUtil from "@/features/ProductSearch/utils/product.utils";
-import ProductDetails from "./ProductDetails";
+import { ProductDetails } from "@/features/ProductSearch/components/Product";
 
 interface IProps {
 	name: string;
@@ -10,10 +9,14 @@ interface IProps {
 	principles: string;
 	url: string;
 	description: string;
-	materials: string;
+	// materials: string;
 	assessment: Array<any>;
-	onCLick: () => void;
+	// onCLick: () => void;
 }
+
+const formatAttributes = (attributes: string) => {
+	return attributes.replaceAll(",", "  ").trim().replaceAll("  ", " • ");
+};
 
 const ProductCard: FC<IProps> = (props) => {
 	return (
@@ -23,16 +26,15 @@ const ProductCard: FC<IProps> = (props) => {
 					src={props.image}
 					alt={`Image of ${props.name}`}
 					className="rounded-t-lg object-cover aspect-square w-full"
-					onClick={props.onCLick}
 					onError={({ currentTarget }) => {
 						currentTarget.onerror = null; // prevents looping
-						currentTarget.src = "https://via.placeholder.com/720";
+						currentTarget.src = "/img/background-fallback.jpg";
 					}}
 				/>
 
 				<div className="p-6 flex flex-col ">
 					<p className="text-slate-500 font-semibold tracking-wide text-xs uppercase">
-						{ProductUtil.formatPrinciplesDisplay(props.principles)}
+						{formatAttributes(props.principles)}
 					</p>
 
 					<h3 className="mt-3 font-semibold leading-3 mb-3 capitalize ">{props.name}</h3>

@@ -1,5 +1,5 @@
 import PageContainer from "@/components/PageContainer";
-import MeasurementBox from "@/features/PatternGenerator/components/MeasurementBox";
+import MeasurementBox from "@/features/apps/PatternGenerator/components/MeasurementBox";
 
 const PatternGenerator = () => {
 	const pageInfo = {

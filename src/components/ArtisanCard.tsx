@@ -20,7 +20,7 @@ interface ICardProps {
 const ArtisanCard: FC<ICardProps> = ({ business, profile, slug }) => {
 	const navigate = useNavigate();
 
-	const handleProfileClick = () => navigate(`/artisans/${slug}`);
+	const handleProfileClick = () => (window.location.href = `/artisans/${slug}`);
 	const handleStoreClick = () => window.open(business.website, "_blank").focus();
 
 	return (

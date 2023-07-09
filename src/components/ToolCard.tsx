@@ -10,10 +10,10 @@ interface IAppCardProps {
 
 const ToolCard: FC<IAppCardProps> = ({ title, subtitle, image, callback }) => {
 	return (
-		<div className="cursor-pointer group" onClick={callback}>
-			<div className="flex flex-col items-center w-10/12 mx-auto my-3 overflow-hidden transition-all duration-200 rounded-lg shadow-lg md:max-w-s lg:max-w-xs group-hover:bg-slate-500 group-active:shadow-lg group-active:shadow-blue-200">
+		<div className="cursor-pointer group h-full " onClick={callback}>
+			<div className="flex flex-col items-center w-10/12 mx-auto my-3 overflow-hidden transition-all duration-200 rounded-lg shadow-lg md:max-w-s lg:max-w-xs group-hover:bg-slate-500 group-active:shadow-lg group-active:shadow-blue-200 h-full ">
 				<img
-					className="object-cover w-full h-64 transition-all duration-200 group-hover:contrast-75"
+					className="rounded-t-lg object-cover aspect-square w-full transition-all duration-200 group-hover:contrast-75"
 					src={image}
 					alt={title}
 				/>

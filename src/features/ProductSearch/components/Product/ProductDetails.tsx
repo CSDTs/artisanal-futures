@@ -7,7 +7,7 @@ interface IProps {
 	image: string;
 	description: string;
 	principles: string;
-	materials: string;
+	// materials: string;
 	assessment: Array<any>;
 	children: React.ReactNode;
 	url: string;
@@ -56,7 +56,7 @@ const ProductDetails: FC<IProps> = ({ children, ...product }) => {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95">
 								<Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-									<Dialog.Title as="h3" className="text-3xl font-medium leading-6 text-gray-900">
+									<Dialog.Title as="h3" className="text-3xl font-medium leading-6 text-gray-900 capitalize">
 										{product.name}
 									</Dialog.Title>
 
@@ -80,7 +80,11 @@ const ProductDetails: FC<IProps> = ({ children, ...product }) => {
 																	product.principles
 																		.split(",")
 
-																		.map((attribute) => <li key={attribute}>{attribute}</li>)}
+																		.map((attribute) => (
+																			<li key={attribute} className="capitalize">
+																				{attribute}
+																			</li>
+																		))}
 															</ul>
 														</Disclosure.Panel>
 													</>

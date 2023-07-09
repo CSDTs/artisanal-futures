@@ -1,5 +1,6 @@
 import { Footer, Navigation } from "@/layout";
 import { FC, ReactNode } from "react";
+
 interface IPageProps {
 	children: ReactNode;
 	title?: string;

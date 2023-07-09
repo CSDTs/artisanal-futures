@@ -3,6 +3,8 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { ForwardedRef, forwardRef, useEffect, useRef, useState } from "react";
 
 import { AccountData } from "@/types";
+import { useTimeout } from "@chakra-ui/react";
+import { FaCheck } from "react-icons/fa";
 
 type Ref = HTMLFormElement;
 
@@ -12,43 +14,8 @@ interface IProps extends AccountData {
 	setAccountData: React.Dispatch<React.SetStateAction<AccountData>>;
 }
 
-const useForwardRef = <T,>(ref: ForwardedRef<T>, initialValue: any = null) => {
-	const targetRef = useRef<T>(initialValue);
-
-	useEffect(() => {
-		if (!ref) return;
-
-		if (typeof ref === "function") {
-			ref(targetRef.current);
-		} else {
-			ref.current = targetRef.current;
-		}
-	}, [ref]);
-
-	return targetRef;
-};
-
-const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
-	const testUpload = (data: any) => {
-		setAccountData({ ...data, profile_image_url: data });
-	};
-	const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files) {
-			setLogo(URL.createObjectURL(e.target.files[0]));
-			uploadImageToMedia(e.target.files[0], testUpload);
-		}
-	};
-	const [logo, setLogo] = useState<string | null>(null);
+const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(props, ref) {
 	const logoInputRef = useRef<HTMLInputElement>(null);
-
-	const { uploadImageToMedia } = useImageUpload();
-	// const inputRef = useForwardRef<HTMLFormElement>(ref);
-	const handleClick = () => {
-		// if (logoInputRef.current) {
-		// 	logoInputRef.current.click();
-		// }
-	};
-
 	const {
 		first_name,
 		last_name,
@@ -61,6 +28,36 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 		handleOnChange,
 		setAccountData,
 	} = props;
+	const [logo, setLogo] = useState<string | null>(null);
+	const testUpload = (data: any) => {
+		setAccountData({
+			...props.accountData,
+			profile_image_file: logoInputRef?.current?.value,
+			profile_image_url: data,
+		});
+	};
+	const handleLogoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		console.log("yet");
+		if (e.target.files) {
+			setLogo(null);
+			setAccountData({
+				...props.accountData,
+				profile_image_file: "",
+				profile_image_url: "",
+			});
+
+			setLogo(URL.createObjectURL(e.target.files[0]));
+			uploadImageToMedia(e.target.files[0], testUpload);
+		}
+	};
+
+	const { uploadImageToMedia } = useImageUpload();
+
+	const handleClick = () => {
+		if (logoInputRef.current) {
+			logoInputRef.current.click();
+		}
+	};
 
 	return (
 		<form className="h-full overflow-scroll bg-white shadow rounded-md p-4" ref={ref} onChange={handleOnChange}>
@@ -186,19 +183,46 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 
 							<input
 								type="file"
-								name="business-logo"
-								id="business-logo"
+								name="profile_image_file"
+								id="profile_image_file"
 								ref={logoInputRef}
 								className="hidden"
 								accept="image/*"
 								onChange={handleLogoChange}
+								aria-label="Account Image"
 							/>
-							<button
-								type="button"
-								className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-								onClick={handleClick}>
-								Change
-							</button>
+							{logo && !profile_image_url ? (
+								<button
+									type="button"
+									className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
+									disabled>
+									<svg
+										className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24">
+										<circle
+											className="opacity-25"
+											cx="12"
+											cy="12"
+											r="10"
+											stroke="currentColor"
+											stroke-width="4"></circle>
+										<path
+											className="opacity-75"
+											fill="currentColor"
+											d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+									</svg>
+									Processing...
+								</button>
+							) : (
+								<button
+									type="button"
+									className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+									onClick={handleClick}>
+									Change
+								</button>
+							)}
 						</div>
 
 						<label htmlFor="profile_image_url" className="block text-sm font-medium leading-6 text-gray-900 sr-only">
@@ -208,10 +232,15 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 							type="text"
 							name="phone"
 							id="profile_image_url"
-							disabled
-							defaultValue={profile_image_url}
+							value={profile_image_url}
 							className="mt-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
 						/>
+						{profile_image_url && (
+							<p className="text-green-500 font-semibold text-lg bg-green-500 bg-opacity-20 inline-flex px-5 items-center rounded">
+								<FaCheck className="mr-2" />
+								Photo processed!
+							</p>
+						)}
 					</div>
 				</div>
 				<div className="pb-12">
@@ -234,7 +263,7 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 											id="moderated_forum"
 											name="moderated_forum"
 											type="checkbox"
-											defaultChecked={forums.moderated_forum}
+											defaultChecked={forums?.moderated_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -251,7 +280,7 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 											id="unmoderated_forum"
 											name="unmoderated_forum"
 											type="checkbox"
-											defaultChecked={forums.unmoderated_forum}
+											defaultChecked={forums?.unmoderated_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -268,7 +297,7 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 											id="private_forum"
 											name="private_forum"
 											type="checkbox"
-											defaultChecked={forums.private_forum}
+											defaultChecked={forums?.private_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -285,7 +314,7 @@ const AccountInfo = forwardRef<Ref, IProps>((props, ref) => {
 											id="hidden_forum"
 											name="hidden_forum"
 											type="checkbox"
-											defaultChecked={forums.hidden_forum}
+											defaultChecked={forums?.hidden_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>

@@ -33,13 +33,22 @@ const ToolsPage = () => {
 			image: "img/routing.png",
 			callback: () => navigate("/craft-recomposition"),
 		},
+		{
+			title: "AI for Cloth",
+			subtitle: "Generate cloth patterns using AI",
+			type: "Design",
+			image: "img/routing.png",
+			callback: () => navigate("/pattern-generator"),
+		},
 	];
 
 	return (
 		<PageContainer {...pageInfo}>
-			<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+			<div className="flex flex-col md:flex-row md:flex-wrap h-fit">
 				{tools.map((tool, index) => (
-					<ToolCard key={index} {...tool} />
+					<div className="basis-full md:basis-1/2 lg:basis-1/4 flex p-4 " key={index}>
+						<ToolCard {...tool} />
+					</div>
 				))}
 			</div>
 		</PageContainer>

@@ -1,6 +1,6 @@
 import ImageUpload from "@/components/ImageUpload";
 import PageContainer from "@/components/PageContainer";
-import processImage from "@/features/CraftRecomposition/mock";
+import processImage from "@/features/apps/CraftRecomposition/mock";
 import { FC, useRef, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 

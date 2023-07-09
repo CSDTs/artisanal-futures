@@ -26,10 +26,10 @@ const SummaryInfo: FC<IProps> = ({ account, business }) => {
 							<p className="block text-sm font-medium leading-6 text-gray-900">{account.email || null}</p>
 
 							<p className="block text-sm font-medium leading-6 text-gray-900 my-3">
-								Forum's interested in: [{account.forums.moderated_forum && "Moderated"}
-								{account.forums.unmoderated_forum && ", Unmoderated"}
-								{account.forums.private_forum && ", Private"}
-								{account.forums.hidden_forum && ", Hidden"}]
+								Forum's interested in: [{account.forums?.moderated_forum && "Moderated"}
+								{account.forums?.unmoderated_forum && ", Unmoderated"}
+								{account.forums?.private_forum && ", Private"}
+								{account.forums?.hidden_forum && ", Hidden"}]
 							</p>
 							<p className="block text-sm font-medium leading-6 text-gray-900 my-3">
 								Supply Chain opt in: {account.supply_chain.toString().toUpperCase()}

@@ -24,6 +24,7 @@ type AccountData = {
 		private_forum: boolean;
 	};
 	about: string;
+	profile_image_file: any;
 	profile_image_url: string;
 	supply_chain: boolean;
 };
@@ -44,5 +45,41 @@ type ArtisanACF = {
 	acf: any;
 	slug: string;
 };
+type Product = {
+	name: string;
+	description: string;
+	principles: string;
+	the_artisan: string;
+	url: string;
+	image: string;
+	craftID: string;
+	assessment: any;
+	id: number;
+};
 
-export type { AccountData, ArtisanACF, BusinessData, NewUser, ReturningUser };
+type Attribute = string;
+
+type Artisan = string;
+
+type FilterData = {
+	searchTerm: string;
+	tags: string[] | FormDataEntryValue[];
+};
+
+type CurrentUser = {
+	token: string;
+	user_nicename: string;
+};
+
+export type {
+	AccountData,
+	Artisan,
+	ArtisanACF,
+	Attribute,
+	BusinessData,
+	CurrentUser,
+	FilterData,
+	NewUser,
+	Product,
+	ReturningUser,
+};

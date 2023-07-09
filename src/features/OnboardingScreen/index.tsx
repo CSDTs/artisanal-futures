@@ -17,6 +17,9 @@ import ConfirmAccountModal from "./ConfirmAccountModal";
 import SummaryInfo from "./SummaryInfo";
 // import createArtisan from "./account.middleware";
 
+import { set } from "react-hook-form";
+import testData from "./data.json";
+
 const FILMS_QUERY = gql`
 	{
 		person(id: "ahunn", idType: SLUG) {
@@ -100,7 +103,7 @@ const OnboardingScreen = () => {
 		return true;
 	};
 
-	const accountInfo = createRef<HTMLFormElement>();
+	const accountInfo = useRef<any>(null);
 	const businessInfo = createRef<HTMLFormElement>();
 
 	const CREATE_POST_MUTATION = gql`
@@ -151,8 +154,20 @@ const OnboardingScreen = () => {
 		}
 	);
 	const [isConsenting, setIsConsenting] = useState(false);
+
+	useEffect(() => {
+		if (accountInfo.current) {
+			if (accountInfo?.current["profile_image_file"]?.value && accountData.profile_image_url) {
+				console.log("Finished");
+			}
+		}
+	}, [accountData.profile_image_file]);
+
 	const handleOnAccountChange = () => {
 		if (accountInfo.current) {
+			if (accountInfo?.current["profile_image_file"]?.value && !accountInfo?.current?.profile_image_url?.value) {
+				console.log("Uploading now");
+			}
 			setAccountData({
 				username: accountInfo?.current?.username.value,
 				email: accountInfo?.current?.email.value,
@@ -165,9 +180,11 @@ const OnboardingScreen = () => {
 					private_forum: accountInfo?.current?.private_forum.checked,
 				},
 				about: accountInfo?.current?.about.value,
+				profile_image_file: accountInfo?.current?.profile_image_file.value,
 				profile_image_url: accountInfo?.current?.profile_image_url.value,
 				supply_chain: accountInfo?.current?.supply_chain.checked,
 			});
+			console.log(accountData);
 		}
 	};
 
@@ -216,6 +233,11 @@ const OnboardingScreen = () => {
 		businessData,
 	};
 
+	const handleDevPrePopulation = () => {
+		setAccountData(testData.account);
+		setBusinessData(testData.business);
+	};
+
 	return (
 		<section className="flex h-screen w-full">
 			<Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -248,7 +270,13 @@ const OnboardingScreen = () => {
 						))}
 					</Tab.List>
 					<div className="p-4">
-						<p>Helpful text here</p>
+						{import.meta.env.DEV && (
+							<button
+								onClick={handleDevPrePopulation}
+								className="bg-orange-500 rounded text-white font-semibold px-3 py-2 hover:bg-orange-400">
+								Prepopulate fields (Dev)
+							</button>
+						)}
 					</div>
 				</div>
 
@@ -357,8 +385,9 @@ const OnboardingNavigation = ({ prevAction, nextAction, current, accountData, bu
 				</button>
 				{current < 3 && (
 					<button
-						className="px-4 py-2 font-semibold text-sm bg-indigo-600 text-white border border-slate-200 rounded-md  shadow-sm"
-						onClick={nextAction}>
+						className="disabled:bg-indigo-300 disabled:cursor-not-allowed px-4 py-2 font-semibold text-sm bg-indigo-600 text-white border border-slate-200 rounded-md  shadow-sm"
+						onClick={nextAction}
+						disabled={accountData.profile_image_file && !accountData.profile_image_url}>
 						Next
 					</button>
 				)}
