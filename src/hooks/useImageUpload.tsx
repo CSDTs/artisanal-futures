@@ -19,14 +19,37 @@ const useImageUpload = () => {
 				},
 			})
 			.then((response) => {
-				callBack(response.data.source_url);
+				console.log(response.data);
+				callBack(response.data);
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 	};
 
-	return { uploadImageToMedia };
+	const deleteMediaLink = async (mediaId: number | null, token: string): Promise<void> => {
+		if (!mediaId) return;
+
+		const endpointUrl = `${import.meta.env.VITE_API_URL}wp/v2/media/${mediaId}?force=true`;
+
+		try {
+			const response = await axios.delete(endpointUrl, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			if (response.status === 200) {
+				console.log("Media link deleted successfully.");
+			} else {
+				console.log(`Failed to delete media link. Status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("An error occurred while deleting the media link:", error);
+		}
+	};
+
+	return { uploadImageToMedia, deleteMediaLink };
 };
 
 export default useImageUpload;

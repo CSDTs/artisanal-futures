@@ -19,6 +19,10 @@ const setCurrentUser = (data) => {
 	localStorage.setItem("user", JSON.stringify(data));
 };
 
+const getCurrentUserMembershipId = () => {
+	return JSON.parse(localStorage.getItem("user") as string).membership_id;
+};
+
 const updateCurrentUser = (data) => {
 	let user = getCurrentUser();
 	user = { ...user, ...data };
@@ -139,6 +143,7 @@ const AuthService = {
 	updateCurrentUser,
 	setCurrentUser,
 	setProfileImage,
+	getCurrentUserMembershipId,
 };
 
 export default AuthService;

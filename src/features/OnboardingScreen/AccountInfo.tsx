@@ -1,57 +1,66 @@
 import useImageUpload from "@/hooks/useImageUpload";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { ForwardedRef, forwardRef, useEffect, useRef, useState } from "react";
-
+import AuthService from "@/services/auth.service";
 import { AccountData } from "@/types";
-import { useTimeout } from "@chakra-ui/react";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { forwardRef, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
-type Ref = HTMLFormElement;
-
-interface IProps extends AccountData {
-	handleOnChange: React.FormEventHandler;
+interface IProps {
 	accountData: AccountData;
+	handleOnChange: React.FormEventHandler;
 	setAccountData: React.Dispatch<React.SetStateAction<AccountData>>;
 }
 
-const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(props, ref) {
+const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(
+	{ handleOnChange, accountData, setAccountData },
+	ref
+) {
 	const logoInputRef = useRef<HTMLInputElement>(null);
+	const { uploadImageToMedia, deleteMediaLink } = useImageUpload();
+
 	const {
 		first_name,
 		last_name,
 		email,
 		username,
-		forums,
-		about,
+		moderated_forum,
+		unmoderated_forum,
+		hidden_forum,
+		private_forum,
+		about_me,
 		profile_image_url,
 		supply_chain,
-		handleOnChange,
-		setAccountData,
-	} = props;
-	const [logo, setLogo] = useState<string | null>(null);
-	const testUpload = (data: any) => {
+		profile_image_media_id,
+	} = accountData;
+
+	const [profileImage, setProfileImage] = useState<string | null>(null);
+
+	const clearProfileImage = () => {
+		setProfileImage(null);
 		setAccountData({
-			...props.accountData,
-			profile_image_file: logoInputRef?.current?.value,
-			profile_image_url: data,
+			...accountData,
+			profile_image_file: "",
+			profile_image_url: "",
+			profile_image_media_id: -1,
 		});
 	};
-	const handleLogoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log("yet");
-		if (e.target.files) {
-			setLogo(null);
-			setAccountData({
-				...props.accountData,
-				profile_image_file: "",
-				profile_image_url: "",
-			});
 
-			setLogo(URL.createObjectURL(e.target.files[0]));
-			uploadImageToMedia(e.target.files[0], testUpload);
+	const profileImageUploadCallback = (data: any) => {
+		setAccountData({
+			...accountData,
+			profile_image_file: logoInputRef?.current?.value,
+			profile_image_url: data?.source_url,
+			profile_image_media_id: data?.id,
+		});
+	};
+	const handleProfileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			clearProfileImage();
+
+			setProfileImage(URL.createObjectURL(e.target.files[0]));
+			uploadImageToMedia(e.target.files[0], profileImageUploadCallback);
 		}
 	};
-
-	const { uploadImageToMedia } = useImageUpload();
 
 	const handleClick = () => {
 		if (logoInputRef.current) {
@@ -59,8 +68,15 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 		}
 	};
 
+	const handleProfileImageRemoval = async () => {
+		const token = await AuthService.getCurrentUser().token;
+		deleteMediaLink(profile_image_media_id, token).then(() => {
+			clearProfileImage();
+		});
+	};
+
 	return (
-		<form className="h-full overflow-scroll bg-white shadow rounded-md p-4" ref={ref} onChange={handleOnChange}>
+		<form className="h-full overflow-scroll bg-white shadow rounded-md p-4 " ref={ref} onChange={handleOnChange}>
 			<div className="space-y-12">
 				<div className="border-b border-gray-900/10 pb-12">
 					<h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
@@ -115,9 +131,8 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 										type="text"
 										name="username"
 										id="username"
-										required
-										autoComplete="username"
-										className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										disabled
+										className=" disabled:rounded-r disabled:rounded-b border border-slate-300 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 										placeholder="janesmith"
 										defaultValue={username}
 									/>
@@ -133,11 +148,10 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 								<input
 									id="email"
 									name="email"
-									required
+									disabled
 									type="email"
-									autoComplete="email"
 									defaultValue={email}
-									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+									className="block w-full rounded-md border border-slate-300 py-1.5 text-gray-900 shadow-sm   placeholder:text-gray-400 sm:text-sm sm:leading-6 bg-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
 								/>
 							</div>
 						</div>
@@ -148,29 +162,13 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 					<p className="mt-1 text-sm leading-6 text-gray-600">
 						This info allows others to see you on the platform. You can change this later.
 					</p>
-					<div className="col-span-full mt-10">
-						<label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-							About
-						</label>
-						<div className="mt-2">
-							<textarea
-								id="about"
-								name="about"
-								rows={3}
-								className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-								defaultValue={about}
-							/>
-						</div>
-						<p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
-					</div>
-
 					<div className="col-span-full mt-5">
 						<label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
 							Photo
 						</label>
 						<div className="mt-2 flex items-center gap-x-3">
-							{logo ? (
-								<img src={logo} alt="Business Logo" className="h-32 w-32 object-cover rounded-full shadow" />
+							{profileImage ? (
+								<img src={profileImage} alt="Business Logo" className="h-32 w-32 object-cover rounded-full shadow" />
 							) : profile_image_url ? (
 								<img
 									src={profile_image_url}
@@ -188,10 +186,10 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 								ref={logoInputRef}
 								className="hidden"
 								accept="image/*"
-								onChange={handleLogoChange}
+								onChange={handleProfileImageChange}
 								aria-label="Account Image"
 							/>
-							{logo && !profile_image_url ? (
+							{profileImage && !profile_image_url ? (
 								<button
 									type="button"
 									className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
@@ -223,6 +221,14 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 									Change
 								</button>
 							)}
+							{profile_image_url && (
+								<button
+									type="button"
+									className="rounded-md bg-red-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-600"
+									onClick={handleProfileImageRemoval}>
+									Remove
+								</button>
+							)}
 						</div>
 
 						<label htmlFor="profile_image_url" className="block text-sm font-medium leading-6 text-gray-900 sr-only">
@@ -230,9 +236,25 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 						</label>
 						<input
 							type="text"
-							name="phone"
+							readOnly
+							hidden
+							name="profile_image_url"
 							id="profile_image_url"
 							value={profile_image_url}
+							className="mt-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
+						/>
+						<label
+							htmlFor="profile_image_media_id"
+							className="block text-sm font-medium leading-6 text-gray-900 sr-only">
+							Profile Image Media ID
+						</label>
+						<input
+							type="number"
+							readOnly
+							hidden
+							name="profile_image_media_id"
+							id="profile_image_media_id"
+							value={profile_image_media_id ?? 0}
 							className="mt-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
 						/>
 						{profile_image_url && (
@@ -241,6 +263,21 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 								Photo processed!
 							</p>
 						)}
+					</div>{" "}
+					<div className="col-span-full mt-10">
+						<label htmlFor="about_me" className="block text-sm font-medium leading-6 text-gray-900">
+							About Me
+						</label>
+						<div className="mt-2">
+							<textarea
+								id="about_me"
+								name="about_me"
+								rows={3}
+								className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+								defaultValue={about_me}
+							/>
+						</div>
+						<p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
 					</div>
 				</div>
 				<div className="pb-12">
@@ -263,7 +300,7 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 											id="moderated_forum"
 											name="moderated_forum"
 											type="checkbox"
-											defaultChecked={forums?.moderated_forum}
+											defaultChecked={moderated_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -280,7 +317,7 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 											id="unmoderated_forum"
 											name="unmoderated_forum"
 											type="checkbox"
-											defaultChecked={forums?.unmoderated_forum}
+											defaultChecked={unmoderated_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -297,7 +334,7 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 											id="private_forum"
 											name="private_forum"
 											type="checkbox"
-											defaultChecked={forums?.private_forum}
+											defaultChecked={private_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -314,7 +351,7 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 											id="hidden_forum"
 											name="hidden_forum"
 											type="checkbox"
-											defaultChecked={forums?.hidden_forum}
+											defaultChecked={hidden_forum}
 											className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 										/>
 									</div>
@@ -338,16 +375,16 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(pro
 								What the AI technology learns helps us identify outside price dips for groups of materials useful to
 								groups of ArtisanalFutures businesses. It also helps us identify alternative and new sources.
 							</p>
-							<div className="mt-6 space-y-6">
+							<div className="mt-6 ">
 								<div className="flex items-center gap-x-3">
 									<input
 										id="supply_chain"
 										name="supply_chain"
-										type="radio"
+										type="checkbox"
 										defaultChecked={supply_chain}
-										className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+										className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
 									/>
-									<label htmlFor="supply_chain" className="block text-sm font-medium leading-6 text-gray-900">
+									<label htmlFor="supply_chain" className=" mb-0 flex text-sm font-medium  text-gray-900">
 										I agree to be a part of our supply chain conversations service
 									</label>
 								</div>

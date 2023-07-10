@@ -1,8 +1,13 @@
+import { AccountData, BusinessData } from "@/types";
 import { Dialog, Transition } from "@headlessui/react";
 import { FC, Fragment, useState } from "react";
 import createArtisan from "./account.middleware";
 
-const ConfirmAccountModal = ({ account, business }) => {
+interface IProps {
+	account: AccountData;
+	business: BusinessData;
+}
+const ConfirmAccountModal: FC<IProps> = ({ account, business }) => {
 	let [isOpen, setIsOpen] = useState(false);
 
 	function closeModal() {
@@ -58,7 +63,7 @@ const ConfirmAccountModal = ({ account, business }) => {
 								leaveTo="opacity-0 scale-95">
 								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 									<Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-										Payment successful
+										Create your account
 									</Dialog.Title>
 									<div className="mt-2">
 										<p className="text-sm text-gray-500 ">
@@ -74,7 +79,7 @@ const ConfirmAccountModal = ({ account, business }) => {
 											<a href="/agreement" target="_blank" className="text-indigo-500 font-medium">
 												Collective Agreement
 											</a>
-											.
+											. You can always change your account and business settings later in your settings.
 										</p>
 									</div>
 

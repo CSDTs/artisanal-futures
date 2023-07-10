@@ -23,7 +23,7 @@ function classNames(...classes) {
 
 export default function Navigation() {
 	const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-	const profileImage = AuthService.getCurrentUser().profile_image;
+	const profileImage = AuthService.getCurrentUser()?.profile_image || null;
 
 	const { getCurrentUser } = AuthService;
 
@@ -110,7 +110,7 @@ export default function Navigation() {
 												<Menu.Item>
 													{({ active }) => (
 														<a
-															href="#"
+															href="/profile"
 															className={classNames(
 																active ? "bg-gray-100" : "",
 																"block px-4 py-2 text-sm text-gray-700"
@@ -147,14 +147,14 @@ export default function Navigation() {
 												)}
 												<Menu.Item>
 													{({ active }) => (
-														<a
-															href="#"
+														<button
+															onClick={() => AuthService.logout()}
 															className={classNames(
 																active ? "bg-gray-100" : "",
 																"block px-4 py-2 text-sm text-gray-700"
 															)}>
 															Sign out
-														</a>
+														</button>
 													)}
 												</Menu.Item>
 											</Menu.Items>

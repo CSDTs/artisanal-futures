@@ -1,31 +1,18 @@
-type BusinessData = {
-	biz_name: string;
-	biz_description: string;
-	website: string;
-	address: string;
-	biz_email: string;
-	phone: string;
-	listing_file_upload: string;
-	biz_processes: string;
-	biz_materials: string;
-	biz_principles: string;
-	listing_file_url: string;
-};
-
 type AccountData = {
 	username: string;
 	email: string;
 	first_name: string;
 	last_name: string;
-	forums: {
-		moderated_forum: boolean;
-		unmoderated_forum: boolean;
-		hidden_forum: boolean;
-		private_forum: boolean;
-	};
-	about: string;
+
+	moderated_forum: boolean;
+	unmoderated_forum: boolean;
+	hidden_forum: boolean;
+	private_forum: boolean;
+
+	about_me: string;
 	profile_image_file: any;
 	profile_image_url: string;
+	profile_image_media_id: number | null;
 	supply_chain: boolean;
 };
 
@@ -70,7 +57,22 @@ type CurrentUser = {
 	token: string;
 	user_nicename: string;
 };
+type BusinessData = {
+	biz_name: string;
+	biz_description: string;
+	website: string;
+	location: string;
+	biz_email: string;
+	phone: string;
 
+	biz_processes: string;
+	biz_materials: string;
+	biz_principles: string;
+
+	listing_image_file: any;
+	listing_image_url: string;
+	listing_image_media_id: number | null;
+};
 export type {
 	AccountData,
 	Artisan,
