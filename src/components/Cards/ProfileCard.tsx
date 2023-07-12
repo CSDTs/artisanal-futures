@@ -1,4 +1,10 @@
-const ProfileCard = ({ data }) => {
+import { FC } from "react";
+
+interface IProps {
+	data: any;
+}
+
+const ProfileCard: FC<IProps> = ({ data }) => {
 	return (
 		<div className="w-10/12 flex items-center">
 			<div className="w-8/12 h-full  flex flex-col bg-slate-200 p-4 ">

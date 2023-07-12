@@ -3,19 +3,19 @@ import axios from "axios";
 const TOKEN_URL = import.meta.env.VITE_API_URL + "jwt-auth/v1/token";
 const WP_USER_URL = import.meta.env.VITE_API_URL + "wp/v2/users/";
 
-const getUser = (id) => {
+const getUser = (id: any) => {
 	return axios.get(WP_USER_URL + id, {
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: "Bearer  " + JSON.parse(localStorage.getItem("user")).token,
+			Authorization: "Bearer  " + JSON.parse(localStorage.getItem("user") as string).token,
 		},
 	});
 };
 
 const getCurrentUser = () => {
-	return JSON.parse(localStorage.getItem("user"));
+	return JSON.parse(localStorage.getItem("user") as string);
 };
-const setCurrentUser = (data) => {
+const setCurrentUser = (data: any) => {
 	localStorage.setItem("user", JSON.stringify(data));
 };
 
@@ -23,17 +23,17 @@ const getCurrentUserMembershipId = () => {
 	return JSON.parse(localStorage.getItem("user") as string).membership_id;
 };
 
-const updateCurrentUser = (data) => {
+const updateCurrentUser = (data: any) => {
 	let user = getCurrentUser();
 	user = { ...user, ...data };
 	setCurrentUser(user);
 };
 
 const getCurrentUserToken = () => {
-	return JSON.parse(localStorage.getItem("user"))?.token;
+	return JSON.parse(localStorage.getItem("user") as string)?.token;
 };
 
-const login = (payload) => {
+const login = (payload: any) => {
 	return axios
 		.post(TOKEN_URL, payload, {
 			headers: { "Content-Type": "application/json" },
@@ -51,25 +51,6 @@ const login = (payload) => {
 			return response.data;
 		});
 };
-const verifyToken = () => {
-	return axios
-		.post(
-			import.meta.env.VITE_API_URL + "jwt-auth/v1/token/validate",
-			{},
-
-			{
-				headers: {
-					Authorization: "Bearer " + getCurrentUserToken(),
-				},
-			}
-		)
-		.then((response) => {
-			if (response.status == 200) {
-				return getUserInformation();
-			}
-			return response.data;
-		});
-};
 
 const logout = () => {
 	localStorage.removeItem("user");
@@ -82,8 +63,7 @@ const AuthService = {
 	getCurrentUser,
 
 	getCurrentUserToken,
-	// updateArtisanInformation,
-	verifyToken,
+
 	updateCurrentUser,
 	setCurrentUser,
 

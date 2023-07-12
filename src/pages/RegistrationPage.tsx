@@ -9,9 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 const RegistrationPage = () => {
 	const [isProcessing, setIsProcessing] = useState(false);
-	// const [error, setError] = useState(false);
+	const [error, setError] = useState(false);
 
-	const { createUser, isLoading, error } = useCreateUser();
+	const { createUser, isLoading } = useCreateUser();
 
 	const handleOnSubmit = (e: FormEvent) => {
 		e.preventDefault();
@@ -29,7 +29,7 @@ const RegistrationPage = () => {
 			console.error(
 				err?.response?.data?.data?.message || "There was an error processing your request. Please try again later."
 			);
-			// setError(true);
+			setError(true);
 			setIsProcessing(false);
 		});
 	};

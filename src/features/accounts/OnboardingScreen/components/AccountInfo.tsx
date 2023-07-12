@@ -72,7 +72,7 @@ const AccountInfo = forwardRef<HTMLFormElement, IProps>(function AccountInfo(
 	};
 
 	const handleProfileImageRemoval = async () => {
-		deleteMediaLink(profile_image_media_id, token).then(() => {
+		deleteMediaLink(profile_image_media_id, token as string).then(() => {
 			clearProfileImage();
 		});
 	};
