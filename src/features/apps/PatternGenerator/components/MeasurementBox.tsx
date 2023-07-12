@@ -1,3 +1,4 @@
+import combineTailwindClasses from "@/utils/combineTailwindClasses";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import React, { Fragment, MouseEvent, useEffect, useRef, useState } from "react";
@@ -67,123 +68,103 @@ const MeasurementBox: React.FC = () => {
 		setPathSegments([]);
 	};
 
-	const classNames = (...classes: string[]) => {
-		return classes.filter(Boolean).join(" ");
-	};
 	return (
-		<div className="relative w-500 h-500 border-black border mb-10">
-			<svg
-				viewBox="0 0 500 500"
-				onMouseDown={addSegment}
-				onMouseUp={endSegment}
-				onMouseMove={addLineSegment}
-				onMouseOver={selectSegment}
-				ref={svgRef}
-				className="w-500 h-500">
-				<defs>
-					<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-						<polygon points="0 0, 10 3, 0 6" />
-					</marker>
-				</defs>
+		<section className="flex  justify-around mb-10">
+			<div className="border-black border w-[500px] h-[500px]">
+				{" "}
+				<svg
+					viewBox="0 0 500 500"
+					onMouseDown={addSegment}
+					onMouseUp={endSegment}
+					onMouseMove={addLineSegment}
+					onMouseOver={selectSegment}
+					ref={svgRef}
+					className="w-[500px] h-[500px]">
+					<defs>
+						<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+							<polygon points="0 0, 10 3, 0 6" />
+						</marker>
+					</defs>
 
-				{/* <!-- Shoulder to wrist --> */}
-				<line x1="20" y1="220" x2="20" y2={height / 2 + shoulder / 2 + 120} stroke="black" />
+					{/* <!-- Shoulder to wrist --> */}
+					<line x1="20" y1="220" x2="20" y2={height / 2 + shoulder / 2 + 120} stroke="black" />
 
-				<text x="20" y="220" fontSize="10" fontFamily="Arial" style={{ userSelect: "none" }}>
-					0 inches
-				</text>
-
-				<text
-					x="20"
-					y={shoulder / 2 + height / 2 + 130}
-					fontSize="10"
-					fontFamily="Arial"
-					style={{ userSelect: "none" }}>
-					{shoulder} inches
-				</text>
-
-				<path strokeWidth={"2"} stroke="#333" fill="none" />
-
-				<g transform="translate(5, 220)">
-					<text
-						x="0"
-						y="0"
-						fontSize="12"
-						fontWeight="bold"
-						textAnchor="start"
-						transform="rotate(90)"
-						// style="user-select: none;"
-					>
-						Shoulder to wrist
+					<text x="20" y="220" fontSize="10" fontFamily="Arial" className="select-none">
+						0 inches
 					</text>
-				</g>
 
-				{/* <!-- wrist circumference --> */}
-				<line x1={250 + wrist} y1="440" x2={250 - wrist} y2="440" stroke="black" strokeWidth="1" />
-				<text
-					x="250"
-					y="430"
-					fontSize="12"
-					fill="black"
-					fontWeight="bold"
-					textAnchor="middle"
-					transform="rotate(0 250 440)"
-					fontFamily="Arial"
-					// style="user-select: none;"
-				>
-					Wrist Circumference
-				</text>
-				<text
-					x={210 + wrist}
-					y={450}
-					fontSize="10"
-					fontFamily="Arial"
-					//   style="user-select: none;"
-				>
-					{wrist} inches
-				</text>
+					<text x="20" y={shoulder / 2 + height / 2 + 130} fontSize="10" fontFamily="Arial" className="select-none">
+						{shoulder} inches
+					</text>
 
-				{/* <!-- bicep circumference --> */}
-				<line x1={250 + bicep} y1="180" x2={250 - bicep} y2="180" stroke="black" strokeWidth="1" />
-				<text
-					x="250"
-					y="170"
-					fontSize="12"
-					fill="black"
-					fontWeight="bold"
-					textAnchor="middle"
-					transform="rotate(0 250 440)"
-					fontFamily="Arial"
-					// style="user-select: none;"
-				>
-					Bicep Circumference
-				</text>
-				<text
-					x={200 + bicep}
-					y={190}
-					fontSize="10"
-					fontFamily="Arial"
-					// style="user-select: none;"
-				>
-					{bicep} inches
-				</text>
-				{/* <!-- ... we draw any new lines --> */}
-				<path d={currentSegment} stroke="black" fill="none" />
+					<path strokeWidth={"2"} stroke="#333" fill="none" />
 
-				{/* <!-- ... and also persist any prior lines -->	 */}
-				{pathSegments.map((segment, index) => (
-					<path
-						key={index}
-						d={segment.path}
-						fill="none"
-						stroke={index === selectedSegment ? "red" : "black"}
-						strokeWidth={index === selectedSegment ? pathWidth * 2 : pathWidth}
-						data-index={index}
-					/>
-				))}
-			</svg>
-			<section className="p-4">
-				<div className="flex justify-around flex-col lg:flex-row gap-4 py-4 my-5 items-center">
+					<g transform="translate(5, 220)">
+						<text
+							x="0"
+							y="0"
+							fontSize="12"
+							fontWeight="bold"
+							textAnchor="start"
+							transform="rotate(90)"
+							className="select-none">
+							Shoulder to wrist
+						</text>
+					</g>
+
+					{/* <!-- wrist circumference --> */}
+					<line x1={250 + wrist} y1="440" x2={250 - wrist} y2="440" stroke="black" strokeWidth="1" />
+					<text
+						x="250"
+						y="430"
+						fontSize="12"
+						fill="black"
+						fontWeight="bold"
+						textAnchor="middle"
+						transform="rotate(0 250 440)"
+						fontFamily="Arial"
+						className="select-none">
+						Wrist Circumference
+					</text>
+					<text x={210 + wrist} y={450} fontSize="10" fontFamily="Arial" className="select-none">
+						{wrist} inches
+					</text>
+
+					{/* <!-- bicep circumference --> */}
+					<line x1={250 + bicep} y1="180" x2={250 - bicep} y2="180" stroke="black" strokeWidth="1" />
+					<text
+						x="250"
+						y="170"
+						fontSize="12"
+						fill="black"
+						fontWeight="bold"
+						textAnchor="middle"
+						transform="rotate(0 250 440)"
+						fontFamily="Arial"
+						className="select-none">
+						Bicep Circumference
+					</text>
+					<text x={200 + bicep} y={190} fontSize="10" fontFamily="Arial" className="select-none">
+						{bicep} inches
+					</text>
+					{/* <!-- ... we draw any new lines --> */}
+					<path d={currentSegment} stroke="black" fill="none" />
+
+					{/* <!-- ... and also persist any prior lines -->	 */}
+					{pathSegments.map((segment, index) => (
+						<path
+							key={index}
+							d={segment.path}
+							fill="none"
+							stroke={index === selectedSegment ? "red" : "black"}
+							strokeWidth={index === selectedSegment ? pathWidth * 2 : pathWidth}
+							data-index={index}
+						/>
+					))}
+				</svg>
+			</div>
+			<div className="p-4 flex flex-col">
+				<div className="flex justify-around flex-col  gap-4 py-4 my-5 items-center">
 					<div className="w-full">
 						<Listbox value={selectedOption} onChange={handleOptionSelect}>
 							{({ open }) => (
@@ -210,7 +191,7 @@ const MeasurementBox: React.FC = () => {
 													<Listbox.Option
 														key={idx}
 														className={({ active }) =>
-															classNames(
+															combineTailwindClasses(
 																active ? "bg-indigo-600 text-white" : "text-gray-900",
 																"relative cursor-default select-none py-2 pl-3 pr-9"
 															)
@@ -220,7 +201,7 @@ const MeasurementBox: React.FC = () => {
 															<>
 																<div className="flex items-center">
 																	<span
-																		className={classNames(
+																		className={combineTailwindClasses(
 																			selected ? "font-semibold" : "font-normal",
 																			"ml-3 block truncate"
 																		)}>
@@ -230,7 +211,7 @@ const MeasurementBox: React.FC = () => {
 
 																{selected ? (
 																	<span
-																		className={classNames(
+																		className={combineTailwindClasses(
 																			active ? "text-white" : "text-indigo-600",
 																			"absolute inset-y-0 right-0 flex items-center pr-4"
 																		)}>
@@ -306,8 +287,8 @@ const MeasurementBox: React.FC = () => {
 						Export as FreeSewing Design
 					</button>
 				</div>
-			</section>
-		</div>
+			</div>
+		</section>
 	);
 };
 

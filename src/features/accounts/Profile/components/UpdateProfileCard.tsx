@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 const UpdateProfileCard = () => {
 	return (
 		<section className="flex px-4 py-32 mx-auto max-w-6xl flex-col w-full">

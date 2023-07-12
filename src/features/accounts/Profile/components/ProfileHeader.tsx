@@ -3,10 +3,10 @@ import { FC } from "react";
 import { FaUser } from "react-icons/fa";
 
 interface IProps {
-	isLoading: boolean;
+	isLoading?: boolean;
 	user: FormattedData;
 }
-const ProfileCard: FC<IProps> = ({ isLoading, user }) => {
+const ProfileHeader: FC<IProps> = ({ user }) => {
 	return (
 		<>
 			<div className=" flex flex-col md:flex-row  items-center border border-slate-200 rounded-lg p-4 gap-4 w-full">
@@ -55,4 +55,4 @@ const ProfileCard: FC<IProps> = ({ isLoading, user }) => {
 		</>
 	);
 };
-export default ProfileCard;
+export default ProfileHeader;

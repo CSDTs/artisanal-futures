@@ -40,6 +40,13 @@ const ToolsPage = () => {
 			image: "img/routing.png",
 			callback: () => navigate("/pattern-generator"),
 		},
+		{
+			title: "AI for Cloth (Arms)",
+			subtitle: "Generate cloth patterns using AI",
+			type: "Design",
+			image: "img/routing.png",
+			callback: () => navigate("/arm-length"),
+		},
 	];
 
 	return (

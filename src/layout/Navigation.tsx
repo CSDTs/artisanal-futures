@@ -183,8 +183,6 @@ export default function Navigation() {
 											</button>
 										</div>
 									)}
-
-									<DebugButton />
 								</div>
 							</div>
 						</div>

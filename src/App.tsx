@@ -27,6 +27,7 @@ import CraftRecompositionPage from "./pages/CraftRecompositionPage";
 import PatternGenerator from "./pages/PatternGenerator";
 import PublicProfilePage from "./pages/PublicProfilePage";
 
+import ArmLengthManipulator from "./features/apps/PatternGenerator/components/ArmLenghManipulator";
 import PrivacyPage from "./pages/PrivacyPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import RegistrationPage from "./pages/RegistrationPage";
@@ -54,6 +55,7 @@ function App() {
 				<Route path="/tools" element={<Tools />} />
 				<Route path="/shop-rate-calculator" element={<ShopRateCalculator />} />
 				<Route path="/pattern-generator" element={<PatternGenerator />} />
+				<Route path="/arm-length" element={<ArmLengthManipulator />} />
 				<Route path="/craft-recomposition" element={<CraftRecompositionPage />} />
 
 				{/* Account */}
