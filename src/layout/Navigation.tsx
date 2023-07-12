@@ -2,13 +2,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/logo.png";
 
-import DebugButton from "@/components/DebugButton";
+// import DebugButton from "@/components/DebugButton";
 import useArtisanData from "@/hooks/useArtisanData";
 import useAuth from "@/hooks/useAuth";
 import combineTailwindClasses from "@/utils/combineTailwindClasses";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 
 const navigation = [
 	{ name: "Artisans", href: "/artisans" },
@@ -167,7 +167,7 @@ export default function Navigation() {
 										</Menu>
 									)}
 
-									{(!authenticated || dataError) && (
+									{!authenticated && (
 										<div className="md:flex gap-4 hidden">
 											<button
 												className="font-thin whitespace-nowrap hover:font-normal"

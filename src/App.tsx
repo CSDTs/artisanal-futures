@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import ShopRateCalculator from "./features/apps/ShopRateCalculator";
+import ShopRatePage from "./pages/ShopRatePage";
 
 import CollectiveAgreementPage from "./pages/CollectiveAgreementPage";
 
@@ -53,7 +53,7 @@ function App() {
 
 				{/* Tools */}
 				<Route path="/tools" element={<Tools />} />
-				<Route path="/shop-rate-calculator" element={<ShopRateCalculator />} />
+				<Route path="/shop-rate-calculator" element={<ShopRatePage />} />
 				<Route path="/pattern-generator" element={<PatternGenerator />} />
 				<Route path="/arm-length" element={<ArmLengthManipulator />} />
 				<Route path="/craft-recomposition" element={<CraftRecompositionPage />} />

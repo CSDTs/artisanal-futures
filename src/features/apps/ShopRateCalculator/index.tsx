@@ -96,12 +96,8 @@ export default function ShopRateCalculator() {
 
 	return (
 		<section>
-			<div className="grid max-w-6xl grid-cols-1 gap-10 px-4 mx-auto lg:gap-32 md:grid-cols-2">
+			<div className="grid w-full grid-cols-1 gap-10 mx-auto lg:gap-32 md:grid-cols-2">
 				<div className="flex flex-col ">
-					<div className="px-4 mt-6">
-						<h1 className="mb-6 text-4xl font-bold">Shop Rate Calculator</h1>
-						<p className="mt-1 mb-8 text-lg font-semibold">Calculate your costs per hour for your shop</p>
-					</div>
 					<div className="flex max-w-lg gap-8 p-4 mx-auto rounded-xl sm:p-6 md:p-8">
 						<Tabs variant="unstyled" align="center" index={tabIndex} onChange={handleTabsChange}>
 							<TabList marginLeft="auto" marginRight="auto">
