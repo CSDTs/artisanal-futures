@@ -1,4 +1,3 @@
-import ProfileService from "@/features/accounts/Profile/services/profile.service";
 import AuthService from "@/services/auth.service";
 import axios from "axios";
 
@@ -7,7 +6,25 @@ const TOKEN_URL = import.meta.env.VITE_API_URL + "jwt-auth/v1/token";
 const SIMP_JWT_REGISTER_URL = "https://forum.artisanalfutures.org/wp-json/simple-jwt-login/v1/users";
 
 import { NewUser, ReturningUser } from "@/types";
+const createMembershipId = () => {
+	const address = "https://forum.artisanalfutures.org/wp-json/wp/v2/af_members";
 
+	return axios
+		.post(
+			address,
+			{ title: AuthService.getCurrentUser().user_display_name, fields: { user: AuthService.getCurrentUser().user_id } },
+			{
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + AuthService.getCurrentUserToken(),
+				},
+			}
+		)
+		.then((response) => {
+			if (response.data.id) AuthService.updateCurrentUser({ membership_id: response.data.id });
+			return response.data;
+		});
+};
 const login = (payload: ReturningUser) => {
 	return postToWordPressAPI(TOKEN_URL, payload)
 		.then((data) => {
@@ -32,7 +49,7 @@ const createNewUser = async (payload: NewUser) => {
 		.then((data) => {
 			if (!data.jwt) throw new Error("Error creating new user. JWT not found.");
 			login(payload).then(() => {
-				ProfileService.createMembershipId().then((data: any) => {
+				createMembershipId().then((data: any) => {
 					const membershipData = { fields: { membership: data.id } };
 					updateUserACFInformation(membershipData).then(() => {
 						window.location.href = "/profile";

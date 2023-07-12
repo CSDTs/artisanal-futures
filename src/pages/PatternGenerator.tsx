@@ -1,6 +1,5 @@
 import PageContainer from "@/components/UI/PageContainer";
-import ArmLengthManipulator from "@/features/apps/PatternGenerator/components/ArmLenghManipulator";
-import MeasurementBox from "@/features/apps/PatternGenerator/components/MeasurementBox";
+import { ArmLengthManipulator, MeasurementBox } from "@/features/apps/PatternGenerator";
 import combineTailwindClasses from "@/utils/combineTailwindClasses";
 import { Tab } from "@headlessui/react";
 const PatternGenerator = () => {

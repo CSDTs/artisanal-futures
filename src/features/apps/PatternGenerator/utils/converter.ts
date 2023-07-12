@@ -3,13 +3,13 @@ const Path = fs.Path;
 const Curve = fs.Curve;
 const Point = fs.Point;
 
-// Converts absolutized path to freesewing Path
-export function svgStringToPath(svgString) {
+// Converts absolute path to freesewing Path
+export function svgStringToPath(svgString: string): typeof Path {
 	const path = new Path();
-	let currentPoint = null;
-	let lastControlPoint = null;
+	let currentPoint: typeof Point | null = null;
+	let lastControlPoint: typeof Point | null = null;
 	let command = "";
-	let args = [];
+	let args: number[] = [];
 
 	const parseCommand = () => {
 		switch (command) {
@@ -31,7 +31,7 @@ export function svgStringToPath(svgString) {
 				lastControlPoint = controlPoint2;
 				break;
 			case "S":
-				console.log("what theheck is S?");
+				console.log("what the heck is S?");
 			// Handle other SVG commands as needed
 			// ...
 			default:
@@ -39,7 +39,7 @@ export function svgStringToPath(svgString) {
 		}
 	};
 
-	const parseArguments = (argString) => {
+	const parseArguments = (argString: string): number[] => {
 		return argString
 			.trim()
 			.split(/\s*,\s*|\s+/)
@@ -61,10 +61,10 @@ export function svgStringToPath(svgString) {
 	return path;
 }
 
-// Absolutizes relative SVG paths
+// Absolutes relative SVG paths
 // Should replace with the better working
-//    https://codepen.io/leaverou/full/RmwzKv, uss snap.svg
-export function convertRelativePathToAbsolute(svgPath) {
+//    https://codepen.io/leaverou/full/RmwzKv, use snap.svg
+export function convertRelativePathToAbsolute(svgPath: string): string {
 	let x = 0;
 	let y = 0;
 	let absolutePath = "";
@@ -77,61 +77,62 @@ export function convertRelativePathToAbsolute(svgPath) {
 		const args = command
 			.substring(1)
 			.trim()
-			.split(/[,\s]+/);
+			.split(/[,\s]+/)
+			.map(parseFloat);
 
 		switch (type) {
 			case "M":
-				x = +args[0];
-				y = +args[1];
+				x = args[0];
+				y = args[1];
 				absolutePath += `M${x},${y} `;
 				break;
 			case "m":
-				x += +args[0];
-				y += +args[1];
+				x += args[0];
+				y += args[1];
 				absolutePath += `M${x},${y} `;
 				break;
 			case "L":
-				x = +args[0];
-				y = +args[1];
+				x = args[0];
+				y = args[1];
 				absolutePath += `L${x},${y} `;
 				break;
 			case "l":
-				x += +args[0];
-				y += +args[1];
+				x += args[0];
+				y += args[1];
 				absolutePath += `L${x},${y} `;
 				break;
 			case "H":
-				x = +args[0];
+				x = args[0];
 				absolutePath += `H${x} `;
 				break;
 			case "h":
-				x += +args[0];
+				x += args[0];
 				absolutePath += `H${x} `;
 				break;
 			case "V":
-				y = +args[0];
+				y = args[0];
 				absolutePath += `V${y} `;
 				break;
 			case "v":
-				y += +args[0];
+				y += args[0];
 				absolutePath += `V${y} `;
 				break;
 			case "C":
-				const c1x = +args[0];
-				const c1y = +args[1];
-				const c2x = +args[2];
-				const c2y = +args[3];
-				x = +args[4];
-				y = +args[5];
+				const c1x = args[0];
+				const c1y = args[1];
+				const c2x = args[2];
+				const c2y = args[3];
+				x = args[4];
+				y = args[5];
 				absolutePath += `C${c1x},${c1y},${c2x},${c2y},${x},${y} `;
 				break;
 			case "c":
-				const relC1x = +args[0];
-				const relC1y = +args[1];
-				const relC2x = +args[2];
-				const relC2y = +args[3];
-				const relX = +args[4];
-				const relY = +args[5];
+				const relC1x = args[0];
+				const relC1y = args[1];
+				const relC2x = args[2];
+				const relC2y = args[3];
+				const relX = args[4];
+				const relY = args[5];
 				const absC1x = x + relC1x;
 				const absC1y = y + relC1y;
 				const absC2x = x + relC2x;
@@ -142,31 +143,35 @@ export function convertRelativePathToAbsolute(svgPath) {
 				break;
 			case "S":
 				const SprevCommand = absolutePath[absolutePath.length - 2];
-				const SprevX = SprevCommand === "C" || SprevCommand === "S" ? +absolutePath[absolutePath.length - 4] : x;
-				const SprevY = SprevCommand === "C" || SprevCommand === "S" ? +absolutePath[absolutePath.length - 3] : y;
+				const SprevX =
+					SprevCommand === "C" || SprevCommand === "S" ? parseFloat(absolutePath[absolutePath.length - 4]) : x;
+				const SprevY =
+					SprevCommand === "C" || SprevCommand === "S" ? parseFloat(absolutePath[absolutePath.length - 3]) : y;
 				const Ssc1x = 2 * x - SprevX; // Calculate the reflection control point
 				const Ssc1y = 2 * y - SprevY;
-				const Ssc2x = +args[0];
-				const Ssc2y = +args[1];
-				x = +args[2];
-				y = +args[3];
+				const Ssc2x = args[0];
+				const Ssc2y = args[1];
+				x = args[2];
+				y = args[3];
 				absolutePath += `C${Ssc1x},${Ssc1y},${Ssc2x},${Ssc2y},${x},${y} `;
 				break;
 
 			case "s":
 				const sprevCommand = absolutePath[absolutePath.length - 2];
-				const sprevX = sprevCommand === "C" || sprevCommand === "S" ? +absolutePath[absolutePath.length - 4] : x;
-				const sprevY = sprevCommand === "C" || sprevCommand === "S" ? +absolutePath[absolutePath.length - 3] : y;
-				const srelC1x = +args[0];
-				const srelC1y = +args[1];
-				const ssc1x = 2 * x - sprevX + relC1x; // Calculate the reflection control point
-				const ssc1y = 2 * y - sprevY + relC1y;
-				const srelC2x = +args[2];
-				const srelC2y = +args[3];
+				const sprevX =
+					sprevCommand === "C" || sprevCommand === "S" ? parseFloat(absolutePath[absolutePath.length - 4]) : x;
+				const sprevY =
+					sprevCommand === "C" || sprevCommand === "S" ? parseFloat(absolutePath[absolutePath.length - 3]) : y;
+				const srelC1x = args[0];
+				const srelC1y = args[1];
+				const ssc1x = 2 * x - sprevX + srelC1x; // Calculate the reflection control point
+				const ssc1y = 2 * y - sprevY + srelC1y;
+				const srelC2x = args[2];
+				const srelC2y = args[3];
 				const ssc2x = x + srelC2x;
 				const ssc2y = y + srelC2y;
-				x += +args[4];
-				y += +args[5];
+				x += args[4];
+				y += args[5];
 				absolutePath += `C${ssc1x},${ssc1y},${ssc2x},${ssc2y},${x},${y} `;
 				break;
 
@@ -178,16 +183,3 @@ export function convertRelativePathToAbsolute(svgPath) {
 
 	return absolutePath.trim();
 }
-
-/*
-// Example usage
-let svg_string = 'M10 80C40 10 65 10 95 80S150 150 180 80' //'M 5 10 L 20 30 C 50 60 70 80 90 100';
-const svgPathString = convertRelativePathToAbsolute(
-	svg_string
-)
-
-const path = svgStringToPath(svgPathString);
-
-console.log('Freesewing Path:', path.asPathstring());
-console.log('Original SVG Path:', svg_string);	
-*/

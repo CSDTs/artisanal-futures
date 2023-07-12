@@ -86,7 +86,8 @@ const CraftRecompositionPage: FC = () => {
 											id="breakdown"
 											className="w-3/4 rounded-md p-2 shadow"
 											rows={4}
-											defaultValue={breakdown.materials.join("\n")}></textarea>
+											defaultValue={breakdown.materials.join("\n")}
+											aria-label="materials"></textarea>
 										<p className="text-base  mt-4 max-w-md font-normal text-slate-500">
 											Enter each material on its own line.
 										</p>

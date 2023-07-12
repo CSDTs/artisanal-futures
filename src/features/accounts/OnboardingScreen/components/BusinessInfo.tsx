@@ -4,6 +4,7 @@ import { forwardRef, useRef, useState } from "react";
 
 import { BusinessData } from "@/types";
 
+import useAuth from "@/hooks/useAuth";
 import { FaCheck, FaTrash } from "react-icons/fa";
 
 type Ref = HTMLFormElement;
@@ -67,7 +68,7 @@ const BusinessInfo = forwardRef<Ref, IProps>(function BusinessInfo(
 	};
 
 	const handleListingImageRemoval = async () => {
-		deleteMediaLink(listing_image_media_id, token).then(() => {
+		deleteMediaLink(listing_image_media_id, token as string).then(() => {
 			clearListingImage();
 		});
 	};
@@ -122,7 +123,6 @@ const BusinessInfo = forwardRef<Ref, IProps>(function BusinessInfo(
 									type="text"
 									name="location"
 									id="location"
-									autoComplete="street-location"
 									defaultValue={location}
 									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>

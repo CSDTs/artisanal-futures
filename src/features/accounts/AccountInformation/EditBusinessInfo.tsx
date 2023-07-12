@@ -1,5 +1,5 @@
 import ArtisanCard from "@/components/Cards/ArtisanCard";
-import BusinessCard from "@/components/Cards/BusinessCard";
+
 import TextInput from "@/components/Form/TextInput";
 import { FormattedData } from "@/types";
 import getFormValues from "@/utils/getFormValues";

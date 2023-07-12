@@ -1,18 +1,14 @@
-import ArtisanCard from "@/components/Cards/ArtisanCard";
-import useImageUpload from "@/hooks/useImageUpload";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Tab, Transition } from "@headlessui/react";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { createRef, useCallback, useEffect, useRef, useState } from "react";
-import { FaArrowLeft, FaArrowRight, FaStoreAlt, FaUserAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Tab } from "@headlessui/react";
+
+import { useEffect, useRef, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+
 import AccountInfo from "./components/AccountInfo";
 import BusinessInfo from "./components/BusinessInfo";
 
 import AuthService from "@/services/auth.service";
 import { AccountData, BusinessData } from "@/types";
-import axios from "axios";
-import ConfirmAccountModal from "./components/ConfirmAccountModal";
+
 import SummaryInfo from "./components/SummaryInfo";
 
 import OnboardingNameplate from "./components/OnboardingNameplate";
@@ -22,7 +18,6 @@ import testData from "./data.json";
 const steps = ["Welcome", "Complete Account", "Setup Business", "Finalize"];
 
 import getFormValues from "@/utils/getFormValues";
-import { MutableRefObject } from "react";
 
 const OnboardingScreen = () => {
 	const [selectedIndex, setSelectedIndex] = useState(0);

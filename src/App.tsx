@@ -27,7 +27,7 @@ import CraftRecompositionPage from "./pages/CraftRecompositionPage";
 import PatternGenerator from "./pages/PatternGenerator";
 import PublicProfilePage from "./pages/PublicProfilePage";
 
-import ArmLengthManipulator from "./features/apps/PatternGenerator/components/ArmLenghManipulator";
+import ArmLengthManipulator from "./features/apps/PatternGenerator/components/ArmLengthManipulator";
 import PrivacyPage from "./pages/PrivacyPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import RegistrationPage from "./pages/RegistrationPage";
