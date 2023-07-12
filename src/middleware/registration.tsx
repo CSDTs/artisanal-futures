@@ -1,4 +1,4 @@
-import ProfileService from "@/features/Profile/services/profile.service";
+import ProfileService from "@/features/accounts/Profile/services/profile.service";
 import AuthService from "@/services/auth.service";
 import axios from "axios";
 

@@ -1,5 +1,5 @@
-import Alert from "@/components/Alert";
-import PageContainer from "@/components/PageContainer";
+import Alert from "@/components/UI/Alert";
+import PageContainer from "@/components/UI/PageContainer";
 
 import emailjs from "emailjs-com";
 import { FormEventHandler, SyntheticEvent, useRef, useState } from "react";

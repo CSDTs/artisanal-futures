@@ -1,4 +1,4 @@
-import { Features, Hero } from "@/features/Homepage";
+import { Features, Hero } from "@/components/Homepage";
 import Footer from "@/layout/Footer";
 import Navigation from "@/layout/Navigation";
 const Homepage = () => {

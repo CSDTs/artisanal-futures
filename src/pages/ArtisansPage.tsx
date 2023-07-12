@@ -1,12 +1,14 @@
-import ArtisanCard from "@/components/ArtisanCard";
-import PageContainer from "@/components/PageContainer";
+import ArtisanCard from "@/components/Cards/ArtisanCard";
+import PageContainer from "@/components/UI/PageContainer";
+import useFetchArtisans from "@/hooks/useFetchArtisans";
 
 import { LoadContainer } from "@/layout";
-import { fetchArtisans } from "@/middleware/fetching";
-import { ArtisanACF } from "@/types";
+
+import { FormattedData } from "@/types";
 import { Fragment } from "react";
+
 const ArtisansPage = () => {
-	const { artisans, isLoading, isError } = fetchArtisans();
+	const { isLoading, isError, data: artisans } = useFetchArtisans();
 
 	const pageInfo = {
 		title: "Artisans",
@@ -21,12 +23,10 @@ const ArtisansPage = () => {
 					</p>
 				)}
 
-				{artisans?.length > 0 && (
+				{artisans && artisans.length > 0 && (
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-						{artisans.map((store: ArtisanACF, index: number) => (
-							<Fragment key={index}>
-								{store.acf.business.name && <ArtisanCard {...store.acf} slug={store.slug} key={index} />}
-							</Fragment>
+						{artisans.map((artisan: FormattedData, index: number) => (
+							<Fragment key={index}>{<ArtisanCard data={artisan} slug={artisan.slug} />}</Fragment>
 						))}
 					</div>
 				)}

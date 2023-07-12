@@ -1,5 +1,5 @@
-import PageContainer from "@/components/PageContainer";
-import ToolCard from "@/components/ToolCard";
+import ToolCard from "@/components/Cards/ToolCard";
+import PageContainer from "@/components/UI/PageContainer";
 
 import { useNavigate } from "react-router-dom";
 

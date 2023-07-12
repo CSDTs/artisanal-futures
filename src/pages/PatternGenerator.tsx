@@ -1,4 +1,4 @@
-import PageContainer from "@/components/PageContainer";
+import PageContainer from "@/components/UI/PageContainer";
 import MeasurementBox from "@/features/apps/PatternGenerator/components/MeasurementBox";
 
 const PatternGenerator = () => {

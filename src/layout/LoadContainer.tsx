@@ -1,5 +1,5 @@
+import LoadingIndicator from "@/components/UI/LoadingIndicator";
 import { FC, ReactNode } from "react";
-import LoadingIndicator from "../components/LoadingIndicator";
 
 interface IProps {
 	isLoading: boolean;

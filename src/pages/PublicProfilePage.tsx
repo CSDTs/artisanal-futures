@@ -1,34 +1,43 @@
 import { useParams } from "react-router-dom";
 
-import { AboutMe, DetailsService, Header, Sidebar } from "../features/ArtisanProfile";
+import PageContainer from "@/components/UI/PageContainer";
+import axios from "axios";
 
-import PageContainer from "@/components/PageContainer";
-import { useEffect } from "react";
-import { FaUser } from "react-icons/fa";
+import { useQuery } from "react-query";
+
+import ProfileCard from "@/components/Cards/ProfileCard";
 import { LoadContainer } from "../layout";
+
+const getMemberInformationBySlug = (slug: string) => {
+	const address = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_ARTISAN_ENDPOINT}`;
+
+	const fetcher = async () => {
+		const response = await axios.get(address, { params: { slug: slug } });
+		return response.data[0].acf;
+	};
+
+	const { data, error, isLoading, isError } = useQuery(["member", slug], fetcher, {
+		refetchOnWindowFocus: true, // auto refetch when the window is focused
+	});
+
+	return {
+		data,
+
+		isLoading,
+		isError,
+	};
+};
 
 const PublicProfilePage = () => {
 	const { name } = useParams();
 
-	const { artisan, business, profile, profile_image, isLoading, isError } =
-		DetailsService.getMemberInformationBySlug(name);
-
+	const { data, isLoading, isError } = getMemberInformationBySlug(name as string);
+	console.log(data);
 	return (
 		<PageContainer>
 			<LoadContainer isLoading={isLoading} isError={isError}>
 				<div className="flex h-full w-full items-center justify-center aspect-[1.618]">
-					<div className="w-10/12 flex items-center">
-						<div className="w-8/12 h-full  flex flex-col bg-slate-200 p-4 ">
-							<h1 className="font-semibold text-4xl">{artisan?.full_name}</h1>
-							<h2 className="text-2xl">{business?.name}</h2>
-
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Quisquam, voluptatum.
-							</p>
-						</div>
-
-						<img src="/img/hero.jpg" alt="" className="aspect-[3/4] object-cover w-4/12 " />
-					</div>
+					<ProfileCard data={data} />
 				</div>
 			</LoadContainer>
 		</PageContainer>

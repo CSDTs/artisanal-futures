@@ -1,9 +1,9 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Alert from "@/components/Alert";
-import Loading from "@/components/LoadingIndicator";
-import AuthService from "@/services/auth.service";
+import Alert from "@/components/UI/Alert";
+import Loading from "@/components/UI/LoadingIndicator";
+import useAuth from "@/hooks/useAuth";
 
 const SignInPage = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +14,8 @@ const SignInPage = () => {
 	const navigate = useNavigate();
 
 	const [error, setError] = useState(false);
+
+	const { login, authenticated } = useAuth();
 
 	const loginInfo = {
 		username: usernameRef.current?.value,
@@ -28,16 +30,10 @@ const SignInPage = () => {
 	const logInUser = (debug = false) => {
 		setIsLoading(true);
 
-		AuthService.login(debug ? debugLoginInfo : loginInfo)
+		login(debug ? debugLoginInfo : loginInfo)
 			.then(() => {
-				AuthService.setProfileImage()
-					.catch(() => {
-						console.error("Error setting profile image");
-					})
-					.finally(() => {
-						navigate("/profile");
-						window.location.reload();
-					});
+				navigate("/profile");
+				window.location.reload();
 			})
 			.catch(() => {
 				console.error("Error logging in");
@@ -57,7 +53,7 @@ const SignInPage = () => {
 	};
 
 	useEffect(() => {
-		if (AuthService.getCurrentUser()) navigate("/profile");
+		if (authenticated) navigate("/profile");
 	}, []);
 
 	return (

@@ -73,6 +73,16 @@ type BusinessData = {
 	listing_image_url: string;
 	listing_image_media_id: number | null;
 };
+type AdminData = {
+	slug: string;
+	membership_id: number;
+	user_id: number;
+	first_time_setup: boolean;
+	full_name: string;
+};
+
+type FormattedData = AdminData & AccountData & BusinessData;
+
 export type {
 	AccountData,
 	Artisan,
@@ -81,6 +91,7 @@ export type {
 	BusinessData,
 	CurrentUser,
 	FilterData,
+	FormattedData,
 	NewUser,
 	Product,
 	ReturningUser,

@@ -5,7 +5,7 @@ const useImageUpload = () => {
 	// const [imageURL, setImageURL] = useState<string | null>(null);
 
 	const uploadImageToMedia = (imageUpload: File, callBack: (data: string) => void) => {
-		const token = JSON.parse(localStorage.getItem("user")).token || null;
+		const token = JSON.parse(localStorage.getItem("user") as string).token || null;
 		const formData = new FormData();
 		formData.append("file", imageUpload);
 

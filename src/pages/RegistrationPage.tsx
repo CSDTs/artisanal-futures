@@ -1,14 +1,17 @@
-import Alert from "@/components/Alert";
+import Alert from "@/components/UI/Alert";
 
 import { FormEvent, useRef, useState } from "react";
 
-import PageContainer from "@/components/PageContainer";
+import PageContainer from "@/components/UI/PageContainer";
+import useCreateUser from "@/hooks/useCreateUser";
 import RegistrationService from "@/middleware/registration";
 import { useNavigate } from "react-router-dom";
 
 const RegistrationPage = () => {
 	const [isProcessing, setIsProcessing] = useState(false);
-	const [error, setError] = useState(false);
+	// const [error, setError] = useState(false);
+
+	const { createUser, isLoading, error } = useCreateUser();
 
 	const handleOnSubmit = (e: FormEvent) => {
 		e.preventDefault();
@@ -22,11 +25,11 @@ const RegistrationPage = () => {
 
 		setIsProcessing(true);
 
-		RegistrationService.createNewUser(payload).catch((err) => {
+		createUser(payload).catch((err) => {
 			console.error(
 				err?.response?.data?.data?.message || "There was an error processing your request. Please try again later."
 			);
-			setError(true);
+			// setError(true);
 			setIsProcessing(false);
 		});
 	};

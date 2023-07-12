@@ -1,4 +1,4 @@
-import PageContainer from "@/components/PageContainer";
+import PageContainer from "@/components/UI/PageContainer";
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 

@@ -45,24 +45,6 @@ const postMembershipData = (id, payload) => {
 		});
 };
 
-const publishMembershipData = (id) => {
-	const address = `https://forum.artisanalfutures.org/wp-json/wp/v2/af_members/${id}`;
-	return axios
-		.post(
-			address,
-			{ status: "publish" },
-			{
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
-				},
-			}
-		)
-		.then((response) => {
-			return response.data;
-		});
-};
-
 const getMemberInformationACF = (id) => {
 	const address = `https://forum.artisanalfutures.org/wp-json/acf/v3/af_members/${id}`;
 	const fetcher = async (url) => await axios.get(url).then((res) => res.data.acf);
@@ -130,7 +112,7 @@ const MemberService = {
 	getCurrentMemberInformation,
 	checkMembershipStatus,
 	getMemberInformation,
-	publishMembershipData,
+
 	postMembershipData,
 	getMemberInformationBySlug,
 	getMemberInformationACF,

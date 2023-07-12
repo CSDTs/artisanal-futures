@@ -18,8 +18,8 @@ import Tools from "./pages/Tools";
 
 import PageNotFound from "./pages/PageNotFound";
 
-import OnboardingScreen from "./features/OnboardingScreen";
-import ProfileWizard from "./features/ProfileWizard";
+import OnboardingScreen from "./features/accounts/OnboardingScreen";
+// import ProfileWizard from "./features/ProfileWizard";
 
 import MeasurementBox from "./features/apps/PatternGenerator/components/MeasurementBox";
 import ContactPage from "./pages/ContactPage";
@@ -61,7 +61,7 @@ function App() {
 				<Route path="/registration" element={<RegistrationPage />} />
 				<Route path="/welcome" element={<OnboardingScreen />} />
 				<Route path="/profile" element={<Profile />} />
-				<Route path="/update-profile" element={<ProfileWizard />} />
+				{/* <Route path="/update-profile" element={<ProfileWizard />} /> */}
 
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
