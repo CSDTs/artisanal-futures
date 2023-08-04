@@ -72,7 +72,7 @@ const MessagingOptIn: React.FC<OptInMessagingProps> = ({ onOptInChange }) => {
 					of these terms.
 				</p>
 
-				{getCurrentUser().user_id && (
+				{getCurrentUser()?.user_id && (
 					<label>
 						<input type="checkbox" checked={optedIn} onChange={handleOptInChange} />
 						Opt in to Messaging Service
@@ -82,8 +82,8 @@ const MessagingOptIn: React.FC<OptInMessagingProps> = ({ onOptInChange }) => {
 				<button
 					type="submit"
 					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-					disabled={!getCurrentUser().user_id}>
-					{getCurrentUser().user_id ? "Submit" : "You must be signed in in order to submit"}
+					disabled={!getCurrentUser()?.user_id}>
+					{getCurrentUser()?.user_id ? "Submit" : "You must be signed in in order to submit"}
 				</button>
 			</form>
 
