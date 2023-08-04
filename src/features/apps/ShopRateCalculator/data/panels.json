@@ -1,0 +1,48 @@
+[
+	{
+		"name": "Monthly Cost",
+		"slug": "fixed",
+		"alt": "Fixed Costs",
+		"description": "Fixed costs are calculated monthly. Things like rent, gas, etc. are included in this.",
+		"hint": "Charges should be recorded on a monthly basis.",
+		"fields": [
+			{ "name": "Monthly Rent", "icon": "MdOutlineHomeWork" },
+			{ "name": "Gas Bill", "icon": "MdLocalGasStation" },
+			{ "name": "Electric Bill", "icon": "MdOutlineElectricalServices" },
+			{ "name": "Maintenance Costs", "icon": "FaHammer" }
+		],
+		"is_additional_available": true,
+		"is_material_hours": false
+	},
+	{
+		"name": "Material Cost",
+		"slug": "material",
+		"alt": "Material Costs",
+		"description": "These costs are intended for one project (to give the best estimate).",
+		"hint": "Charges are intended for one project.",
+		"fields": [
+			{ "name": "Fabric Cost", "icon": "FaTshirt" },
+			{ "name": "Other Materials", "icon": "FaTshirt" }
+		],
+		"is_additional_available": true,
+		"is_material_hours": true
+	},
+	{
+		"name": "Labor Cost",
+		"slug": "labor",
+		"alt": "Labor Costs",
+		"description": "These costs are based on your current staffing operations",
+		"hint": "Charges are on a per hour basis",
+		"fields": [
+			{ "name": "Labor Rate Per Hour", "icon": "FaTshirt" },
+			{ "name": "Number of Workers", "icon": "FaUserAlt" }
+		],
+		"is_additional_available": false,
+		"is_material_hours": false
+	},
+	{
+		"name": "Profits",
+		"slug": "profits",
+		"profit_modifier": true
+	}
+]

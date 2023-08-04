@@ -2,7 +2,11 @@
 module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			listStyleImage: {
+				checkmark: 'url("/img/checkmark.svg")',
+			},
+		},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };
