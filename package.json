@@ -6,7 +6,8 @@
 		"dev": "vite",
 		"build_ignore_tsc": " vite build ",
 		"build": "tsc && vite build ",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"lint": "tsc"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.7.15",

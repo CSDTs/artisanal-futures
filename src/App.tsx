@@ -31,6 +31,7 @@ import ArmLengthManipulator from "./features/apps/PatternGenerator/components/Ar
 import PrivacyPage from "./pages/PrivacyPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import RoutingOptInPage from "./pages/RoutingOptInPage";
 import TermsPage from "./pages/TermsPage";
 function App() {
 	localStorage.removeItem("chakra-ui-color-mode");
@@ -65,6 +66,7 @@ function App() {
 				<Route path="/profile" element={<Profile />} />
 				{/* <Route path="/update-profile" element={<ProfileWizard />} /> */}
 
+				<Route path="/messaging-opt-in" element={<RoutingOptInPage />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 		</div>
